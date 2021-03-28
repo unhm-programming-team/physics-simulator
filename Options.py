@@ -12,6 +12,7 @@ Options = {
     'gravity': False,
     'zoom': 1,
     'canvas height': 500,
-    'canvas width': 500
+    'canvas width': 500,
+    'update interval': 0.1
 }
 

@@ -64,6 +64,10 @@ class Vector:
         self.magnitude *= scalar
         self.calculate_components()
 
+    def scale_make(self, scalar):
+        new_magnitude = self.magnitude * scalar
+        return Vector(self.angle, new_magnitude)
+
     @staticmethod
     def make_directional_vector(direction='S', magnitude=1):
         """
@@ -102,5 +106,9 @@ class PhysicsObject:
         self.height = 0
         self.displacement = Vector(0,0)
         self.velocity = Vector(0,0)
-        self.acceleration = Vector(0,0)
+        self.acceleration = Vector.make_directional_vector('S', -9.8)
 
+    def update(self, interval):
+        self.velocity.add(self.acceleration.scale_make(interval))
+        self.displacement.add(self.velocity.scale_make(interval))
+        self.physics_canvas.move_me(self)

@@ -25,6 +25,8 @@ Todo:
  - ~~The time loop will need to go through the physics objects and update them according to their vectors~~
  - ~~The time loop should run on a separate thread (really not too bad in Python!)~~
  - PhysicsObjects need to have mass
+ - The UI for adding PhysicsObjects doesnt support negative numbers or decimals; validation needs to be improved/fixed
+ - The color selector for adding physics objects is an ugly button, and it would be nicer if that button changed to the color selected
  - PhysicsObjects need to know what forces are acting on them and be able to interact with other objects, such as via gravitational pull and collision
  - If you click on a Physics object, there should be a UI pane on the side that shows you the current vectors operating on it
  - You should be able to change vectors and forces on a particular object from the UI

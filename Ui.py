@@ -79,16 +79,15 @@ class PhysicsCanvas:
             physics_object.velocity.x *= -1
         if displacement_x - physics_object.width/2 < self.min_x and physics_object.velocity.x < 0:
             physics_object.velocity.x *= -1
-        if displacement_y + physics_object.height/2 > self.max_y and physics_object.velocity.y > 0:
+        if displacement_y + physics_object.height > self.max_y and physics_object.velocity.y > 0:
             physics_object.velocity.y *= -1
         if displacement_y - physics_object.width/2 < self.min_y and physics_object.velocity.y < 0:
             physics_object.velocity.y *= -1
         physics_object.velocity.calculate_angles()
 
-        new_x = displacement_x + self.origin_x
-        new_y = displacement_y + self.origin_y
+        new_x = displacement_x + self.origin_x - physics_object.width/2
+        new_y = displacement_y + self.origin_y - physics_object.height/2
         self.canvas.moveto(physics_object.canvas_id, new_x, new_y)
-
 
 
 class ObjectAdder:
@@ -106,8 +105,8 @@ class ObjectAdder:
 
         self.x_variable = StringVar(value='0')
         self.y_variable = StringVar(value='0')
-        self.width_variable = StringVar(value='5')
-        self.height_variable = StringVar(value='5')
+        self.width_variable = StringVar(value='20')
+        self.height_variable = StringVar(value='20')
         self.x_entry = ttk.Entry(self.frame, textvariable=self.x_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
         self.y_entry = ttk.Entry(self.frame, textvariable=self.y_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
         self.width_entry = ttk.Entry(self.frame, textvariable=self.width_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))

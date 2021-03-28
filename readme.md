@@ -12,7 +12,7 @@ It will use Tkinter for the User Interface because of Tkinter's lightweight natu
 
 The `reference-examples` folder contains examples of two games I made recently for a midterm, snakes and ladders and war, using the tkinter ui. Don't worry, we can make it a _much_ more ergonomic UI than that rushed project.
 
-Next, we must create `PhysicsObjects` which have vectors in them to represent distance, velocity, and acceleration. The lib should be written so that the origin is (0,0), not the top left corner, so there will have to be a low level transposing function.
+The next step towards physics is creating `PhysicsObject`s which have vectors in them to represent distance, velocity, and acceleration. The lib should be written so that the origin is in the center of canvas, not the top left corner, so there will have to be a low level transposing function. That way we can do all the trigonometry the normal way. I think it makes it a lot easier. Every PhysicsObject has a displacement vector that describes where it is from center of canvas. 
 
 I experimented with creating something like this with Javascript and I got the basics working and I included that library in `reference-examples`. The next functionality I believe we will need for physics is similar to that described in `shapes.js` in the `javascript-other-example-prog` directory.
 
@@ -22,7 +22,7 @@ Todo:
  - Create an object to encapsulate the Canvas object
  - Create a Phyics Object that contains references to Vectors and will re-set its X and Y accordingly
  - Like the pieces in `snakes_and_ladders`, a physics object should have a reference to its x and y coord, vectors for position, velocity, and acceleration, the shape(s) it draws, and the canvas object so it can move those shapes around. It will probably need a mass, though we may eventually want to abstract this, or have the option to abstract this, into a material.
- - There will have to be a game loop or other timing.
+ - There will have to be a timing loop to handle updates to physics objects based on their vectors and intervals.
  - There will need to be a way to pause and step time.
  - The time loop will need to go through the physics objects and update them according to their vectors
  - The time loop should run on a separate thread (really not too bad in Python!)

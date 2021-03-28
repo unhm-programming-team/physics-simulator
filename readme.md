@@ -16,20 +16,20 @@ The next step towards physics is creating `PhysicsObject`s which have vectors in
 
 I experimented with creating something like this with Javascript and I got the basics working and I included that library in `reference-examples`. The next functionality I believe we will need for physics is similar to that described in `shapes.js` in the `javascript-other-example-prog` directory.
 
-I'd say the `Vector` class in the `physics` directory is just about done.
-
 Todo:
- - Create an object to encapsulate the Canvas object
- - Create a Phyics Object that contains references to Vectors and will re-set its X and Y accordingly
- - Like the pieces in `snakes_and_ladders`, a physics object should have a reference to its x and y coord, vectors for position, velocity, and acceleration, the shape(s) it draws, and the canvas object so it can move those shapes around. It will probably need a mass, though we may eventually want to abstract this, or have the option to abstract this, into a material.
- - There will have to be a timing loop to handle updates to physics objects based on their vectors and intervals.
- - There will need to be a way to pause and step time.
- - The time loop will need to go through the physics objects and update them according to their vectors
- - The time loop should run on a separate thread (really not too bad in Python!)
+ - ~~Create an object to encapsulate the Canvas object~~
+ - ~~Create a Phyics Object that contains references to Vectors and will re-set its X and Y accordingly~~
+ - ~~Like the pieces in `snakes_and_ladders`, a physics object should have a reference to its x and y coord, vectors for position, velocity, and acceleration, the shape(s) it draws, and the canvas object so it can move those shapes around. It will probably need a mass, though we may eventually want to abstract this, or have the option to abstract this, into a material.~~
+ - ~~There will have to be a timing loop to handle updates to physics objects based on their vectors and intervals.~~
+ - ~~There will need to be a way to pause and step time.~~
+ - ~~The time loop will need to go through the physics objects and update them according to their vectors~~
+ - ~~The time loop should run on a separate thread (really not too bad in Python!)~~
+ - PhysicsObjects need to have mass
+ - PhysicsObjects need to know what forces are acting on them and be able to interact with other objects, such as via gravitational pull and collision
  - If you click on a Physics object, there should be a UI pane on the side that shows you the current vectors operating on it
-- You should be able to change those vectors
-- Should we start with Force vectors from the beginning or do velocity/position/acceleration first?
-- We should be able to save the game
+ - You should be able to change vectors and forces on a particular object from the UI
+ - We should be able to save and load states
+ - We should have a UI to configure the Options
 
 - Everything should be documented with Sphinx eventually. For now, we should document everything with [docstrings that Sphinx can use](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html)
 

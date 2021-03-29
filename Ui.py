@@ -7,6 +7,7 @@ import time
 from Options import Options
 import Physics
 import Utility
+import Substance
 
 
 class Window:
@@ -19,7 +20,8 @@ class Window:
         self.bottom_frame = ttk.Frame(self.root_frame)
 
         self.physics_canvas = PhysicsCanvas(self, self.center_frame)
-        self.object_adder = ObjectAdder(self, self.right_frame)
+        self.vector_object_adder = VectorObjectAdder(self, ttk.Frame(self.right_frame))
+        self.mass_object_adder = MassObjectAdder(self, ttk.Frame(self.right_frame))
         self.time_selector = TimeSelector(self, self.bottom_frame)
 
         self.root_frame.grid()
@@ -47,8 +49,8 @@ class PhysicsCanvas:
 
         self.canvas.grid()
 
-    def add(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
-        physics_object = Physics.PhysicsObject(self)
+    def add_gravity_vector_object(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
+        physics_object = Physics.VectorObject(self)
         if x > self.max_x:  # objects placed beyond canvas size get moved to edge
             x = self.max_x
         elif x < self.min_x:
@@ -59,6 +61,7 @@ class PhysicsCanvas:
             x = self.min_y
         displacement_vector = Physics.Vector.make_vector_from_components(x, y)
         physics_object.displacement = displacement_vector
+        physics_object.acceleration = Physics.Vector.make_directional_vector('S', -9.8)
         physics_object.width = width
         physics_object.height = height
         x_0 = x - width/2 + self.origin_x
@@ -68,6 +71,19 @@ class PhysicsCanvas:
         physics_object.canvas_id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
         self.physics_objects.append(physics_object)
 
+    def add_mass_object(self, mass_object):
+        mass_object.displacement = Physics.Vector.make_vector_from_components(self.origin_x, self.origin_y)
+        mass_object.calculate_bounds()
+        x_0 = mass_object.x_0
+        y_0 = mass_object.y_0
+        x_1 = mass_object.x_1
+        y_1 = mass_object.y_1
+        color = mass_object.material.color
+        mass_object.id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
+        print(f"x_0={x_0} y_0={y_0} x_1={x_1} y_1={y_1} fill={color}")
+        self.physics_objects.append(mass_object)
+        print(f'adding {mass_object}')
+
     def update(self, interval):
         for o in self.physics_objects:
             o.update(interval)
@@ -75,6 +91,7 @@ class PhysicsCanvas:
     def move_me(self, physics_object):
         displacement_x = physics_object.displacement.x
         displacement_y = physics_object.displacement.y
+        physics_object.calculate_bounds()
         if displacement_x + physics_object.width/2 > self.max_x and physics_object.velocity.x > 0:
             physics_object.velocity.x *= -1
         if displacement_x - physics_object.width/2 < self.min_x and physics_object.velocity.x < 0:
@@ -89,12 +106,35 @@ class PhysicsCanvas:
         new_y = displacement_y + self.origin_y - physics_object.height/2
         self.canvas.moveto(physics_object.canvas_id, new_x, new_y)
 
+    def move_mass_object(self, mass_object):
+        mass_object.calculate_bounds()
+        print(mass_object.displacement.x)
+        velocity = mass_object.velocity
+        x_0 = mass_object.x_0 + self.origin_x
+        if x_0 < self.min_x and velocity.x < 0:
+            velocity.x *= -1
+        x_1 = mass_object.x_1 + self.origin_x
+        if x_1 > self.max_x and velocity.x > 0:
+            velocity.x *= -1
+        y_0 = mass_object.y_0 + self.origin_y
+        if y_0 < self.min_y and velocity.y < 0:
+            velocity.y *= -1
+        y_1 = mass_object.y_1 + self.origin_y
+        if y_1 > self.max_y and velocity.y > 0:
+            velocity.y *= -1
+        x = mass_object.displacement.x + self.origin_x
+        y = mass_object.displacement.y + self.origin_y
+        self.canvas.moveto(mass_object.canvas_id, x_0, y_0)
 
-class ObjectAdder:
+
+class VectorObjectAdder:
     def __init__(self, window, parent_frame):
+        """
+        Will call .grid() on parent_frame
+        """
         self.window = window
         self.frame = parent_frame
-        self.add_button = ttk.Button(self.frame, text='add', command=self.add_button_press)
+        self.add_button = ttk.Button(self.frame, text='add massless gravity vector object', command=self.add_button_press)
         x_label = ttk.Label(self.frame, text='x')
         y_label = ttk.Label(self.frame, text='y')
         width_label = ttk.Label(self.frame, text='width')
@@ -125,6 +165,7 @@ class ObjectAdder:
         self.height_entry.grid(column=4, row=1)
         color_label.grid(column=5, row=0)
         self.color_button.grid(column=5, row=1)
+        self.frame.grid()
 
     def select_color(self):
         result = colorchooser.askcolor(color=self.color_button['text'])
@@ -137,7 +178,40 @@ class ObjectAdder:
         width = float(self.width_variable.get())
         height = float(self.height_variable.get())
         color = self.color_button['text']
-        self.window.physics_canvas.add(x=x, y=y, width=width, height=height, color=color)
+        self.window.physics_canvas.add_gravity_vector_object(x=x, y=y, width=width, height=height, color=color)
+
+
+class MassObjectAdder:
+    def __init__(self, window, parent_frame):
+        """
+        Will call .grid() on parent frame
+        """
+        self.window = window
+        self.frame = parent_frame
+        self.add_button = ttk.Button(self.frame, text='add object with mass', command=self.add_button_press)
+        material_label = ttk.Label(self.frame, text='material')
+        mass_label = ttk.Label(self.frame, text='mass')
+
+        self.listbox = ttk.Spinbox(self.frame, value=list(Substance.MATERIALS.keys()), state='readonly', width=11 )
+        self.listbox.set(list(Substance.MATERIALS.keys())[0])
+
+        registered_validator_id = self.frame.register(Utility.validate_number_input)
+        self.mass_variable = StringVar(value='1')
+        self.mass_entry = ttk.Entry(self.frame, textvariable=self.mass_variable, validate='all', validatecommand=(registered_validator_id, '%S'))
+
+        self.add_button.grid(column=0, row=1)
+        material_label.grid(column=1, row=0)
+        self.listbox.grid(column=1,row=1)
+        mass_label.grid(column=2,row=0)
+        self.mass_entry.grid(column=2,row=1)
+        self.frame.grid()
+
+    def add_button_press(self):
+        material = Substance.MATERIALS[self.listbox.get()]
+        mass = float(self.mass_variable.get())
+        mass_object = Physics.MassObject(self.window.physics_canvas, material, mass)
+        self.window.physics_canvas.add_mass_object(mass_object)
+        self.window.physics_canvas.move_mass_object(mass_object)
 
 
 class TimeSelector:

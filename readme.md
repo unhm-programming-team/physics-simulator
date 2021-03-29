@@ -24,7 +24,8 @@ Todo:
  - ~~There will need to be a way to pause and step time.~~
  - ~~The time loop will need to go through the physics objects and update them according to their vectors~~
  - ~~The time loop should run on a separate thread (really not too bad in Python!)~~
- - PhysicsObjects need to have mass
+ - ~~PhysicsObjects need to have mass~~
+ - ~~PhysicsObject should calculate their size based on material and mass~~
  - The UI for adding PhysicsObjects doesnt support negative numbers or decimals; validation needs to be improved/fixed
  - The color selector for adding physics objects is an ugly button, and it would be nicer if that button changed to the color selected
  - PhysicsObjects need to know what forces are acting on them and be able to interact with other objects, such as via gravitational pull and collision

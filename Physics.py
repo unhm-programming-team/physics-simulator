@@ -1,5 +1,7 @@
 import math
 
+import Substance
+
 
 class Vector:
     def __init__(self, angle, magnitude):
@@ -98,17 +100,46 @@ class Vector:
         return Vector(angle, magnitude)
 
 
-class PhysicsObject:
+class VectorObject:
+    """
+    Displacement should be meters, velocity meters/s, acceleration meters/s^2
+    """
     def __init__(self, physics_canvas):
         self.physics_canvas = physics_canvas
         self.canvas_id = 0
         self.width = 0
         self.height = 0
+        self.x_0 = 0
+        self.x_1 = 0
+        self.y_0 = 0
+        self.y_1 = 0
         self.displacement = Vector(0,0)
         self.velocity = Vector(0,0)
-        self.acceleration = Vector.make_directional_vector('S', -9.8)
+        self.acceleration = Vector(0,0)
+        self.calculate_bounds()
+
+    def calculate_bounds(self):
+        self.x_0 = self.displacement.x - 1/2 * self.width
+        self.x_1 = self.displacement.x + 1/2 * self.width
+        self.y_0 = self.displacement.y - 1/2 * self.height
+        self.y_1 = self.displacement.y + 1/2 * self.height
 
     def update(self, interval):
         self.velocity.add(self.acceleration.scale_make(interval))
         self.displacement.add(self.velocity.scale_make(interval))
         self.physics_canvas.move_me(self)
+
+
+class MassObject(VectorObject):
+    def __init__(self, physics_canvas, material=Substance.Material(), mass=10):
+        VectorObject.__init__(self, physics_canvas)
+        self.material = material
+        self.mass = mass
+        self.volume = mass / self.material.density
+        self.side = self.volume**(1/3)
+        self.width = self.side
+        self.height = self.side
+        self.calculate_bounds()
+
+
+

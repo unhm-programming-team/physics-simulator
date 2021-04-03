@@ -22,6 +22,7 @@ class Window:
         self.physics_canvas = PhysicsCanvas(self, self.center_frame)
         self.vector_object_adder = VectorObjectAdder(self, ttk.Frame(self.right_frame))
         self.mass_object_adder = MassObjectAdder(self, ttk.Frame(self.right_frame))
+        self.force_object_adder = ForceObjectAdder(self, ttk.Frame(self.right_frame))
         self.time_selector = TimeSelector(self, self.bottom_frame)
 
         self.root_frame.grid()
@@ -72,17 +73,15 @@ class PhysicsCanvas:
         self.physics_objects.append(physics_object)
 
     def add_mass_object(self, mass_object):
-        mass_object.displacement = Physics.Vector.make_vector_from_components(self.origin_x, self.origin_y)
+        mass_object.displacement = Physics.Vector(0,0)
         mass_object.calculate_bounds()
         x_0 = mass_object.x_0
         y_0 = mass_object.y_0
         x_1 = mass_object.x_1
         y_1 = mass_object.y_1
         color = mass_object.material.color
-        mass_object.id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
-        print(f"x_0={x_0} y_0={y_0} x_1={x_1} y_1={y_1} fill={color}")
+        mass_object.canvas_id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
         self.physics_objects.append(mass_object)
-        print(f'adding {mass_object}')
 
     def update(self, interval):
         for o in self.physics_objects:
@@ -108,23 +107,50 @@ class PhysicsCanvas:
 
     def move_mass_object(self, mass_object):
         mass_object.calculate_bounds()
-        print(mass_object.displacement.x)
         velocity = mass_object.velocity
         x_0 = mass_object.x_0 + self.origin_x
-        if x_0 < self.min_x and velocity.x < 0:
+        if x_0 < 0 and velocity.x < 0:
             velocity.x *= -1
         x_1 = mass_object.x_1 + self.origin_x
-        if x_1 > self.max_x and velocity.x > 0:
+        if x_1 > self.width and velocity.x > 0:
             velocity.x *= -1
         y_0 = mass_object.y_0 + self.origin_y
-        if y_0 < self.min_y and velocity.y < 0:
+        if y_0 < 0 and velocity.y < 0:
             velocity.y *= -1
         y_1 = mass_object.y_1 + self.origin_y
-        if y_1 > self.max_y and velocity.y > 0:
+        if y_1 > self.height and velocity.y > 0:
             velocity.y *= -1
         x = mass_object.displacement.x + self.origin_x
         y = mass_object.displacement.y + self.origin_y
         self.canvas.moveto(mass_object.canvas_id, x_0, y_0)
+
+    def add_force_object(self, force_object):
+        self.physics_objects.append(force_object)
+        x0 = force_object.x_0 + self.origin_x
+        y0 = force_object.y_0 + self.origin_y
+        x1 = force_object.x_1 + self.origin_x
+        y1 = force_object.y_1 + self.origin_y
+        color = force_object.material.color
+        force_object.canvas_id = self.canvas.create_oval(x0, y0, x1, y1, fill=color)
+
+    def move_force_object(self, force_object):
+        velocity = force_object.velocity
+        x0 = force_object.x_0 + self.origin_x
+        y0 = force_object.y_0 + self.origin_y
+        x1 = force_object.x_1 + self.origin_x
+        y1 = force_object.y_1 + self.origin_y
+        opp_force = False
+        if x0 < 0 and velocity.x < 0:
+            velocity.x *= -1
+        if x1 > self.width and velocity.x > 0:
+            velocity.x *= -1
+        if y0 < 0 and velocity.y < 0:
+            velocity.y *= -1
+        if y1 > self.height and velocity.y > 0:
+            velocity.y *= -1
+        velocity.calculate_angles()
+        force_object.calculate_bounds()
+        self.canvas.moveto(force_object.canvas_id, x0, y0)
 
 
 class VectorObjectAdder:
@@ -196,7 +222,7 @@ class MassObjectAdder:
         self.listbox.set(list(Substance.MATERIALS.keys())[0])
 
         registered_validator_id = self.frame.register(Utility.validate_number_input)
-        self.mass_variable = StringVar(value='1')
+        self.mass_variable = StringVar(value=str(Options['default mass']))
         self.mass_entry = ttk.Entry(self.frame, textvariable=self.mass_variable, validate='all', validatecommand=(registered_validator_id, '%S'))
 
         self.add_button.grid(column=0, row=1)
@@ -212,6 +238,54 @@ class MassObjectAdder:
         mass_object = Physics.MassObject(self.window.physics_canvas, material, mass)
         self.window.physics_canvas.add_mass_object(mass_object)
         self.window.physics_canvas.move_mass_object(mass_object)
+
+
+class ForceObjectAdder:
+    def __init__(self, window, parent_frame):
+        """
+        Will call .grid() on parent_frame
+        """
+        self.window = window
+        self.frame = parent_frame
+        self.add_button = ttk.Button(self.frame, text='add Force Object', command=self.add_button_press)
+        force_angle_label = ttk.Label(self.frame, text='angle')
+        magnitude_label = ttk.Label(self.frame, text='magnitude')
+        self.force_angle_string = StringVar()
+        self.force_magnitude_string = StringVar()
+        force_angle_display = ttk.Label(self.frame, textvariable=self.force_angle_string)
+        force_magnitude_display = ttk.Label(self.frame, textvariable=self.force_magnitude_string)
+
+        self.add_button.grid(column=0, row=1)
+        force_angle_label.grid(column=1,row=0)
+        magnitude_label.grid(column=2,row=0)
+        force_angle_display.grid(column=1, row=1)
+        force_magnitude_display.grid(column=1,row=1)
+        self.frame.grid()
+
+        self.force_objects = []
+        self.window.root.bind('<Down>', self.key_handler)
+        self.window.root.bind('<Up>', self.key_handler)
+        self.window.root.bind('<Left>', self.key_handler)
+        self.window.root.bind('<Right>', self.key_handler)
+
+    def add_button_press(self):
+        material = Substance.MATERIALS['cork']
+        mass = 100000
+        force_object = Physics.ForceObject(self.window.physics_canvas, material, mass)
+        self.force_objects.append(force_object)
+        self.window.physics_canvas.add_force_object(force_object)
+
+    def key_handler(self, event):
+        direction = 'n'
+        if event.keysym == 'Right':
+            direction = 'e'
+        elif event.keysym == 'Up':
+            direction = 's'
+        elif event.keysym == 'Left':
+            direction = 'w'
+        for i in range(0, len(self.force_objects)):
+            force = Physics.Force.make_directional_force(direction, Options['key force magnitude'], Options['key force duration'])
+            self.force_objects[i].forces.append(force)
 
 
 class TimeSelector:

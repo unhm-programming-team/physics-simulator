@@ -1,13 +1,14 @@
 from tkinter import *
-from tkinter import ttk, colorchooser
+from tkinter import ttk
 
 import threading
 import time
 
 from Options import Options
 import Physics
-import Utility
-import Substance
+import DebugTab
+
+import ForceObjectWindow
 
 
 class Window:
@@ -15,20 +16,34 @@ class Window:
         self.root = Tk()  # start tkinter
         self.root.title = '2d Physics Simulator'
         self.root_frame = ttk.Frame(self.root)
-        self.center_frame = ttk.Frame(self.root_frame)
-        self.right_frame = ttk.Frame(self.root_frame)
-        self.bottom_frame = ttk.Frame(self.root_frame)
 
+        # physics canvas will create and grid the canvas
+        self.center_frame = ttk.Frame(self.root_frame)
+        pad = Options['canvas border width']
+        # self.center_frame['style'] = 'BorderCanvas.TFrame
+        # self.center_frame['padding'] = (pad,pad,pad,pad)
         self.physics_canvas = PhysicsCanvas(self, self.center_frame)
-        self.vector_object_adder = VectorObjectAdder(self, ttk.Frame(self.right_frame))
-        self.mass_object_adder = MassObjectAdder(self, ttk.Frame(self.right_frame))
-        self.force_object_adder = ForceObjectAdder(self, ttk.Frame(self.right_frame))
-        self.time_selector = TimeSelector(self, self.bottom_frame)
+
+        # notebook has tabbed selections
+        self.right_notebook = ttk.Notebook(self.root_frame)
+        self.options_tab = OptionsTab(self.right_notebook, self)
+        self.environment_tab = EnvironmentTab(self.right_notebook, self)
+        self.debug_tab = DebugTab.DebugTab(self.right_notebook, self)
+        self.right_notebook.add(self.options_tab, text='Options')
+        self.right_notebook.add(self.environment_tab, text='Environment')
+        self.right_notebook.add(self.debug_tab, text='Debug')
+
+        # time selector handles play/pause
+        self.bottom_time_frame = ttk.Frame(self.root_frame)
+        self.time_selector = TimeSelector(self, self.bottom_time_frame)
+
+        # additional windows for vector popups
+        self.additional_windows = []
 
         self.root_frame.grid()
-        self.center_frame.grid(row=1, column=1)
-        self.right_frame.grid(row=1, column=2)
-        self.bottom_frame.grid(row=2, column=1)
+        self.center_frame.grid(row=0, column=1)
+        self.right_notebook.grid(row=0, column=2, sticky=N)
+        self.bottom_time_frame.grid(row=1, column=1)
         self.root.mainloop()
 
 
@@ -46,8 +61,16 @@ class PhysicsCanvas:
         self.max_y = self.height/2
         self.min_y = -self.height/2
         self.canvas = Canvas(self.frame, width=self.width, height=self.height)
-        self.physics_objects = []
 
+        # set canvas style from options
+        self.canvas['relief'] = Options['canvas border type']
+        self.canvas['bd'] = Options['canvas border width']
+        self.canvas['bg'] = Options['canvas background color']
+
+        # set click handler
+        self.canvas.bind("<Button-1>", self.click_handler)
+
+        self.physics_objects = []
         self.canvas.grid()
 
     def add_gravity_vector_object(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
@@ -131,161 +154,47 @@ class PhysicsCanvas:
         x1 = force_object.x_1 + self.origin_x
         y1 = force_object.y_1 + self.origin_y
         color = force_object.material.color
-        force_object.canvas_id = self.canvas.create_oval(x0, y0, x1, y1, fill=color)
+        force_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
 
     def move_force_object(self, force_object):
         velocity = force_object.velocity
+        force_object.calculate_bounds()
         x0 = force_object.x_0 + self.origin_x
         y0 = force_object.y_0 + self.origin_y
         x1 = force_object.x_1 + self.origin_x
         y1 = force_object.y_1 + self.origin_y
-        opp_force = False
-        if x0 < 0 and velocity.x < 0:
+        if x0 < 0 + Options['canvas left physics adjustment'] and velocity.x < 0:
             velocity.x *= -1
-        if x1 > self.width and velocity.x > 0:
+        if x1 > self.width + Options['canvas right physics adjustment'] and velocity.x > 0:
             velocity.x *= -1
-        if y0 < 0 and velocity.y < 0:
+        if y0 < 0 + Options['canvas top physics adjustment'] and velocity.y < 0:
             velocity.y *= -1
-        if y1 > self.height and velocity.y > 0:
+        if y1 > self.height + Options['canvas bottom physics adjustment'] and velocity.y > 0:
             velocity.y *= -1
         velocity.calculate_angles()
-        force_object.calculate_bounds()
         self.canvas.moveto(force_object.canvas_id, x0, y0)
 
+    def click_handler(self, event):
+        radius = Options['canvas select radius']
+        left = event.x - radius
+        right = event.x + radius
+        top = event.y - radius
+        bottom = event.y + radius
 
-class VectorObjectAdder:
-    def __init__(self, window, parent_frame):
-        """
-        Will call .grid() on parent_frame
-        """
-        self.window = window
-        self.frame = parent_frame
-        self.add_button = ttk.Button(self.frame, text='add massless gravity vector object', command=self.add_button_press)
-        x_label = ttk.Label(self.frame, text='x')
-        y_label = ttk.Label(self.frame, text='y')
-        width_label = ttk.Label(self.frame, text='width')
-        height_label = ttk.Label(self.frame, text='height')
-        color_label = ttk.Label(self.frame, text='color')
+        results = self.canvas.find_overlapping(left, top, right, bottom)
 
-        registered_validator_id = self.frame.register(Utility.validate_number_input)
+        objects = []
 
-        self.x_variable = StringVar(value='0')
-        self.y_variable = StringVar(value='0')
-        self.width_variable = StringVar(value='20')
-        self.height_variable = StringVar(value='20')
-        self.x_entry = ttk.Entry(self.frame, textvariable=self.x_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
-        self.y_entry = ttk.Entry(self.frame, textvariable=self.y_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
-        self.width_entry = ttk.Entry(self.frame, textvariable=self.width_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
-        self.height_entry = ttk.Entry(self.frame, textvariable=self.height_variable, width=5, validate='all', validatecommand=(registered_validator_id, '%S'))
+        for i in range(0, len(self.physics_objects)):
+            p_o = self.physics_objects[i]
+            if type(p_o) == Physics.ForceObject:
+                for c in range(0,len(results)):
+                    target_id = results[c]
+                    if p_o.canvas_id == target_id:
+                        objects.append(p_o)
 
-        self.color_button = Button(self.frame, text='blue', command=self.select_color)
-
-        self.add_button.grid(column=0, row=1)
-        x_label.grid(column=1, row=0)
-        self.x_entry.grid(column=1, row=1)
-        y_label.grid(column=2, row=0)
-        self.y_entry.grid(column=2, row=1)
-        width_label.grid(column=3, row=0)
-        self.width_entry.grid(column=3, row=1)
-        height_label.grid(column=4, row=0)
-        self.height_entry.grid(column=4, row=1)
-        color_label.grid(column=5, row=0)
-        self.color_button.grid(column=5, row=1)
-        self.frame.grid()
-
-    def select_color(self):
-        result = colorchooser.askcolor(color=self.color_button['text'])
-        self.color_button['text'] = result[1]
-
-    def add_button_press(self):
-        # self, x = 0, y = 0, width = 5, height = 5, velocity = 0, acceleration = 0, color = 'blue')
-        x = float(self.x_variable.get())
-        y = float(self.y_variable.get())
-        width = float(self.width_variable.get())
-        height = float(self.height_variable.get())
-        color = self.color_button['text']
-        self.window.physics_canvas.add_gravity_vector_object(x=x, y=y, width=width, height=height, color=color)
-
-
-class MassObjectAdder:
-    def __init__(self, window, parent_frame):
-        """
-        Will call .grid() on parent frame
-        """
-        self.window = window
-        self.frame = parent_frame
-        self.add_button = ttk.Button(self.frame, text='add object with mass', command=self.add_button_press)
-        material_label = ttk.Label(self.frame, text='material')
-        mass_label = ttk.Label(self.frame, text='mass')
-
-        self.listbox = ttk.Spinbox(self.frame, value=list(Substance.MATERIALS.keys()), state='readonly', width=11 )
-        self.listbox.set(list(Substance.MATERIALS.keys())[0])
-
-        registered_validator_id = self.frame.register(Utility.validate_number_input)
-        self.mass_variable = StringVar(value=str(Options['default mass']))
-        self.mass_entry = ttk.Entry(self.frame, textvariable=self.mass_variable, validate='all', validatecommand=(registered_validator_id, '%S'))
-
-        self.add_button.grid(column=0, row=1)
-        material_label.grid(column=1, row=0)
-        self.listbox.grid(column=1,row=1)
-        mass_label.grid(column=2,row=0)
-        self.mass_entry.grid(column=2,row=1)
-        self.frame.grid()
-
-    def add_button_press(self):
-        material = Substance.MATERIALS[self.listbox.get()]
-        mass = float(self.mass_variable.get())
-        mass_object = Physics.MassObject(self.window.physics_canvas, material, mass)
-        self.window.physics_canvas.add_mass_object(mass_object)
-        self.window.physics_canvas.move_mass_object(mass_object)
-
-
-class ForceObjectAdder:
-    def __init__(self, window, parent_frame):
-        """
-        Will call .grid() on parent_frame
-        """
-        self.window = window
-        self.frame = parent_frame
-        self.add_button = ttk.Button(self.frame, text='add Force Object', command=self.add_button_press)
-        force_angle_label = ttk.Label(self.frame, text='angle')
-        magnitude_label = ttk.Label(self.frame, text='magnitude')
-        self.force_angle_string = StringVar()
-        self.force_magnitude_string = StringVar()
-        force_angle_display = ttk.Label(self.frame, textvariable=self.force_angle_string)
-        force_magnitude_display = ttk.Label(self.frame, textvariable=self.force_magnitude_string)
-
-        self.add_button.grid(column=0, row=1)
-        force_angle_label.grid(column=1,row=0)
-        magnitude_label.grid(column=2,row=0)
-        force_angle_display.grid(column=1, row=1)
-        force_magnitude_display.grid(column=1,row=1)
-        self.frame.grid()
-
-        self.force_objects = []
-        self.window.root.bind('<Down>', self.key_handler)
-        self.window.root.bind('<Up>', self.key_handler)
-        self.window.root.bind('<Left>', self.key_handler)
-        self.window.root.bind('<Right>', self.key_handler)
-
-    def add_button_press(self):
-        material = Substance.MATERIALS['cork']
-        mass = 100000
-        force_object = Physics.ForceObject(self.window.physics_canvas, material, mass)
-        self.force_objects.append(force_object)
-        self.window.physics_canvas.add_force_object(force_object)
-
-    def key_handler(self, event):
-        direction = 'n'
-        if event.keysym == 'Right':
-            direction = 'e'
-        elif event.keysym == 'Up':
-            direction = 's'
-        elif event.keysym == 'Left':
-            direction = 'w'
-        for i in range(0, len(self.force_objects)):
-            force = Physics.Force.make_directional_force(direction, Options['key force magnitude'], Options['key force duration'])
-            self.force_objects[i].forces.append(force)
+        for force_object in objects:
+            ForceObjectWindow.ForceObjectWindow(self.window, force_object)
 
 
 class TimeSelector:
@@ -310,7 +219,7 @@ class TimeSelector:
             now_time = time.time()
             interval = now_time - last_time
             last_time = now_time
-            self.window.physics_canvas.update(interval)
+            self.update(interval)
             time.sleep(Options['update interval'])
 
     def start_thread(self):
@@ -319,10 +228,28 @@ class TimeSelector:
         self.run_thread = threading.Thread(target=self.run, daemon=True)
         self.run_thread.start()
 
+    def update(self, interval):
+        self.window.physics_canvas.update(interval)
+        for i in range(0, len(self.window.additional_windows)):
+            window = self.window.additional_windows[i]
+            window.update(interval)
+
     def stop_thread(self):
         self.running = False
         if self.run_thread.is_alive():
             self.run_thread.join()
 
     def step(self):
-        self.window.physics_canvas.update(Options['update interval'])
+        self.update(Options['update interval'])
+
+
+class EnvironmentTab(ttk.Frame):
+    def __init__(self, parent, window):
+        ttk.Frame.__init__(self, parent)
+        self.window = window
+
+
+class OptionsTab(ttk.Frame):
+    def __init__(self, parent, window):
+        ttk.Frame.__init__(self, parent)
+        self.window = window

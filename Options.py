@@ -1,11 +1,10 @@
 """
-This module will have info relating to game options
+Contains a list, Options, for easy changing of in-game options.
 
-Should work it into the UI so that some or all of these options can be toggled.
+At some point, this might be broken into several lists.
 
-Maybe options could be saved/loaded
+
 """
-
 
 Options = {
     'title': 'Physics Simulator',
@@ -28,3 +27,5 @@ Options = {
     'canvas select radius': 5,
     'windows transparent color': '#F3F4FF'
 }
+"""
+"""

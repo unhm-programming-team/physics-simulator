@@ -12,10 +12,15 @@ import PhysicsWindow
 
 
 class MainWindow:
+    """
+    MainWindow serves as the entry point to the application. It builds the PhysicsCanvas, the right side Notebook, and the tabs in that notebook. Many other objects contain references to MainWindow (usually simply as self.window) in order that they can access all other parts of the application.
+    """
     def __init__(self):
         self.root = Tk()  # start tkinter
+        """The Tkinter root"""
         self.root.title = '2d Physics Simulator'
         self.root_frame = ttk.Frame(self.root)
+        """The root frame"""
 
         # physics canvas will create and grid the canvas
         self.center_frame = ttk.Frame(self.root_frame)
@@ -31,6 +36,7 @@ class MainWindow:
         self.debug_tab = DebugTab.DebugTab(self.right_notebook, self)
         self.log_tab = DebugTab.LogTab(self.right_notebook, self)
         self.log = self.log_tab.log
+        """Simply call window.log(message) to log directly to the log tab"""
         self.right_notebook.add(self.options_tab, text='Options')
         self.right_notebook.add(self.environment_tab, text='Environment')
         self.right_notebook.add(self.debug_tab, text='Debug')
@@ -42,6 +48,7 @@ class MainWindow:
 
         # additional windows for vector popups
         self.additional_windows = []
+        """Extant instances from PhysicsWindows module"""
 
         self.root_frame.grid()
         self.center_frame.grid(row=0, column=1)
@@ -51,12 +58,18 @@ class MainWindow:
 
 
 class PhysicsCanvas:
+    """
+    Controls the drawing of PhysicsObjects and inheriting classes on a canvas
+
+    Sets origin to center and calculates actual pixel coordinates from object displacement vectors.
+    """
     def __init__(self, window, parent_frame):
         self.window = window
         self.frame = parent_frame
         self.width = Options['canvas width']
         self.height = Options['canvas height']
         self.scale = Options['zoom']
+        """Not yet implemented"""
         self.origin_x = self.width/2
         self.origin_y = self.height/2
         self.max_x = self.width/2
@@ -76,7 +89,9 @@ class PhysicsCanvas:
         self.canvas.bind("<Button-3>", self.context_popup)
 
         self.physics_objects = []
+        """Instances from e.g., :class:`Physics.ForceObject` that need to be have update called"""
         self.interacting_forces = []
+        """Instances from, e.g. :class:`Physics.GravitationalForceGenerator` that need to be have update called"""
         self.canvas.grid()
 
     def add_gravity_vector_object(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
@@ -113,6 +128,11 @@ class PhysicsCanvas:
         self.physics_objects.append(mass_object)
 
     def update(self, interval):
+        """
+        Passes update to interval to self.physics_objects and self.interacting_forces
+        :param interval: time in seconds
+        :type interval: number
+        """
         for o in self.physics_objects:
             o.update(interval)
         for f in self.interacting_forces:
@@ -156,6 +176,14 @@ class PhysicsCanvas:
         self.canvas.moveto(mass_object.canvas_id, x_0, y_0)
 
     def add_force_object(self, force_object):
+        """
+        Renders a new force object to the canvas.
+
+        Sets force_object.canvas_id to the canvas id returned from generating the shape, which the canvas object uses to find the graphic rendering.
+
+        :param force_object: A ForceObject to add
+        :type force_object: :class:`Physics.ForceObject`
+        """
         self.physics_objects.append(force_object)
         x0 = force_object.x_0 + self.origin_x
         y0 = force_object.y_0 + self.origin_y
@@ -166,6 +194,14 @@ class PhysicsCanvas:
         self.window.log(f'added force object {force_object.canvas_id}')
 
     def move_force_object(self, force_object):
+        """
+        Called by :class:`Physics.ForceObject` when they need to move.
+
+        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas, then moves the rendering to the appropriate pixel x,y.
+
+        :param force_object: An object with a displacement vector that wants to move
+        :type force_object: extends :class:`Physics.PhysicsObject`
+        """
         velocity = force_object.velocity
         force_object.calculate_bounds()
         x0 = force_object.x_0 + self.origin_x
@@ -184,6 +220,13 @@ class PhysicsCanvas:
         self.canvas.moveto(force_object.canvas_id, x0, y0)
 
     def delete_physics_object(self, physics_object):
+        """
+        Deletes an object and removes its rendering from the canvas.
+
+        :param physics_object: Object to delete
+        :type physics_object: extends :class:`Physics.PhysicsObject`
+        :return:
+        """
         delete_id = physics_object.canvas_id
         for i in range(0, len(self.physics_objects)-1):
             phys_object = self.physics_objects[i]
@@ -193,6 +236,13 @@ class PhysicsCanvas:
         self.window.log(f"deleted physics object {delete_id}")
 
     def context_popup(self, event):
+        """
+        Pops a right click option menu near the user click.
+
+        If there is a ForceObject within Option['click radius'] of the click, the option menu is populated with entries relating to that object. Otherwise, the entry for adding a new object is in the menu.
+
+        :param event: Mouse click event
+        """
         radius = Options['canvas select radius']
         left = event.x - radius
         right = event.x + radius
@@ -219,9 +269,18 @@ class PhysicsCanvas:
         # self.context_menu.destroy()
         self.context_menu = Menu(self.frame)
 
-    def popup_info(self, physics_object, event):
+    def popup_info(self, force_object, event):
+        """
+        Generates a callback function for use with the context menu, so the ForceObject is linked to the ForceObjectWindow when it is created.
+
+        :param force_object: The physics object to link
+        :type force_object: :class:`Physics.ForceObject`
+        :param event: Mouse click event
+        :return: A callback to pass to the menu entry as the command
+        :rtype: Function
+        """
         self.window.log('window popup called')
-        po = physics_object
+        po = force_object
 
         def callb():
             if type(po) == Physics.ForceObject:
@@ -229,6 +288,11 @@ class PhysicsCanvas:
         return callb
 
     def click_handler(self, event):
+        """
+        deprecated, slated for removal
+        :param event:
+        :return:
+        """
         radius = Options['canvas select radius']
         left = event.x - radius
         right = event.x + radius
@@ -252,6 +316,16 @@ class PhysicsCanvas:
 
 
 class TimeSelector:
+    """
+    Handles pause, step, and play buttons at the bottom of the UI.
+
+    Calculates update time and sends it to window.physics_canvas for updating.
+
+    :param window: The main entry of the application
+    :type window: :class:`Ui.Window`
+    :param parent_frame: The frame where these components should be located
+    :type frame: Tkinter.Frame
+    """
     def __init__(self, window, parent_frame):
         self.window = window
         self.frame = parent_frame
@@ -260,8 +334,10 @@ class TimeSelector:
         self.step_button = Button(self.frame, text='Step', command=self.step)
 
         self.run_thread = threading.Thread(target=self.run, daemon=True)
+        """Main program time loop"""
 
         self.running = False
+        """Set True when program is running"""
 
         self.pause_button.grid(column=0, row=0)
         self.start_button.grid(column=1, row=0)
@@ -269,12 +345,22 @@ class TimeSelector:
         self.window.root.bind('<Return>', self.toggle_run_button)
 
     def toggle_run_button(self, event):
+        """
+        Bound to the Enter keyboard key to toggle whether time is running
+        :param event: Key event, not used
+        """
         if not self.running:
             self.start_thread()
         else:
             self.stop_thread()
 
     def run(self):
+        """
+        Run by the program thread(s), not called directly!
+
+        Sleeps for approximately `Options.Options['update interval']` seconds, then calls self.update(interval) with
+        the interval being the actual time passed since the last update was called. :return:
+        """
         last_time = time.time()
         while self.running:
             now_time = time.time()
@@ -284,33 +370,59 @@ class TimeSelector:
             time.sleep(Options['update interval'])
 
     def start_thread(self):
+        """
+        Stops the old thread in case it's running, then sets self.run_thread to a new thread and starts it.
+        """
         self.stop_thread()
         self.running = True
         self.run_thread = threading.Thread(target=self.run, daemon=True)
         self.run_thread.start()
 
     def update(self, interval):
+        """
+        Tells :class:`Ui.PhysicsWindow` to update with interval amount.
+
+        Also tells each window in `MainWindow.additional_windows` to update by interval amount.
+
+        :param interval: Time to update in seconds
+        :type interval: number
+        """
         self.window.physics_canvas.update(interval)
         for i in range(0, len(self.window.additional_windows)):
             window = self.window.additional_windows[i]
             window.update(interval)
 
     def stop_thread(self):
+        """
+        Stops the current self.run_thread and joins it (if its alive)
+
+        Also sets self.running to false
+        :return:
+        """
         self.running = False
         if self.run_thread.is_alive():
             self.run_thread.join()
 
     def step(self):
+        """
+        Calls self.update(Options['update interval']), 'stepping' the time that would pass in 1 'frame'
+        """
         self.update(Options['update interval'])
 
 
 class EnvironmentTab(ttk.Frame):
+    """
+    Will have environment options like grav, air resistance, maybe scaling
+    """
     def __init__(self, parent, window):
         ttk.Frame.__init__(self, parent)
         self.window = window
 
 
 class OptionsTab(ttk.Frame):
+    """
+    Presumably will have options components
+    """
     def __init__(self, parent, window):
         ttk.Frame.__init__(self, parent)
         self.window = window

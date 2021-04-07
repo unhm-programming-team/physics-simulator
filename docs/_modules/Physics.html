@@ -1,51 +1,160 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-<!DOCTYPE html>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
+        <title>Physics - physics-simulator 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../_static/pygments_dark.css">
+    
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Physics &#8212; physics-simulator 0.0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">physics-simulator 0.0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
+  <span class="sidebar-brand-text">physics-simulator 0.0.1 documentation</span>
   
+</a><form class="sidebar-search-container" method="get" action="../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules.html">physics-simulator</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../DebugTab.html">DebugTab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Options.html">Options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Physics.html">Physics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PhysicsWindow.html">PhysicsWindow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Substance.html">Substance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Ui.html">Ui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Utility.html">Utility module</a></li>
+</ul>
+</li>
+</ul>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <h1>Source code for Physics</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""Physics contains the objects relating to mathematical calculations, such as Vectors, Forces, and ForceObjects.</span>
+<span class="sd">They generally do not interact directly with the user interface, but are managed by the user interface. """</span>
 
-          <div class="body" role="main">
-            
-  <h1>Source code for Physics</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">Substance</span>
 
 
 <div class="viewcode-block" id="Vector"><a class="viewcode-back" href="../Physics.html#Physics.Vector">[docs]</a><span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Represents direction and magnitude. Vectors can be broken into x and y components and reassembled from those</span>
+<span class="sd">    components.</span>
+
+<span class="sd">    :param angle: The angle, in radians</span>
+<span class="sd">    :type angle: number</span>
+<span class="sd">    :param magnitude: The magnitude of the Vector</span>
+<span class="sd">    :type magnitude: number</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Represents direction and magnitude. Vectors can be broken into x and y components and</span>
-<span class="sd">        reassembled from those components.</span>
-<span class="sd">        :param angle: The angle, in radians</span>
-<span class="sd">        :type angle: number</span>
-<span class="sd">        :param magnitude: The magnitude of the Vector</span>
-<span class="sd">        :type magnitude: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
+<span class="sd">        constructor</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">angle</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">=</span> <span class="n">magnitude</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
@@ -53,16 +162,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_components</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Vector.calculate_components"><a class="viewcode-back" href="../Physics.html#Physics.Vector.calculate_components">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate components from angle and magnitude.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
+<span class="sd">        Calculates components from angle and magnitude.</span>
+
+<span class="sd">        :math:`y = \\text{vector}_\text{mag} * \\sin{\\theta}`</span>
+<span class="sd">        :math:`x = \\text{vector}_\text{mag} * \\cos{\\theta}`</span>
+
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.calculate_angles"><a class="viewcode-back" href="../Physics.html#Physics.Vector.calculate_angles">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate angle from components.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
+<span class="sd">        Calculates angle and mag from components.</span>
+
+<span class="sd">        :math:`\\theta= \\arctan{(\\frac{y}{x})}`</span>
+<span class="sd">        :math:`\text{mag} = \\sqrt{x^2+y^2}`</span>
+<span class="sd">        """</span>
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -70,19 +186,21 @@
 
 <div class="viewcode-block" id="Vector.make_vector_from_components"><a class="viewcode-back" href="../Physics.html#Physics.Vector.make_vector_from_components">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_vector_from_components</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Static: Create a new Vector from x and y values.</span>
 <span class="sd">        :param x: The x component</span>
 <span class="sd">        :type x: number</span>
 <span class="sd">        :param y: The y component</span>
 <span class="sd">        :type y: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        :returns: A brand new Vector</span>
+<span class="sd">        :rtype: Vector</span>
+<span class="sd">        """</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">magnitude</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.add_make"><a class="viewcode-back" href="../Physics.html#Physics.Vector.add_make">[docs]</a>    <span class="k">def</span> <span class="nf">add_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_vector</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Use this to have a new vector return from the addition and the input vectors to be unchanged.</span>
 
 <span class="sd">        No existing Vector will mutate.</span>
@@ -91,13 +209,13 @@
 <span class="sd">        :type other_vector: Vector</span>
 <span class="sd">        :returns: A brand new Vector</span>
 <span class="sd">        :rtype: Vector</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">new_x</span> <span class="o">=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
         <span class="n">new_y</span> <span class="o">=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.subtract_make"><a class="viewcode-back" href="../Physics.html#Physics.Vector.subtract_make">[docs]</a>    <span class="k">def</span> <span class="nf">subtract_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_vector</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Use this to have a new vector return from the subtraction and the input vectors to be unchanged.</span>
 
 <span class="sd">        No existing Vector will mutate.</span>
@@ -106,45 +224,44 @@
 <span class="sd">        :type other_vector: Vector</span>
 <span class="sd">        :returns: A brand new Vector</span>
 <span class="sd">        :rtype: Vector</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">new_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">x</span>
         <span class="n">new_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">y</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span><span class="n">new_y</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.add"><a class="viewcode-back" href="../Physics.html#Physics.Vector.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_vector</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Use this to MUTATE this Vector by adding another Vector to it.</span>
 
 <span class="sd">        The other Vector will be unchanged.</span>
 
 <span class="sd">        :param other_vector: A vector to add to this one.</span>
 <span class="sd">        :type other_vector: Vector</span>
-<span class="sd">        :returns: undefined</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Vector.subtract"><a class="viewcode-back" href="../Physics.html#Physics.Vector.subtract">[docs]</a>    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_vector</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Use this to MUTATE this Vector by subtracting another Vector from it.</span>
 
 <span class="sd">        The other Vector will be unchanged.</span>
 
 <span class="sd">        :param other_vector: A vector to subtract from this one.</span>
 <span class="sd">        :type other_vector: Vector</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Vector.rotate"><a class="viewcode-back" href="../Physics.html#Physics.Vector.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radians</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Mutates this Vector by adding radians to its angle and recalculating its components.</span>
 
-<span class="sd">        :param radians: Radians to add to this Vector&#39;s angle.</span>
+<span class="sd">        :param radians: Radians to add to this Vector's angle.</span>
 <span class="sd">        :type radians: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">new_angle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">+</span> <span class="n">radians</span>
         <span class="n">twoPi</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span>
         <span class="k">if</span> <span class="n">new_angle</span> <span class="o">&gt;</span> <span class="n">twoPi</span><span class="p">:</span>
@@ -155,38 +272,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_components</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Vector.scale"><a class="viewcode-back" href="../Physics.html#Physics.Vector.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Mutates this Vector by multiplying its magnitude by the scalar.</span>
 
-<span class="sd">        :param scalar: Scalar to multiply this Vector&#39;s angle by.</span>
+<span class="sd">        :param scalar: Scalar to multiply this Vector's angle by.</span>
 <span class="sd">        :type scalar: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*=</span> <span class="n">scalar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_components</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Vector.scale_make"><a class="viewcode-back" href="../Physics.html#Physics.Vector.scale_make">[docs]</a>    <span class="k">def</span> <span class="nf">scale_make</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a new Vector of a magnitude equal to this Vector&#39;s magnitude multiplied by the scalar,</span>
+        <span class="sd">"""</span>
+<span class="sd">        Creates a new Vector of a magnitude equal to this Vector's magnitude multiplied by the scalar,</span>
 <span class="sd">        and returns the new Vector..</span>
 
-<span class="sd">        :param scalar: Scalar to multiply this Vector&#39;s angle by.</span>
+<span class="sd">        :param scalar: Scalar to multiply this Vector's angle by.</span>
 <span class="sd">        :type scalar: number</span>
 <span class="sd">        :returns: A brand new Vector</span>
 <span class="sd">        :rtype: Vector</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*=</span> <span class="n">scalar</span>
         <span class="n">new_magnitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span> <span class="n">scalar</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">new_magnitude</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.make_directional_vector"><a class="viewcode-back" href="../Physics.html#Physics.Vector.make_directional_vector">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">make_directional_vector</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="n">magnitude</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">make_directional_vector</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">'S'</span><span class="p">,</span> <span class="n">magnitude</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">"""</span>
 <span class="sd">        Static method which creates a directional Vector from compass coordinates passed as a character.</span>
 
 <span class="sd">        Direction string controls vector angle.</span>
 <span class="sd">        I.e.:</span>
-<span class="sd">        &#39;E&#39;: 0 radians (0 degrees)</span>
-<span class="sd">        &#39;W&#39;: 3.1415 radians (180 degrees)</span>
+<span class="sd">        'E': 0 radians (0 degrees)</span>
+<span class="sd">        'W': 3.1415 radians (180 degrees)</span>
 
 <span class="sd">        Valid directions are e,ne,n,nw,w,sw,s,se</span>
 
@@ -194,46 +311,47 @@
 <span class="sd">        :type direction: str</span>
 <span class="sd">        :param magnitude: vector magnitude</span>
 <span class="sd">        :type magnitude: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">angle</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">case</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span>
-            <span class="n">angle</span> <span class="o">=</span> <span class="mf">1.5707963267948966</span>  <span class="c1"># don&#39;t know if this improves processing time</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;NW&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'N'</span><span class="p">:</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="mf">1.5707963267948966</span>  <span class="c1"># don't know if this improves processing time</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'NW'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">2.356194490192345</span>  <span class="c1"># but i wanted to write the radians out</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;W&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'W'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">3.141592653589793</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;SW&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'SW'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">3.9269908169872414</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'S'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">4.71238898038469</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;SE&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'SE'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">5.497787143782138</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'E'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">&#39;NE&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s1">'NE'</span><span class="p">:</span>
             <span class="n">angle</span> <span class="o">=</span> <span class="mf">0.7853981633974483</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="VectorObject"><a class="viewcode-back" href="../Physics.html#Physics.VectorObject">[docs]</a><span class="k">class</span> <span class="nc">VectorObject</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    An object which stores its x,y position as a displacement vector.</span>
-<span class="sd">    It has a width and height, and &#39;bounds&#39; based on those values.</span>
+<span class="sd">    It has a width and height, and 'bounds' based on those values.</span>
 <span class="sd">    In addition to displacement, it has vectors for velocity and acceleration.</span>
 
 <span class="sd">    When it updates, it converts acceleration to velocity and velocity into displacement.</span>
 
 <span class="sd">    It recalculates bounds as it needs to as the displacement vector changes for drawing.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_canvas</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        :param physics_canvas: Vector Object can tell Physics_Canvas when it needs to move.</span>
 <span class="sd">        :type physics_canvas: class PhysicsCanvas</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span> <span class="o">=</span> <span class="n">physics_canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="sd">"""Used by the tkinter canvas to reference the shape linked to this object"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_0</span> <span class="o">=</span> <span class="mi">0</span>
@@ -241,46 +359,51 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">y_0</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_1</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="sd">"""offset from origin"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="sd">"""speed, m/s"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="sd">"""m/s^2"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
 
 <div class="viewcode-block" id="VectorObject.calculate_bounds"><a class="viewcode-back" href="../Physics.html#Physics.VectorObject.calculate_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Sets the x1 and y1 to coordinates of a square around it.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span></div>
 
 <div class="viewcode-block" id="VectorObject.update"><a class="viewcode-back" href="../Physics.html#Physics.VectorObject.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Gets a new vector equal to multiplying acceleration by Velocity and adds it</span>
 <span class="sd">        to the velocity, mutating the velocity vector. v = at + v_0</span>
 <span class="sd">        Does the same for displacement. s = vt + s_0</span>
 <span class="sd">        Tells physicsCanvas to move the rendering of the oval.</span>
 <span class="sd">        :param interval: The time since last update.</span>
 <span class="sd">        :type interval: seconds</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">move_me</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="MassObject"><a class="viewcode-back" href="../Physics.html#Physics.MassObject">[docs]</a><span class="k">class</span> <span class="nc">MassObject</span><span class="p">(</span><span class="n">VectorObject</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    Extends VectorObject, so it has displacement, velocity, and acceleration.</span>
 
 <span class="sd">    Also has a mass and a material.</span>
 <span class="sd">    It calculates its volume(m^3) and side length(m) from its material density(kg/m^3) and mass(kg).</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="sd">    :param physics_canvas: The PhysicsCanvas object where this will be added</span>
+<span class="sd">    :type physics_canvas: :class:`Ui.PhysicsCanvas`</span>
+<span class="sd">    :param material: Used to calculate dimensions based on density and mass</span>
+<span class="sd">    :type material: Substance.Material</span>
+<span class="sd">    :param mass: kilograms</span>
+<span class="sd">    :type mass: number</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_canvas</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">Substance</span><span class="o">.</span><span class="n">Material</span><span class="p">(),</span> <span class="n">mass</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :type physics_canvas: class PhysicsCanvas</span>
-<span class="sd">        :type material: class Substance.Material</span>
-<span class="sd">        :type mass: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">VectorObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_canvas</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">material</span> <span class="o">=</span> <span class="n">material</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="n">mass</span>
@@ -292,13 +415,20 @@
 
 
 <div class="viewcode-block" id="Force"><a class="viewcode-back" href="../Physics.html#Physics.Force">[docs]</a><span class="k">class</span> <span class="nc">Force</span><span class="p">(</span><span class="n">Vector</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    A force which operates over time, executing a single force on the object once per sec.</span>
 
-<span class="sd">    If constant is true, the force (such as gravity), acts continually on the object.</span>
+<span class="sd">    If constant is true, the force does not deplete and will continue acting on the object.</span>
 
-
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    :param angle: Angle in radians</span>
+<span class="sd">    :type angle: number</span>
+<span class="sd">    :param magnitude: Magnitude in Newtons</span>
+<span class="sd">    :type magnitude: number</span>
+<span class="sd">    :param duration: Seconds force is exerted for</span>
+<span class="sd">    :type duration: number</span>
+<span class="sd">    :param constant: Whether force depletes or not</span>
+<span class="sd">    :type constant: bool</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">Vector</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">force_magnitude</span> <span class="o">=</span> <span class="n">magnitude</span>
@@ -307,14 +437,33 @@
 
 <div class="viewcode-block" id="Force.make_directional_force"><a class="viewcode-back" href="../Physics.html#Physics.Force.make_directional_force">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_directional_force</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Similar to `Vector.make_directional_vector`, creates a force in a cardinal direction.</span>
+
+<span class="sd">        :param direction: N,S,E,W,NE,SE,NW,SW</span>
+<span class="sd">        :type direction: str</span>
+<span class="sd">        :param magnitude: In Newtons</span>
+<span class="sd">        :type magnitude: number</span>
+<span class="sd">        :param duration: In seconds</span>
+<span class="sd">        :type duration: number</span>
+<span class="sd">        :param constant: Whether force depletes</span>
+<span class="sd">        :type constant: boolean</span>
+<span class="sd">        :return: A new force</span>
+<span class="sd">        :rtype: Force</span>
+<span class="sd">        """</span>
         <span class="n">vec</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Force</span><span class="p">(</span><span class="n">vec</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">vec</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">constant</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Force.update"><a class="viewcode-back" href="../Physics.html#Physics.Force.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Changes Vector.magnitude accordingly</span>
+        <span class="sd">"""</span>
+<span class="sd">        Scales the current vector magnitude to the interval, so that `self.force_magnitude` is delivered each second;</span>
+<span class="sd">        if updates occur more frequently than once a second, this causes this forces temporary magnitude to be lower</span>
+<span class="sd">        to account for that.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        :param interval: Time since last update, in seconds.</span>
+<span class="sd">        :type interval: number</span>
+
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">interval</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span><span class="p">:</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">-</span> <span class="n">interval</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -326,6 +475,26 @@
 
 
 <div class="viewcode-block" id="GravitationalForceGenerator"><a class="viewcode-back" href="../Physics.html#Physics.GravitationalForceGenerator">[docs]</a><span class="k">class</span> <span class="nc">GravitationalForceGenerator</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Connects two objects together with 'gravity'. Currently not accurately implemented, because planetary scales make</span>
+<span class="sd">    for poor visibility on the UI.</span>
+
+<span class="sd">    Three objects keep a reference to a gravitational force; the `class:Ui.PhysicsCanvas` object and each</span>
+<span class="sd">    `class:Physics.ForceObject` that are connected with the gravity.</span>
+
+<span class="sd">    When remove() is called on a GravitationalForceGenerator, it removes each of these references so it will no</span>
+<span class="sd">    longer be updated.</span>
+
+<span class="sd">    GraviationalForceGenerator is updated directly by  `class:Ui.PhysicsCanvas`; each update, it calculates the</span>
+<span class="sd">    appropriate graviational pull for its two reference ForceObjects, then adds a force of the appropriate angle and</span>
+<span class="sd">    magnitude to their force lists.</span>
+
+<span class="sd">    :param planet: An object to connect with gravity</span>
+<span class="sd">    :type planet: ForceObject</span>
+<span class="sd">    :param moon: An object to connect with gravity</span>
+<span class="sd">    :type moon: ForceObject</span>
+
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planet</span><span class="p">,</span> <span class="n">moon</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">moon</span> <span class="o">=</span> <span class="n">moon</span>
@@ -335,6 +504,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="GravitationalForceGenerator.update"><a class="viewcode-back" href="../Physics.html#Physics.GravitationalForceGenerator.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Gets the location of self.planet and self.moon, figures out F_G between them, then adds opposite forces to</span>
+<span class="sd">        each one reduced by the interval.</span>
+
+<span class="sd">        :math:`F_G = \\frac{Gm_1m_2}{r^2}`</span>
+
+<span class="sd">        :param interval: Update time, seconds :type interval: number</span>
+<span class="sd">        """</span>
         <span class="n">planet_off_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moon</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
         <span class="n">planet_off_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moon</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span>
         <span class="n">planet_vector</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">planet_off_x</span><span class="p">,</span> <span class="n">planet_off_y</span><span class="p">)</span>
@@ -357,30 +534,32 @@
 
 
 <div class="viewcode-block" id="ForceObject"><a class="viewcode-back" href="../Physics.html#Physics.ForceObject">[docs]</a><span class="k">class</span> <span class="nc">ForceObject</span><span class="p">(</span><span class="n">MassObject</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">"""</span>
 <span class="sd">    Mass Object gives it mass and volume</span>
 <span class="sd">    Force adds forces to the object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_canvas</span><span class="p">,</span> <span class="n">material</span><span class="o">=</span><span class="n">Substance</span><span class="o">.</span><span class="n">Material</span><span class="p">(),</span> <span class="n">mass</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        :type physics_canvas:PhysicsCanvas</span>
 <span class="sd">        :type material: Substance.Material</span>
 <span class="sd">        :type mass: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">MassObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_canvas</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">mass</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">""" Currently active forces affecting this object """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dependent_force_generators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">""" Force generators like :class:`Physics.GravitationalForceGenerator`"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ForceObject.update"><a class="viewcode-back" href="../Physics.html#Physics.ForceObject.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Gets a new vector equal to multiplying acceleration by Velocity and adds it</span>
 <span class="sd">        to the velocity, mutating the velocity vector. v = at + v_0</span>
 <span class="sd">        Does the same for displacement. s = vt + s_0</span>
 <span class="sd">        Tells physicsCanvas to move the rendering of the oval.</span>
 <span class="sd">        :param interval: The time since last update.</span>
 <span class="sd">        :type interval: number</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">non_expired_forces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forces</span><span class="p">)):</span>  <span class="c1"># get the net force for this interval</span>
@@ -397,71 +576,43 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">move_force_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ForceObject.clear_forces"><a class="viewcode-back" href="../Physics.html#Physics.ForceObject.clear_forces">[docs]</a>    <span class="k">def</span> <span class="nf">clear_forces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Clears forces from self.dependent_force_generators by calling remove() on each</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div></div>
 
 
 </pre></div>
-
-          </div>
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
           
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">physics-simulator</a></h1>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
+        <div class="related-information">
+              Copyright &#169; 2021, Karl Miller
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
         </div>
-      </div>
-      <div class="clearer"></div>
+        
+      </footer>
     </div>
-    <div class="footer">
-      &copy;2021, Karl Miller.
+    <aside class="toc-drawer no-toc">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
-    </div>
-
-    
-
-    
-  </body>
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

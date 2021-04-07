@@ -1,57 +1,192 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="PhysicsWindow module" href="PhysicsWindow.html" /><link rel="prev" title="Options module" href="Options.html" />
 
-<!DOCTYPE html>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
+        <title>Physics module - physics-simulator 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="_static/pygments_dark.css">
+    
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
-    <title>Physics module &#8212; physics-simulator 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">physics-simulator 0.0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
+  <span class="sidebar-brand-text">physics-simulator 0.0.1 documentation</span>
   
+</a><form class="sidebar-search-container" method="get" action="search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="modules.html">physics-simulator</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DebugTab.html">DebugTab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Options.html">Options module</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Physics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PhysicsWindow.html">PhysicsWindow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Substance.html">Substance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Ui.html">Ui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Utility.html">Utility module</a></li>
+</ul>
+</li>
+</ul>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <section id="module-Physics">
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <section id="module-Physics">
 <span id="physics-module"></span><h1>Physics module<a class="headerlink" href="#module-Physics" title="Permalink to this headline">¶</a></h1>
+<p>Physics contains the objects relating to mathematical calculations, such as Vectors, Forces, and ForceObjects.
+They generally do not interact directly with the user interface, but are managed by the user interface.</p>
 <dl class="py class">
 <dt id="Physics.Force">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">Force</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Force" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#Physics.Vector" title="Physics.Vector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.Vector</span></code></a></p>
 <p>A force which operates over time, executing a single force on the object once per sec.</p>
-<p>If constant is true, the force (such as gravity), acts continually on the object.</p>
+<p>If constant is true, the force does not deplete and will continue acting on the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angle</strong> (<em>number</em>) – Angle in radians</p></li>
+<li><p><strong>magnitude</strong> (<em>number</em>) – Magnitude in Newtons</p></li>
+<li><p><strong>duration</strong> (<em>number</em>) – Seconds force is exerted for</p></li>
+<li><p><strong>constant</strong> (<em>bool</em>) – Whether force depletes or not</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="Physics.Force.make_directional_force">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">make_directional_force</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Force.make_directional_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Force.make_directional_force" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dd><p>Similar to <cite>Vector.make_directional_vector</cite>, creates a force in a cardinal direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>direction</strong> (<em>str</em>) – N,S,E,W,NE,SE,NW,SW</p></li>
+<li><p><strong>magnitude</strong> (<em>number</em>) – In Newtons</p></li>
+<li><p><strong>duration</strong> (<em>number</em>) – In seconds</p></li>
+<li><p><strong>constant</strong> (<em>boolean</em>) – Whether force depletes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new force</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Physics.Force" title="Physics.Force">Force</a></p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt id="Physics.Force.update">
 <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Force.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Force.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes Vector.magnitude accordingly</p>
+<dd><p>Scales the current vector magnitude to the interval, so that <cite>self.force_magnitude</cite> is delivered each second;
+if updates occur more frequently than once a second, this causes this forces temporary magnitude to be lower
+to account for that.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<em>number</em>) – Time since last update, in seconds.</p>
+</dd>
+</dl>
 </dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="Physics.ForceObject">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">ForceObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">physics_canvas</span></em>, <em class="sig-param"><span class="pre">material=&lt;Substance.Material</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">mass=1000</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#ForceObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.ForceObject" title="Permalink to this definition">¶</a></dt>
@@ -61,8 +196,18 @@ Force adds forces to the object</p>
 <dl class="py method">
 <dt id="Physics.ForceObject.clear_forces">
 <code class="sig-name descname"><span class="pre">clear_forces</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#ForceObject.clear_forces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.ForceObject.clear_forces" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dd><p>Clears forces from self.dependent_force_generators by calling remove() on each</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="Physics.ForceObject.dependent_force_generators">
+<code class="sig-name descname"><span class="pre">dependent_force_generators</span></code><a class="headerlink" href="#Physics.ForceObject.dependent_force_generators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force generators like <a class="reference internal" href="#Physics.GravitationalForceGenerator" title="Physics.GravitationalForceGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.GravitationalForceGenerator</span></code></a></p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="Physics.ForceObject.forces">
+<code class="sig-name descname"><span class="pre">forces</span></code><a class="headerlink" href="#Physics.ForceObject.forces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently active forces affecting this object</p>
+</dd></dl>
 <dl class="py method">
 <dt id="Physics.ForceObject.update">
 <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#ForceObject.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.ForceObject.update" title="Permalink to this definition">¶</a></dt>
@@ -73,25 +218,45 @@ Tells physicsCanvas to move the rendering of the oval.
 :param interval: The time since last update.
 :type interval: number</p>
 </dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="Physics.GravitationalForceGenerator">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">GravitationalForceGenerator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#GravitationalForceGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.GravitationalForceGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Connects two objects together with ‘gravity’. Currently not accurately implemented, because planetary scales make
+for poor visibility on the UI.</p>
+<p>Three objects keep a reference to a gravitational force; the <cite>class:Ui.PhysicsCanvas</cite> object and each
+<cite>class:Physics.ForceObject</cite> that are connected with the gravity.</p>
+<p>When remove() is called on a GravitationalForceGenerator, it removes each of these references so it will no
+longer be updated.</p>
+<p>GraviationalForceGenerator is updated directly by  <cite>class:Ui.PhysicsCanvas</cite>; each update, it calculates the
+appropriate graviational pull for its two reference ForceObjects, then adds a force of the appropriate angle and
+magnitude to their force lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planet</strong> (<a class="reference internal" href="#Physics.ForceObject" title="Physics.ForceObject"><em>ForceObject</em></a>) – An object to connect with gravity</p></li>
+<li><p><strong>moon</strong> (<a class="reference internal" href="#Physics.ForceObject" title="Physics.ForceObject"><em>ForceObject</em></a>) – An object to connect with gravity</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="Physics.GravitationalForceGenerator.remove">
 <code class="sig-name descname"><span class="pre">remove</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#GravitationalForceGenerator.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.GravitationalForceGenerator.remove" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
 <dl class="py method">
 <dt id="Physics.GravitationalForceGenerator.update">
 <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#GravitationalForceGenerator.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.GravitationalForceGenerator.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dd><p>Gets the location of self.planet and self.moon, figures out F_G between them, then adds opposite forces to
+each one reduced by the interval.</p>
+<p><span class="math notranslate nohighlight">\(F_G = \frac{Gm_1m_2}{r^2}\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> – Update time, seconds :type interval: number</p>
+</dd>
+</dl>
 </dd></dl>
-
+</dd></dl>
 <dl class="py class">
 <dt id="Physics.MassObject">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">MassObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">physics_canvas</span></em>, <em class="sig-param"><span class="pre">material=&lt;Substance.Material</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">mass=10</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#MassObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.MassObject" title="Permalink to this definition">¶</a></dt>
@@ -99,12 +264,30 @@ Tells physicsCanvas to move the rendering of the oval.
 <p>Extends VectorObject, so it has displacement, velocity, and acceleration.</p>
 <p>Also has a mass and a material.
 It calculates its volume(m^3) and side length(m) from its material density(kg/m^3) and mass(kg).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>physics_canvas</strong> (<a class="reference internal" href="Ui.html#Ui.PhysicsCanvas" title="Ui.PhysicsCanvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ui.PhysicsCanvas</span></code></a>) – The PhysicsCanvas object where this will be added</p></li>
+<li><p><strong>material</strong> (<a class="reference internal" href="Substance.html#Substance.Material" title="Substance.Material"><em>Substance.Material</em></a>) – Used to calculate dimensions based on density and mass</p></li>
+<li><p><strong>mass</strong> (<em>number</em>) – kilograms</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
-
 <dl class="py class">
 <dt id="Physics.Vector">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">Vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents direction and magnitude. Vectors can be broken into x and y components and reassembled from those
+components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angle</strong> (<em>number</em>) – The angle, in radians</p></li>
+<li><p><strong>magnitude</strong> (<em>number</em>) – The magnitude of the Vector</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="Physics.Vector.add">
 <code class="sig-name descname"><span class="pre">add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.add" title="Permalink to this definition">¶</a></dt>
@@ -114,12 +297,8 @@ It calculates its volume(m^3) and side length(m) from its material density(kg/m^
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>other_vector</strong> (<a class="reference internal" href="#Physics.Vector" title="Physics.Vector"><em>Vector</em></a>) – A vector to add to this one.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>undefined</p>
-</dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.add_make">
 <code class="sig-name descname"><span class="pre">add_make</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.add_make"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.add_make" title="Permalink to this definition">¶</a></dt>
@@ -137,19 +316,20 @@ It calculates its volume(m^3) and side length(m) from its material density(kg/m^
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.calculate_angles">
 <code class="sig-name descname"><span class="pre">calculate_angles</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.calculate_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.calculate_angles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate angle from components.</p>
+<dd><p>Calculates angle and mag from components.</p>
+<p><span class="math notranslate nohighlight">\(\theta= \arctan{(\frac{y}{x})}\)</span>
+:math:` ext{mag} = sqrt{x^2+y^2}`</p>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.calculate_components">
 <code class="sig-name descname"><span class="pre">calculate_components</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.calculate_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.calculate_components" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate components from angle and magnitude.</p>
+<dd><p>Calculates components from angle and magnitude.</p>
+<p><span class="math notranslate nohighlight">\(y = \text{vector}_       ext{mag} * \sin{\theta}\)</span>
+<span class="math notranslate nohighlight">\(x = \text{vector}_       ext{mag} * \cos{\theta}\)</span></p>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.make_directional_vector">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">make_directional_vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'S'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.make_directional_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.make_directional_vector" title="Permalink to this definition">¶</a></dt>
@@ -168,7 +348,6 @@ I.e.:
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.make_vector_from_components">
 <em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">make_vector_from_components</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.make_vector_from_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.make_vector_from_components" title="Permalink to this definition">¶</a></dt>
@@ -176,9 +355,10 @@ I.e.:
 :param x: The x component
 :type x: number
 :param y: The y component
-:type y: number</p>
+:type y: number
+:returns: A brand new Vector
+:rtype: Vector</p>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.rotate">
 <code class="sig-name descname"><span class="pre">rotate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radians</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.rotate" title="Permalink to this definition">¶</a></dt>
@@ -189,7 +369,6 @@ I.e.:
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.scale">
 <code class="sig-name descname"><span class="pre">scale</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scalar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.scale" title="Permalink to this definition">¶</a></dt>
@@ -200,7 +379,6 @@ I.e.:
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.scale_make">
 <code class="sig-name descname"><span class="pre">scale_make</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scalar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.scale_make"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.scale_make" title="Permalink to this definition">¶</a></dt>
@@ -218,7 +396,6 @@ and returns the new Vector..</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.subtract">
 <code class="sig-name descname"><span class="pre">subtract</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.subtract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.subtract" title="Permalink to this definition">¶</a></dt>
@@ -230,7 +407,6 @@ and returns the new Vector..</p>
 </dd>
 </dl>
 </dd></dl>
-
 <dl class="py method">
 <dt id="Physics.Vector.subtract_make">
 <code class="sig-name descname"><span class="pre">subtract_make</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.subtract_make"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.subtract_make" title="Permalink to this definition">¶</a></dt>
@@ -248,9 +424,7 @@ and returns the new Vector..</p>
 </dd>
 </dl>
 </dd></dl>
-
 </dd></dl>
-
 <dl class="py class">
 <dt id="Physics.VectorObject">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">VectorObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_canvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#VectorObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.VectorObject" title="Permalink to this definition">¶</a></dt>
@@ -260,12 +434,26 @@ It has a width and height, and ‘bounds’ based on those values.
 In addition to displacement, it has vectors for velocity and acceleration.</p>
 <p>When it updates, it converts acceleration to velocity and velocity into displacement.</p>
 <p>It recalculates bounds as it needs to as the displacement vector changes for drawing.</p>
+<dl class="py attribute">
+<dt id="Physics.VectorObject.acceleration">
+<code class="sig-name descname"><span class="pre">acceleration</span></code><a class="headerlink" href="#Physics.VectorObject.acceleration" title="Permalink to this definition">¶</a></dt>
+<dd><p>m/s^2</p>
+</dd></dl>
 <dl class="py method">
 <dt id="Physics.VectorObject.calculate_bounds">
 <code class="sig-name descname"><span class="pre">calculate_bounds</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#VectorObject.calculate_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.VectorObject.calculate_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the x1 and y1 to coordinates of a square around it.</p>
 </dd></dl>
-
+<dl class="py attribute">
+<dt id="Physics.VectorObject.canvas_id">
+<code class="sig-name descname"><span class="pre">canvas_id</span></code><a class="headerlink" href="#Physics.VectorObject.canvas_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by the tkinter canvas to reference the shape linked to this object</p>
+</dd></dl>
+<dl class="py attribute">
+<dt id="Physics.VectorObject.displacement">
+<code class="sig-name descname"><span class="pre">displacement</span></code><a class="headerlink" href="#Physics.VectorObject.displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>offset from origin</p>
+</dd></dl>
 <dl class="py method">
 <dt id="Physics.VectorObject.update">
 <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#VectorObject.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.VectorObject.update" title="Permalink to this definition">¶</a></dt>
@@ -276,72 +464,67 @@ Tells physicsCanvas to move the rendering of the oval.
 :param interval: The time since last update.
 :type interval: seconds</p>
 </dd></dl>
-
+<dl class="py attribute">
+<dt id="Physics.VectorObject.velocity">
+<code class="sig-name descname"><span class="pre">velocity</span></code><a class="headerlink" href="#Physics.VectorObject.velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>speed, m/s</p>
 </dd></dl>
-
+</dd></dl>
 </section>
 
-
-          </div>
-          
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="PhysicsWindow.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">PhysicsWindow module</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="Options.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Options module</div>
+                
+              </div>
+            </a>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">physics-simulator</a></h1>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
+        <div class="related-information">
+              Copyright &#169; 2021, Karl Miller
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            |
+            <a class="muted-link" href="_sources/Physics.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
         </div>
-      </div>
-      <div class="clearer"></div>
+        
+      </footer>
     </div>
-    <div class="footer">
-      &copy;2021, Karl Miller.
+    <aside class="toc-drawer no-toc">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
-      |
-      <a href="_sources/Physics.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

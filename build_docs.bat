@@ -1,3 +1,4 @@
+rmdir docs
 move main.py SphinxDocs
 sphinx-apidoc . -o ./SphinxDocs/source -f
 cd SphinxDocs

@@ -1,36 +1,138 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
-<!DOCTYPE html>
+    <meta name="generator" content="sphinx-3.5.3, furo 2021.03.20.beta30"/>
+        <title>PhysicsWindow - physics-simulator 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/styles/furo.css?digest=978e1795dfe158b585dda6a8417f6411828bf3ed">
+    <link rel="stylesheet" href="../_static/pygments.css">
+    <link media="(prefers-color-scheme: dark)" rel="stylesheet" href="../_static/pygments_dark.css">
+    
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PhysicsWindow &#8212; physics-simulator 0.0.1 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+<style>
+  :root {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+
+  /* For allowing end-user-specific overrides */
+  .override-light {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  .override-dark {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+</style><link rel="stylesheet" href="../_static/styles/furo-extensions.css?digest=d391b54134226e4196576da3bdb6dddb7e05ba2b"></head>
+  <body dir="">
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke-width="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z"/>
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">physics-simulator 0.0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
+  <span class="sidebar-brand-text">physics-simulator 0.0.1 documentation</span>
   
+</a><form class="sidebar-search-container" method="get" action="../search.html">
+  <input class="sidebar-search" placeholder=Search name="q">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules.html">physics-simulator</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../DebugTab.html">DebugTab module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Options.html">Options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Physics.html">Physics module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../PhysicsWindow.html">PhysicsWindow module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Substance.html">Substance module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Ui.html">Ui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Utility.html">Utility module</a></li>
+</ul>
+</li>
+</ul>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <h1>Source code for PhysicsWindow</h1><div class="highlight"><pre>
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <main class="main">
+    <div class="content">
+      <article role="main">
+        <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+        </label>
+        <h1>Source code for PhysicsWindow</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
 
@@ -41,56 +143,77 @@
 
 
 <div class="viewcode-block" id="PhysicsWindow"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsWindow">[docs]</a><span class="k">class</span> <span class="nc">PhysicsWindow</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generated by Physics Canvas interactions.</span>
+    <span class="sd">"""</span>
+<span class="sd">    Generated by Physics Canvas interactions, when some interaction should cause a new window to open which relates to something on the PhysicsCanvas.</span>
 
-<span class="sd">    Window refers to the top level Tk object, the Window in Ui.py, which hosts the PhysicsCanvas.</span>
-
-<span class="sd">    Window gets a reference to a PhysicsWindow so it can update if need be.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    :param window: The main UI window</span>
+<span class="sd">    :type window: :class:`Ui.MainWindow`</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        constructor</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
-        <span class="c1"># self.root.wm_attributes(&quot;-transparent&quot;, Options[&#39;windows transparent color&#39;])</span>
-        <span class="c1"># self.root[&#39;bg&#39;] = Options[&#39;windows transparent color&#39;]</span>
+        <span class="c1"># self.root.wm_attributes("-transparent", Options['windows transparent color'])</span>
+        <span class="c1"># self.root['bg'] = Options['windows transparent color']</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">additional_windows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_win</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span><span class="s2">"WM_DELETE_WINDOW"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_win</span><span class="p">)</span>
         <span class="c1"># self.root.mainloop()</span>
 
 <div class="viewcode-block" id="PhysicsWindow.del_win"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsWindow.del_win">[docs]</a>    <span class="k">def</span> <span class="nf">del_win</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Custom delete function also deletes window from Ui.Window update references</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
+<span class="sd">        Custom delete function also deletes window from :class:`Ui.Window` update references</span>
+<span class="sd">        """</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">additional_windows</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">additional_windows</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="PhysicsWindow.update"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsWindow.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">"""</span>
 <span class="sd">        Set interval in Options.py to control how often these windows update.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        :param interval: Time in seconds</span>
+<span class="sd">        :type interval: number</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">+=</span> <span class="n">interval</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">&gt;=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">&#39;object popup update interval&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">&gt;=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'object popup update interval'</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">=</span> <span class="mi">0</span></div></div>
 
 
 <div class="viewcode-block" id="ForceObjectWindow"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow">[docs]</a><span class="k">class</span> <span class="nc">ForceObjectWindow</span><span class="p">(</span><span class="n">PhysicsWindow</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A window which tracks the status of a :class:`Physics.ForceObject`, showing its current x, y, velocity, etc.</span>
+
+<span class="sd">    Also provides buttons for deleting the object and adding an "orbiter"</span>
+
+<span class="sd">    :param window: The main UI window</span>
+<span class="sd">    :type window: :class:`Ui.MainWindow`</span>
+<span class="sd">    :param force_object: The ForceObject to track</span>
+<span class="sd">    :type force_object: :class:`Physics.ForceObject`</span>
+<span class="sd">    :param x: The screen x the window should appear</span>
+<span class="sd">    :type x: number</span>
+<span class="sd">    :param y: The screen y the window should appear</span>
+<span class="sd">    :type y: number</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">force_object</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        constructor</span>
+<span class="sd">        """</span>
         <span class="n">PhysicsWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;+</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="sa">f</span><span class="s2">"+</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span> <span class="o">=</span> <span class="n">force_object</span>
 
-        <span class="n">id_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;id: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">force_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">))</span>
+        <span class="n">id_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'id: '</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">force_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">))</span>
         <span class="n">id_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
-        <span class="n">material_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">force_object</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">force_object</span><span class="o">.</span><span class="n">mass</span><span class="si">}</span><span class="s2">kg&quot;</span>
+        <span class="n">material_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">force_object</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">force_object</span><span class="o">.</span><span class="n">mass</span><span class="si">}</span><span class="s2">kg"</span>
         <span class="n">material_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">material_text</span><span class="p">)</span>
         <span class="n">material_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span> <span class="o">=</span> <span class="n">W</span><span class="p">)</span>
-        <span class="n">x_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;x: &#39;</span><span class="p">)</span>
+        <span class="n">x_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'x: '</span><span class="p">)</span>
         <span class="n">x_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_val</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_val</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
-        <span class="n">y_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;y: &#39;</span><span class="p">)</span>
+        <span class="n">y_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'y: '</span><span class="p">)</span>
         <span class="n">y_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
@@ -101,42 +224,63 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">net_force_label</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">net_force_label</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Delete&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'Delete'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_orbiter_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Add Orbiter&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">orbiter_button</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_orbiter_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'Add Orbiter'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">orbiter_button</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_orbiter_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Options</span><span class="p">[</span><span class="s1">&#39;object popup update interval&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Options</span><span class="p">[</span><span class="s1">'object popup update interval'</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
         <span class="c1"># add additional protocol to window close so it removes from open window list</span>
 
 <div class="viewcode-block" id="ForceObjectWindow.update"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Updates the displayed information.</span>
+
+<span class="sd">        Updates less frequently than the framerate; only as often as specified in Options.py to improve performance</span>
+
+<span class="sd">        :param interval: Time in seconds</span>
+<span class="sd">        :type interval: number</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">+=</span> <span class="n">interval</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">&gt;=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">&#39;object popup update interval&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">&gt;=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'object popup update interval'</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">lift</span><span class="p">()</span>
             <span class="n">displacement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="o">.</span><span class="n">displacement</span>
-            <span class="n">x_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2"> m&quot;</span>
-            <span class="n">y_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2"> m&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x_val</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_text</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_text</span>
+            <span class="n">x_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2"> m"</span>
+            <span class="n">y_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2"> m"</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_val</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_text</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_val</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_text</span>
             <span class="n">velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="o">.</span><span class="n">velocity</span>
-            <span class="n">velocity_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;velocity: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> m/s, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">velocity_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity_text</span>
+            <span class="n">velocity_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"velocity: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> m/s, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg"</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">velocity_label</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity_text</span>
             <span class="n">acceleration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="o">.</span><span class="n">acceleration</span>
-            <span class="n">acceleration_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;acceleration: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acceleration</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> m/s^2, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">acceleration</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">acceleration_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">acceleration_text</span>
+            <span class="n">acceleration_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"acceleration: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">acceleration</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> m/s^2, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">acceleration</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg"</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">acceleration_label</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">acceleration_text</span>
             <span class="n">net_force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="o">.</span><span class="n">net_force_vector</span>
-            <span class="n">net_force_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;net_force: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">net_force</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> N, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">net_force</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">net_force_label</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">net_force_text</span>
+            <span class="n">net_force_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"net_force: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">net_force</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="si">}</span><span class="s2"> N, </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">net_force</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span><span class="si">}</span><span class="s2"> deg"</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">net_force_label</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">net_force_text</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">=</span> <span class="mi">0</span></div>
 
 <div class="viewcode-block" id="ForceObjectWindow.delete_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.delete_button">[docs]</a>    <span class="k">def</span> <span class="nf">delete_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Called when user presses the delete button on the window.</span>
+
+<span class="sd">        Deletes the ForceObject and the ForceObjectWindow</span>
+
+<span class="sd">        Calls clear_forces on the :class:`Physics.ForceObject`</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="o">.</span><span class="n">clear_forces</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">delete_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">del_win</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ForceObjectWindow.orbiter_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.orbiter_button">[docs]</a>    <span class="k">def</span> <span class="nf">orbiter_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Adds a new ForceObject to the physics canvas. The new ForceObject is 1/100th the mass of the object this</span>
+<span class="sd">        ForceWindow is already referencing. It starts 100 meters N of this ForceWindow's ForceObject and has a</span>
+<span class="sd">        western velocity. A :class:`Physics.GravitationalForceGenerator` is also created to generate gravity between</span>
+<span class="sd">        the two objects</span>
+<span class="sd">        """</span>
         <span class="n">planet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_object</span>
         <span class="n">gravitational_constant</span> <span class="o">=</span> <span class="mf">6.67</span><span class="o">*</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">11</span><span class="p">)</span>
         <span class="n">orbital_radius</span> <span class="o">=</span> <span class="mi">100</span>
@@ -149,78 +293,50 @@
         <span class="n">moon_x</span> <span class="o">=</span> <span class="n">planet</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
         <span class="n">moon_y</span> <span class="o">=</span> <span class="n">planet</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">orbital_radius</span>
         <span class="n">moon</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">moon_x</span><span class="p">,</span><span class="n">moon_y</span><span class="p">)</span>
-        <span class="n">moon</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="s1">&#39;W&#39;</span><span class="p">,</span> <span class="n">orbital_velocity</span><span class="p">)</span>
+        <span class="n">moon</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="s1">'W'</span><span class="p">,</span> <span class="n">orbital_velocity</span><span class="p">)</span>
         <span class="n">moon</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">add_force_object</span><span class="p">(</span><span class="n">moon</span><span class="p">)</span>
         <span class="n">grav</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">GravitationalForceGenerator</span><span class="p">(</span><span class="n">planet</span><span class="p">,</span> <span class="n">moon</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">interacting_forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grav</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;added orbiter&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">'added orbiter'</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="AddObjectWindow"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.AddObjectWindow">[docs]</a><span class="k">class</span> <span class="nc">AddObjectWindow</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    Not yet implemented - will open a new window for adding a new object to the physics canvas</span>
+<span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span></div>
 </pre></div>
-
-          </div>
+      </article>
+      <footer>
+        
+        <div class="related-pages">
+          
           
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">physics-simulator</a></h1>
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
+        <div class="related-information">
+              Copyright &#169; 2021, Karl Miller
+            |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
         </div>
-      </div>
-      <div class="clearer"></div>
+        
+      </footer>
     </div>
-    <div class="footer">
-      &copy;2021, Karl Miller.
+    <aside class="toc-drawer no-toc">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
-    </div>
-
-    
-
-    
-  </body>
+      
+    </aside>
+  </main>
+</div>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

@@ -1,3 +1,13 @@
+"""Contains 'tabs' which are really just frames but are used by the `ttk.Notebook object
+<https://tkdocs.com/shipman/ttk-Notebook.html>`_ for tabbed display.
+
+The LogTab contains a Listbox and a Scrollbar. Strings can be sent to LogTab to be logged - they will be added to
+the list. When clicked, they display on a lower label to account for long-stringed log events.
+
+The DebugTab contains buttons for adding objects, for testing purposes. The panels for adding those objects are part
+of this module. Ultimately, the only objects that will likely be added in later versions of this project are
+ForceObjects or higher. """
+
 from tkinter import *
 from tkinter import ttk, colorchooser
 
@@ -7,7 +17,22 @@ from Options import Options
 import time
 
 class LogTab(ttk.Frame):
+    """
+    Fills a frame with UI component necessary for keeping a log. Intended use is as a tab for the Notebook object.
+
+    Created by :class:`Ui.MainWindow`
+
+    Uses a `Tkinter.Listbox <https://tkdocs.com/shipman/listbox.html>`_.
+
+    :param parent: The frame where this component will be placed.
+    :type parent: widget
+    :param window: The broad reference window.
+    :type window: See MainWindow in :doc: Ui
+    """
     def __init__(self, parent, window):
+        """
+        Constructor
+        """
         ttk.Frame.__init__(self, parent)
         self.window = window
         self.scroll_bar = Scrollbar(self)
@@ -20,16 +45,35 @@ class LogTab(ttk.Frame):
         selected_label.grid(column=1,row=1)
 
     def click(self, event):
+        """
+        Called when ListBox in this widget is clicked.
+
+        Displays selected item in the label, in case the log entry is too long for the ListBox.
+
+        :param event: MouseEvent
+        """
         index = self.list_box.nearest(event.y)
         selection = self.list_box.get(index)
         self.selected_var.set(selection)
 
     def log(self, string):
+        """
+        Creates an entry in the Listbox from the string. Prepends a timestamp.
+        :param string: text to log
+        """
         timestring = time.strftime('%H:%M:%S', time.localtime())
         self.list_box.insert(END, f"{string}    {timestring}")
 
 
 class DebugTab(ttk.Frame):
+    """
+    Fills a frame with some UI components for doing debug operations.
+
+    Created by :class:`Ui.MainWindow`.
+
+    :param parent: The frame where this component will be placed.
+    :type parent: widget
+    """
     def __init__(self, parent, window):
         ttk.Frame.__init__(self, parent)
         self.window = window
@@ -39,8 +83,15 @@ class DebugTab(ttk.Frame):
 
 
 class VectorObjectAdder:
+    """
+    Created by :class:`DebugTab.DebugTab`.
+
+    Deprecated, and should be removed in a future version.
+    """
     def __init__(self, window, parent_frame):
         """
+        Constructor
+
         Will call .grid() on parent_frame
         """
         self.window = window
@@ -93,6 +144,11 @@ class VectorObjectAdder:
 
 
 class MassObjectAdder:
+    """
+    Created by :class:`DebugTab.DebugTab`.
+
+    Deprecated, and should be removed in a future version.
+    """
     def __init__(self, window, parent_frame):
         """
         Will call .grid() on parent frame
@@ -126,6 +182,11 @@ class MassObjectAdder:
 
 
 class ForceObjectAdder:
+    """
+    Created by :class:`DebugTab.DebugTab`.
+
+    Deprecated, and should be removed in a future version.
+    """
     def __init__(self, window, parent_frame):
         """
         Will call .grid() on parent_frame

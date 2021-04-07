@@ -292,6 +292,37 @@ class Force(Vector):
             self.remaining = 1
 
 
+class GravitationalForceGenerator:
+    def __init__(self, planet, moon):
+        self.planet = planet
+        self.moon = moon
+        self.planet.dependent_force_generators.append(self)
+        self.moon.dependent_force_generators.append(self)
+        self.grav_sum = planet.mass * moon.mass
+        self.remaining = 1
+
+    def update(self, interval):
+        planet_off_x = self.moon.displacement.x - self.planet.displacement.x
+        planet_off_y = self.moon.displacement.y - self.planet.displacement.y
+        planet_vector = Vector.make_vector_from_components(planet_off_x, planet_off_y)
+        reversed_vector = Vector.make_vector_from_components(planet_off_x*-1, planet_off_y*-1)
+        force_magnitude = (1000000/planet_vector.magnitude)*interval
+        self.planet.forces.append(Force(planet_vector.angle, force_magnitude))
+        self.moon.forces.append(Force(reversed_vector.angle, force_magnitude))
+
+
+    def remove(self):
+        moon_forces = self.moon.dependent_force_generators
+        moon_i = moon_forces.index(self)
+        planet_forces = self.planet.dependent_force_generators
+        planet_i = planet_forces.index(self)
+        moon_forces.pop(moon_i)
+        planet_forces.pop(planet_i)
+        main_list = self.planet.physics_canvas.interacting_forces
+        main_i = main_list.index(self)
+        main_list.pop(main_i)
+
+
 class ForceObject(MassObject):
     """
     Mass Object gives it mass and volume
@@ -305,6 +336,7 @@ class ForceObject(MassObject):
         """
         MassObject.__init__(self, physics_canvas, material, mass)
         self.forces = []
+        self.dependent_force_generators = []
         self.net_force_vector = Vector(0,0)
 
     def update(self, interval):
@@ -326,8 +358,13 @@ class ForceObject(MassObject):
                 non_expired_forces.append(force)
         self.forces = non_expired_forces
         self.acceleration = Vector(self.net_force_vector.angle, self.net_force_vector.magnitude/self.mass)
-        self.velocity.add(self.acceleration.scale_make(interval))
-        self.displacement.add(self.velocity.scale_make(interval))
+        self.velocity.add(self.acceleration)
+        self.displacement.add(self.velocity)
         self.calculate_bounds()
         self.physics_canvas.move_force_object(self)
+
+    def clear_forces(self):
+        for f in self.dependent_force_generators:
+            f.remove()
+
 

@@ -45,12 +45,22 @@ class TestWindow:
         radio = StringVar()
         menu_file.add_radiobutton(label='Opt1', variable=radio, value='Option 1')
         menu_file.add_radiobutton(label='Opt2', variable=radio, value='Option 2')
+
+        # add a context menu
+        self.context_menu = Menu(self.root_frame, tearoff=0)
+        self.context_menu.add_command(label="Right", command=self.no_command)
+        self.context_menu.add_separator()
+
+        self.root.bind("<Button-3>", self.context_popup)
+
         # this activates the menu
         self.root['menu'] = menu_bar
 
         self.root_frame.grid()
         self.root.mainloop()
 
+    def context_popup(self, event):
+        self.context_menu.tk_popup(event.x_root, event.y_root)
 
     def no_command(self):
         print('nothing')

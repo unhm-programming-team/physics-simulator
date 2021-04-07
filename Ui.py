@@ -8,10 +8,10 @@ from Options import Options
 import Physics
 import DebugTab
 
-import ForceObjectWindow
+import PhysicsWindow
 
 
-class Window:
+class MainWindow:
     def __init__(self):
         self.root = Tk()  # start tkinter
         self.root.title = '2d Physics Simulator'
@@ -29,9 +29,12 @@ class Window:
         self.options_tab = OptionsTab(self.right_notebook, self)
         self.environment_tab = EnvironmentTab(self.right_notebook, self)
         self.debug_tab = DebugTab.DebugTab(self.right_notebook, self)
+        self.log_tab = DebugTab.LogTab(self.right_notebook, self)
+        self.log = self.log_tab.log
         self.right_notebook.add(self.options_tab, text='Options')
         self.right_notebook.add(self.environment_tab, text='Environment')
         self.right_notebook.add(self.debug_tab, text='Debug')
+        self.right_notebook.add(self.log_tab, text='Log')
 
         # time selector handles play/pause
         self.bottom_time_frame = ttk.Frame(self.root_frame)
@@ -61,6 +64,7 @@ class PhysicsCanvas:
         self.max_y = self.height/2
         self.min_y = -self.height/2
         self.canvas = Canvas(self.frame, width=self.width, height=self.height)
+        self.context_menu = Menu(self.frame)  # menu items created at the time of click
 
         # set canvas style from options
         self.canvas['relief'] = Options['canvas border type']
@@ -69,8 +73,10 @@ class PhysicsCanvas:
 
         # set click handler
         self.canvas.bind("<Button-1>", self.click_handler)
+        self.canvas.bind("<Button-3>", self.context_popup)
 
         self.physics_objects = []
+        self.interacting_forces = []
         self.canvas.grid()
 
     def add_gravity_vector_object(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
@@ -109,6 +115,8 @@ class PhysicsCanvas:
     def update(self, interval):
         for o in self.physics_objects:
             o.update(interval)
+        for f in self.interacting_forces:
+            f.update(interval)
 
     def move_me(self, physics_object):
         displacement_x = physics_object.displacement.x
@@ -155,6 +163,7 @@ class PhysicsCanvas:
         y1 = force_object.y_1 + self.origin_y
         color = force_object.material.color
         force_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
+        self.window.log(f'added force object {force_object.canvas_id}')
 
     def move_force_object(self, force_object):
         velocity = force_object.velocity
@@ -173,6 +182,51 @@ class PhysicsCanvas:
             velocity.y *= -1
         velocity.calculate_angles()
         self.canvas.moveto(force_object.canvas_id, x0, y0)
+
+    def delete_physics_object(self, physics_object):
+        delete_id = physics_object.canvas_id
+        for i in range(0, len(self.physics_objects)-1):
+            phys_object = self.physics_objects[i]
+            if phys_object == physics_object:
+                self.physics_objects.pop(i)
+        self.canvas.delete(delete_id)
+        self.window.log(f"deleted physics object {delete_id}")
+
+    def context_popup(self, event):
+        radius = Options['canvas select radius']
+        left = event.x - radius
+        right = event.x + radius
+        top = event.y - radius
+        bottom = event.y + radius
+        results = self.canvas.find_overlapping(left, top, right, bottom)
+
+        found_match = ''
+        for i in range(0, len(self.physics_objects)):
+            phys_obj = self.physics_objects[i]
+            for j in range(0, len(results)):
+                if phys_obj.canvas_id == results[j]:
+                    found_match = phys_obj
+                    break
+            if type(found_match) != str:
+                break
+
+        if type(found_match) == str:
+            self.context_menu.add_command(label='Add')
+        else:
+            cb = self.popup_info(found_match, event)
+            self.context_menu.add_command(label='Info', command=cb)
+        self.context_menu.tk_popup(event.x_root, event.y_root)
+        # self.context_menu.destroy()
+        self.context_menu = Menu(self.frame)
+
+    def popup_info(self, physics_object, event):
+        self.window.log('window popup called')
+        po = physics_object
+
+        def callb():
+            if type(po) == Physics.ForceObject:
+                fow = PhysicsWindow.ForceObjectWindow(self.window, po, event.x, event.y)
+        return callb
 
     def click_handler(self, event):
         radius = Options['canvas select radius']
@@ -194,7 +248,7 @@ class PhysicsCanvas:
                         objects.append(p_o)
 
         for force_object in objects:
-            ForceObjectWindow.ForceObjectWindow(self.window, force_object)
+            Window.ForceObjectWindow(self.window, force_object)
 
 
 class TimeSelector:
@@ -212,6 +266,13 @@ class TimeSelector:
         self.pause_button.grid(column=0, row=0)
         self.start_button.grid(column=1, row=0)
         self.step_button.grid(column=2, row=0)
+        self.window.root.bind('<Return>', self.toggle_run_button)
+
+    def toggle_run_button(self, event):
+        if not self.running:
+            self.start_thread()
+        else:
+            self.stop_thread()
 
     def run(self):
         last_time = time.time()

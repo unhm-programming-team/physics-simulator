@@ -1,2 +1,2 @@
 import Ui
-Ui.Window()
+Ui.MainWindow()

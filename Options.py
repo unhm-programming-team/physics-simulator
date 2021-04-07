@@ -15,7 +15,7 @@ Options = {
     'canvas width': 500,
     'update interval': 0.05,  # seconds
     'default mass': 10000000,  # kilograms
-    'key force magnitude': 1000000000,  # newtons
+    'key force magnitude': 1000000,  # newtons
     'key force duration': 1,
     'canvas border type': 'ridge',  # keywords only
     'canvas border width': 4,
@@ -25,5 +25,6 @@ Options = {
     'canvas top physics adjustment': 5,
     'canvas bottom physics adjustment': 3,
     'object popup update interval': 1,  # in seconds
-    'canvas select radius': 5
+    'canvas select radius': 5,
+    'windows transparent color': '#F3F4FF'
 }

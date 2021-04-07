@@ -4,6 +4,30 @@ from tkinter import ttk, colorchooser
 import Utility, Substance, Physics
 from Options import Options
 
+import time
+
+class LogTab(ttk.Frame):
+    def __init__(self, parent, window):
+        ttk.Frame.__init__(self, parent)
+        self.window = window
+        self.scroll_bar = Scrollbar(self)
+        self.list_box = Listbox(self, selectmode=SINGLE, width=45, yscrollcommand=self.scroll_bar.set)
+        self.list_box.bind('<ButtonPress>', self.click)
+        self.selected_var = StringVar()
+        selected_label = ttk.Label(self, textvariable=self.selected_var, wraplength=230)
+        self.list_box.grid(column=1, row=0)
+        self.scroll_bar.grid(column=0, row=0, sticky=(N,S))
+        selected_label.grid(column=1,row=1)
+
+    def click(self, event):
+        index = self.list_box.nearest(event.y)
+        selection = self.list_box.get(index)
+        self.selected_var.set(selection)
+
+    def log(self, string):
+        timestring = time.strftime('%H:%M:%S', time.localtime())
+        self.list_box.insert(END, f"{string}    {timestring}")
+
 
 class DebugTab(ttk.Frame):
     def __init__(self, parent, window):

@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Ui module &#8212; physics-simulator 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-Ui">
+<span id="ui-module"></span><h1>Ui module<a class="headerlink" href="#module-Ui" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="Ui.EnvironmentTab">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">EnvironmentTab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#EnvironmentTab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.EnvironmentTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.ttk.Frame</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="Ui.MainWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">MainWindow</span></code><a class="reference internal" href="_modules/Ui.html#MainWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="Ui.OptionsTab">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">OptionsTab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#OptionsTab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.OptionsTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.ttk.Frame</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="Ui.PhysicsCanvas">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">PhysicsCanvas</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.add_force_object">
+<code class="sig-name descname"><span class="pre">add_force_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_force_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_force_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.add_gravity_vector_object">
+<code class="sig-name descname"><span class="pre">add_gravity_vector_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_gravity_vector_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_gravity_vector_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.add_mass_object">
+<code class="sig-name descname"><span class="pre">add_mass_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_mass_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_mass_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.click_handler">
+<code class="sig-name descname"><span class="pre">click_handler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.click_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.click_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.context_popup">
+<code class="sig-name descname"><span class="pre">context_popup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.context_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.context_popup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.delete_physics_object">
+<code class="sig-name descname"><span class="pre">delete_physics_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.delete_physics_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.delete_physics_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.move_force_object">
+<code class="sig-name descname"><span class="pre">move_force_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_force_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_force_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.move_mass_object">
+<code class="sig-name descname"><span class="pre">move_mass_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_mass_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_mass_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.move_me">
+<code class="sig-name descname"><span class="pre">move_me</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_me"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_me" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.popup_info">
+<code class="sig-name descname"><span class="pre">popup_info</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.popup_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.popup_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="Ui.TimeSelector">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">TimeSelector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="Ui.TimeSelector.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.TimeSelector.start_thread">
+<code class="sig-name descname"><span class="pre">start_thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.start_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.start_thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.TimeSelector.step">
+<code class="sig-name descname"><span class="pre">step</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.TimeSelector.stop_thread">
+<code class="sig-name descname"><span class="pre">stop_thread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.stop_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.stop_thread" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.TimeSelector.toggle_run_button">
+<code class="sig-name descname"><span class="pre">toggle_run_button</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.toggle_run_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.toggle_run_button" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="Ui.TimeSelector.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#TimeSelector.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.TimeSelector.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">physics-simulator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Karl Miller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Ui.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

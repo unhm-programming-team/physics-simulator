@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>PhysicsWindow module &#8212; physics-simulator 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-PhysicsWindow">
+<span id="physicswindow-module"></span><h1>PhysicsWindow module<a class="headerlink" href="#module-PhysicsWindow" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="PhysicsWindow.AddObjectWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">AddObjectWindow</span></code><a class="reference internal" href="_modules/PhysicsWindow.html#AddObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.AddObjectWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="PhysicsWindow.ForceObjectWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">ForceObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#PhysicsWindow.PhysicsWindow" title="PhysicsWindow.PhysicsWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicsWindow.PhysicsWindow</span></code></a></p>
+<dl class="py method">
+<dt id="PhysicsWindow.ForceObjectWindow.delete_button">
+<code class="sig-name descname"><span class="pre">delete_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.delete_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.delete_button" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="PhysicsWindow.ForceObjectWindow.orbiter_button">
+<code class="sig-name descname"><span class="pre">orbiter_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.orbiter_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.orbiter_button" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="PhysicsWindow.ForceObjectWindow.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set interval in Options.py to control how often these windows update.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="PhysicsWindow.PhysicsWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">PhysicsWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generated by Physics Canvas interactions.</p>
+<p>Window refers to the top level Tk object, the Window in Ui.py, which hosts the PhysicsCanvas.</p>
+<p>Window gets a reference to a PhysicsWindow so it can update if need be.</p>
+<dl class="py method">
+<dt id="PhysicsWindow.PhysicsWindow.del_win">
+<code class="sig-name descname"><span class="pre">del_win</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsWindow.del_win"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsWindow.del_win" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom delete function also deletes window from Ui.Window update references</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="PhysicsWindow.PhysicsWindow.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsWindow.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsWindow.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set interval in Options.py to control how often these windows update.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">physics-simulator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Karl Miller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/PhysicsWindow.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -235,9 +235,8 @@ class MassObjectAdder:
     def add_button_press(self):
         material = Substance.MATERIALS[self.listbox.get()]
         mass = float(self.mass_variable.get())
-        mass_object = Physics.MassObject(self.window.physics_canvas, material, mass)
-        self.window.physics_canvas.add_mass_object(mass_object)
-        self.window.physics_canvas.move_mass_object(mass_object)
+        mass_object = Physics.MassObject(material, mass)
+        self.window.physics_canvas.add_physics_object(mass_object)
 
 
 class ForceObjectAdder:

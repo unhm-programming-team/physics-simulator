@@ -142,8 +142,8 @@
 <p>Not yet implemented - will open a new window for adding a new object to the physics canvas</p>
 </dd></dl>
 <dl class="py class">
-<dt id="PhysicsWindow.ForceObjectWindow">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">ForceObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow" title="Permalink to this definition">¶</a></dt>
+<dt id="PhysicsWindow.PhysicsObjectWindow">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">PhysicsObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#PhysicsWindow.PhysicsWindow" title="PhysicsWindow.PhysicsWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicsWindow.PhysicsWindow</span></code></a></p>
 <p>A window which tracks the status of a <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a>, showing its current x, y, velocity, etc.</p>
 <p>Also provides buttons for deleting the object and adding an “orbiter”</p>
@@ -158,23 +158,23 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="PhysicsWindow.ForceObjectWindow.delete_button">
-<code class="sig-name descname"><span class="pre">delete_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.delete_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.delete_button" title="Permalink to this definition">¶</a></dt>
+<dt id="PhysicsWindow.PhysicsObjectWindow.delete_button">
+<code class="sig-name descname"><span class="pre">delete_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow.delete_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow.delete_button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when user presses the delete button on the window.</p>
-<p>Deletes the ForceObject and the ForceObjectWindow</p>
+<p>Deletes the ForceObject and the PhysicsObjectWindow</p>
 <p>Calls clear_forces on the <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a></p>
 </dd></dl>
 <dl class="py method">
-<dt id="PhysicsWindow.ForceObjectWindow.orbiter_button">
-<code class="sig-name descname"><span class="pre">orbiter_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.orbiter_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.orbiter_button" title="Permalink to this definition">¶</a></dt>
+<dt id="PhysicsWindow.PhysicsObjectWindow.orbiter_button">
+<code class="sig-name descname"><span class="pre">orbiter_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow.orbiter_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow.orbiter_button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new ForceObject to the physics canvas. The new ForceObject is 1/100th the mass of the object this
 ForceWindow is already referencing. It starts 100 meters N of this ForceWindow’s ForceObject and has a
 western velocity. A <a class="reference internal" href="Physics.html#Physics.GravitationalForceGenerator" title="Physics.GravitationalForceGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.GravitationalForceGenerator</span></code></a> is also created to generate gravity between
 the two objects</p>
 </dd></dl>
 <dl class="py method">
-<dt id="PhysicsWindow.ForceObjectWindow.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#ForceObjectWindow.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.ForceObjectWindow.update" title="Permalink to this definition">¶</a></dt>
+<dt id="PhysicsWindow.PhysicsObjectWindow.update">
+<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the displayed information.</p>
 <p>Updates less frequently than the framerate; only as often as specified in Options.py to improve performance</p>
 <dl class="field-list simple">

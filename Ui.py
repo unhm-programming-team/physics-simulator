@@ -7,6 +7,7 @@ import time
 from Options import Options
 import Physics
 import DebugTab
+import Utility
 
 import PhysicsWindow
 
@@ -54,6 +55,7 @@ class MainWindow:
         self.center_frame.grid(row=0, column=1)
         self.right_notebook.grid(row=0, column=2, sticky=N)
         self.bottom_time_frame.grid(row=1, column=1)
+        Utility.center(self.root)
         self.root.mainloop()
 
 
@@ -103,39 +105,18 @@ class PhysicsCanvas:
         self.canvas.create_line(0, self.origin_y, self.width, self.origin_y, fill=color)
         self.canvas.create_line(self.origin_x, 0, self.origin_x, self.height, fill=color)
 
-    def add_gravity_vector_object(self, x=0, y=0, width=5, height=5, velocity=0, acceleration=0, color='blue'):
-        physics_object = Physics.VectorObject(self)
-        if x > self.max_x:  # objects placed beyond canvas size get moved to edge
-            x = self.max_x
-        elif x < self.min_x:
-            x = self.min_x
-        if y > self.max_y:
-            x = self.max_y
-        elif y < self.min_y:
-            x = self.min_y
-        displacement_vector = Physics.Vector.make_vector_from_components(x, y)
-        physics_object.displacement = displacement_vector
-        physics_object.acceleration = Physics.Vector.make_directional_vector('S', -9.8)
-        physics_object.width = width
-        physics_object.height = height
-        x_0 = x - width/2 + self.origin_x
-        y_0 = y - height/2 + self.origin_y
-        x_1 = x + width/2 + self.origin_x
-        y_1 = y + height/2 + self.origin_y
-        physics_object.canvas_id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
-        print(f"{x_0},{y_0}, result coords= {self.canvas.coords(physics_object.canvas_id)}")
+    def add_physics_object(self, physics_object):
+        if hasattr(physics_object, 'material'):
+            color = physics_object.material.color
+        else:
+            color = 'blue'
+        x0 = physics_object.displacement.x - physics_object.side + self.origin_x
+        x1 = physics_object.displacement.x + physics_object.side + self.origin_x
+        y0 = physics_object.displacement.y - physics_object.side + self.origin_y
+        y1 = physics_object.displacement.y + physics_object.side + self.origin_y
+        physics_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
+        physics_object.physics_canvas = self
         self.physics_objects.append(physics_object)
-
-    def add_mass_object(self, mass_object):
-        mass_object.displacement = Physics.Vector(0,0)
-        mass_object.calculate_bounds()
-        x_0 = mass_object.x_0
-        y_0 = mass_object.y_0
-        x_1 = mass_object.x_1
-        y_1 = mass_object.y_1
-        color = mass_object.material.color
-        mass_object.canvas_id = self.canvas.create_oval(x_0, y_0, x_1, y_1, fill=color)
-        self.physics_objects.append(mass_object)
 
     def update(self, interval):
         """
@@ -148,98 +129,36 @@ class PhysicsCanvas:
         for f in self.interacting_forces:
             f.update(interval)
 
-    def move_me(self, physics_object):
+    def move_physics_object(self, physics_object):
         """
         Called by :class:`Physics.ForceObject` when they need to move.
 
-        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas, then moves the rendering to the appropriate pixel x,y.
+        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas,
+        then moves the rendering to the appropriate pixel x,y.
 
-        :param force_object: An object with a displacement vector that wants to move
-        :type force_object: extends :class:`Physics.PhysicsObject`
+        :param physics_object: An object with a displacement vector that wants to move
+        :type physics_object: extends :class:`Physics.PhysicsObject`
         """
         velocity = physics_object.velocity
-        physics_object.calculate_bounds()
-        x0 = self.origin_x + physics_object.x_0
-        x1 = self.origin_x + physics_object.x_1
-        y0 = self.origin_y - physics_object.y_0
-        y1 = self.origin_y - physics_object.y_1
-        if x0 < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
+        dx = physics_object.displacement.x
+        dy = physics_object.displacement.y
+        side = physics_object.side
+        x0 = dx - side
+        x1 = dx + side
+        y0 = dy - side
+        y1 = dy + side
+        if dx < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
             velocity.x *= -1
-        elif x1 > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
+        elif dx > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
             velocity.x *= -1
-        if y0 < self.min_y + Options['canvas top physics adjustment'] and velocity.y > 0:
+        if dy < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0:
             velocity.y *= -1
-        elif y1 > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y < 0:
-            velocity.y *= -1
-        self.canvas.moveto(physics_object.canvas_id, x0, y0)
-
-    def move_mass_object(self, mass_object):
-        mass_object.calculate_bounds()
-        velocity = mass_object.velocity
-        x_0 = mass_object.x_0 + self.origin_x
-        if x_0 < 0 and velocity.x < 0:
-            velocity.x *= -1
-        x_1 = mass_object.x_1 + self.origin_x
-        if x_1 > self.width and velocity.x > 0:
-            velocity.x *= -1
-        y_0 = mass_object.y_0 + self.origin_y
-        if y_0 < 0 and velocity.y < 0:
-            velocity.y *= -1
-        y_1 = mass_object.y_1 + self.origin_y
-        if y_1 > self.height and velocity.y > 0:
-            velocity.y *= -1
-        x = mass_object.displacement.x + self.origin_x
-        y = mass_object.displacement.y + self.origin_y
-        self.canvas.moveto(mass_object.canvas_id, x_0, y_0)
-
-    def add_force_object(self, force_object):
-        """
-        Renders a new force object to the canvas.
-
-        Sets force_object.canvas_id to the canvas id returned from generating the shape, which the canvas object uses to find the graphic rendering.
-
-        :param force_object: A ForceObject to add
-        :type force_object: :class:`Physics.ForceObject`
-        """
-        self.physics_objects.append(force_object)
-        x0 = self.origin_x + force_object.x_0
-        x1 = self.origin_x + force_object.x_1
-        y0 = self.origin_y - force_object.y_0
-        y1 = self.origin_y - force_object.y_1
-        color = force_object.material.color
-        force_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
-        self.window.log(f'added force object {force_object.canvas_id}')
-        self.move_force_object(force_object)
-
-    def move_force_object(self, force_object):
-        """
-        Called by :class:`Physics.ForceObject` when they need to move.
-
-        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas, then moves the rendering to the appropriate pixel x,y.
-
-        :param force_object: An object with a displacement vector that wants to move
-        :type force_object: extends :class:`Physics.PhysicsObject`
-        """
-        velocity = force_object.velocity
-        force_object.calculate_bounds()
-        x0 = self.origin_x + force_object.x_0
-        x1 = self.origin_x + force_object.x_1
-        y0 = self.origin_y - force_object.y_0
-        y1 = self.origin_y - force_object.y_1
-        if x0 < 0 + Options['canvas left physics adjustment'] and velocity.x < 0:
-            velocity.x *= -1
-        elif x1 > self.width + Options['canvas right physics adjustment'] and velocity.x > 0:
-            velocity.x *= -1
-        if y0 < 0 + Options['canvas top physics adjustment'] and velocity.y > 0:
-            velocity.y *= -1
-        elif y1 > self.height - Options['canvas bottom physics adjustment'] and velocity.y < 0:
+        elif dy > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0:
             velocity.y *= -1
         velocity.calculate_angles()
-        self.check_collision(force_object)
-        self.canvas.moveto(force_object.canvas_id, x0, y0)
-
-    def check_collision(self, physics_object):
-        pass
+        new_x = physics_object.displacement.x + self.origin_x - side
+        new_y = physics_object.displacement.y + self.origin_y - side
+        self.canvas.moveto(physics_object.canvas_id, new_x, new_y)
 
     def get_physics_object_from_id(self, id):
         """
@@ -293,7 +212,8 @@ class PhysicsCanvas:
                 break
 
         if type(found_match) == str:
-            self.context_menu.add_command(label='Add')
+            cb = self.popup_add(event)
+            self.context_menu.add_command(label='Add', command=cb)
         else:
             cb = self.popup_info(found_match, event)
             self.context_menu.add_command(label='Info', command=cb)
@@ -301,9 +221,21 @@ class PhysicsCanvas:
         # self.context_menu.destroy()
         self.context_menu = Menu(self.frame)
 
+    def popup_add(self, event):
+        """
+        Generates a callback function for use with the context menu, to popup a new window for adding a PHysics Object at the click location.
+        :param event: MouseEvent
+        :return: A callback function to be attached as a UI command
+        :rtype: Function
+        """
+        def callb():
+            PhysicsWindow.AddObjectWindow(self.window, event)
+        return callb
+
+
     def popup_info(self, force_object, event):
         """
-        Generates a callback function for use with the context menu, so the ForceObject is linked to the ForceObjectWindow when it is created.
+        Generates a callback function for use with the context menu, so the ForceObject is linked to the PhysicsObjectWindow when it is created.
 
         :param force_object: The physics object to link
         :type force_object: :class:`Physics.ForceObject`
@@ -315,8 +247,8 @@ class PhysicsCanvas:
         po = force_object
 
         def callb():
-            if type(po) == Physics.ForceObject:
-                fow = PhysicsWindow.ForceObjectWindow(self.window, po, event.x, event.y)
+            if type(po) == Physics.PhysicsObject:
+                fow = PhysicsWindow.PhysicsObjectWindow(self.window, po, event.x, event.y)
         return callb
 
     def click_handler(self, event):
@@ -337,14 +269,14 @@ class PhysicsCanvas:
 
         for i in range(0, len(self.physics_objects)):
             p_o = self.physics_objects[i]
-            if type(p_o) == Physics.ForceObject:
+            if type(p_o) == Physics.PhysicsObject:
                 for c in range(0,len(results)):
                     target_id = results[c]
                     if p_o.canvas_id == target_id:
                         objects.append(p_o)
 
         for force_object in objects:
-            PhysicsWindow.ForceObjectWindow(self.window, force_object)
+            PhysicsWindow.PhysicsObjectWindow(self.window, force_object)
 
 
 class TimeSelector:

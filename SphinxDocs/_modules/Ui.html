@@ -151,7 +151,7 @@
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interacting_forces</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PhysicsCanvas.move_me"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.move_me">[docs]</a>    <span class="k">def</span> <span class="nf">move_me</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_object</span><span class="p">):</span>
+<div class="viewcode-block" id="PhysicsCanvas.move_physics_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.move_physics_object">[docs]</a>    <span class="k">def</span> <span class="nf">move_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_object</span><span class="p">):</span>
         <span class="n">displacement_x</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
         <span class="n">displacement_y</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span>
         <span class="n">physics_object</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
@@ -258,7 +258,7 @@
 
         <span class="k">def</span> <span class="nf">callb</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">po</span><span class="p">)</span> <span class="o">==</span> <span class="n">Physics</span><span class="o">.</span><span class="n">ForceObject</span><span class="p">:</span>
-                <span class="n">fow</span> <span class="o">=</span> <span class="n">PhysicsWindow</span><span class="o">.</span><span class="n">ForceObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">po</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">fow</span> <span class="o">=</span> <span class="n">PhysicsWindow</span><span class="o">.</span><span class="n">PhysicsObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">po</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">callb</span></div>
 
 <div class="viewcode-block" id="PhysicsCanvas.click_handler"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.click_handler">[docs]</a>    <span class="k">def</span> <span class="nf">click_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -281,7 +281,7 @@
                         <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_o</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">force_object</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
-            <span class="n">Window</span><span class="o">.</span><span class="n">ForceObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">force_object</span><span class="p">)</span></div></div>
+            <span class="n">Window</span><span class="o">.</span><span class="n">PhysicsObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">force_object</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="TimeSelector"><a class="viewcode-back" href="../Ui.html#Ui.TimeSelector">[docs]</a><span class="k">class</span> <span class="nc">TimeSelector</span><span class="p">:</span>

@@ -181,7 +181,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">=</span> <span class="mi">0</span></div></div>
 
 
-<div class="viewcode-block" id="ForceObjectWindow"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow">[docs]</a><span class="k">class</span> <span class="nc">ForceObjectWindow</span><span class="p">(</span><span class="n">PhysicsWindow</span><span class="p">):</span>
+<div class="viewcode-block" id="PhysicsObjectWindow"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow">[docs]</a><span class="k">class</span> <span class="nc">PhysicsObjectWindow</span><span class="p">(</span><span class="n">PhysicsWindow</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    A window which tracks the status of a :class:`Physics.ForceObject`, showing its current x, y, velocity, etc.</span>
 
@@ -234,7 +234,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
         <span class="c1"># add additional protocol to window close so it removes from open window list</span>
 
-<div class="viewcode-block" id="ForceObjectWindow.update"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
+<div class="viewcode-block" id="PhysicsObjectWindow.update"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        Updates the displayed information.</span>
 
@@ -262,11 +262,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">net_force_label</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="n">net_force_text</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time_elapsed_since_last_update</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="ForceObjectWindow.delete_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.delete_button">[docs]</a>    <span class="k">def</span> <span class="nf">delete_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhysicsObjectWindow.delete_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow.delete_button">[docs]</a>    <span class="k">def</span> <span class="nf">delete_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        Called when user presses the delete button on the window.</span>
 
-<span class="sd">        Deletes the ForceObject and the ForceObjectWindow</span>
+<span class="sd">        Deletes the ForceObject and the PhysicsObjectWindow</span>
 
 <span class="sd">        Calls clear_forces on the :class:`Physics.ForceObject`</span>
 <span class="sd">        """</span>
@@ -274,7 +274,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">delete_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force_object</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">del_win</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ForceObjectWindow.orbiter_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.ForceObjectWindow.orbiter_button">[docs]</a>    <span class="k">def</span> <span class="nf">orbiter_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PhysicsObjectWindow.orbiter_button"><a class="viewcode-back" href="../PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow.orbiter_button">[docs]</a>    <span class="k">def</span> <span class="nf">orbiter_button</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        Adds a new ForceObject to the physics canvas. The new ForceObject is 1/100th the mass of the object this</span>
 <span class="sd">        ForceWindow is already referencing. It starts 100 meters N of this ForceWindow's ForceObject and has a</span>

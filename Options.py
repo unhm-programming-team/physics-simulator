@@ -10,8 +10,8 @@ Options = {
     'title': 'Physics Simulator',
     'gravity': False, # not yet implemented
     'zoom': 1, # not yet implemented
-    'canvas height': 1000, # pixels
-    'canvas width': 1000,
+    'canvas height': 800, # pixels
+    'canvas width': 800,
     'update interval': 0.05,  # seconds
     'default mass': 10000000,  # kilograms
     'key force magnitude': 100000,  # newtons

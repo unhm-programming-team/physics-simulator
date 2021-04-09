@@ -3,6 +3,8 @@ from tkinter import ttk
 
 import math
 
+import Substance
+import Utility
 from Options import Options
 import Physics
 
@@ -46,7 +48,7 @@ class PhysicsWindow:
             self.time_elapsed_since_last_update = 0
 
 
-class ForceObjectWindow(PhysicsWindow):
+class PhysicsObjectWindow(PhysicsWindow):
     """
     A window which tracks the status of a :class:`Physics.ForceObject`, showing its current x, y, velocity, etc.
 
@@ -54,24 +56,24 @@ class ForceObjectWindow(PhysicsWindow):
 
     :param window: The main UI window
     :type window: :class:`Ui.MainWindow`
-    :param force_object: The ForceObject to track
-    :type force_object: :class:`Physics.ForceObject`
+    :param physics_object: The ForceObject to track
+    :type physics_object: :class:`Physics.ForceObject`
     :param x: The screen x the window should appear
     :type x: number
     :param y: The screen y the window should appear
     :type y: number
     """
-    def __init__(self, window, force_object, x = 200, y=200):
+    def __init__(self, window, physics_object, x = 200, y=200):
         """
         constructor
         """
         PhysicsWindow.__init__(self, window)
         self.root.geometry(f"+{round(x)}+{round(y)}")
-        self.force_object = force_object
+        self.physics_object = physics_object
 
-        id_label = ttk.Label(self.root, text='id: '+str(force_object.canvas_id))
+        id_label = ttk.Label(self.root, text='id: '+str(physics_object.canvas_id))
         id_label.grid(row=0, column=0, sticky=W)
-        material_text = f"{force_object.material.name}, {force_object.mass}kg"
+        material_text = f"{physics_object.material.name}, {physics_object.mass}kg"
         material_label = ttk.Label(self.root, text=material_text)
         material_label.grid(row=1, columnspan=4, sticky = W)
         x_label = ttk.Label(self.root, text='x: ')
@@ -111,18 +113,18 @@ class ForceObjectWindow(PhysicsWindow):
         self.time_elapsed_since_last_update += interval
         if self.time_elapsed_since_last_update >= Options['object popup update interval']:
             self.root.lift()
-            displacement = self.force_object.displacement
+            displacement = self.physics_object.displacement
             x_text = f"{round(displacement.x)} m"
             y_text = f"{round(displacement.y)} m"
             self.x_val['text'] = x_text
             self.y_val['text'] = y_text
-            velocity = self.force_object.velocity
+            velocity = self.physics_object.velocity
             velocity_text = f"velocity: {round(velocity.magnitude)} m/s, {round(math.degrees(velocity.angle))} deg"
             self.velocity_label['text'] = velocity_text
-            acceleration = self.force_object.acceleration
+            acceleration = self.physics_object.acceleration
             acceleration_text = f"acceleration: {round(acceleration.magnitude)} m/s^2, {round(math.degrees(acceleration.angle))} deg"
             self.acceleration_label['text'] = acceleration_text
-            net_force = self.force_object.net_force_vector
+            net_force = self.physics_object.net_force_vector
             net_force_text = f"net_force: {round(net_force.magnitude)} N, {round(math.degrees(net_force.angle))} deg"
             self.net_force_label['text'] = net_force_text
             self.time_elapsed_since_last_update = 0
@@ -131,12 +133,12 @@ class ForceObjectWindow(PhysicsWindow):
         """
         Called when user presses the delete button on the window.
 
-        Deletes the ForceObject and the ForceObjectWindow
+        Deletes the ForceObject and the PhysicsObjectWindow
 
         Calls clear_forces on the :class:`Physics.ForceObject`
         """
-        self.force_object.clear_forces()
-        self.window.physics_canvas.delete_physics_object(self.force_object)
+        self.physics_object.clear_forces()
+        self.window.physics_canvas.delete_physics_object(self.physics_object)
         self.del_win()
 
     def orbiter_button(self):
@@ -146,7 +148,7 @@ class ForceObjectWindow(PhysicsWindow):
         western velocity. A :class:`Physics.GravitationalForceGenerator` is also created to generate gravity between
         the two objects
         """
-        planet = self.force_object
+        planet = self.physics_object
         gravitational_constant = 6.67*10**(-11)
         orbital_radius = 100
         new_mass = planet.mass/100
@@ -154,21 +156,53 @@ class ForceObjectWindow(PhysicsWindow):
         force_magnitude = (gravitational_constant * planet.mass * new_mass)/orbital_radius**2
         moon_radial_acceleration = new_mass/force_magnitude
         orbital_velocity = 10
-        moon = Physics.ForceObject(self.window.physics_canvas, material, new_mass)
+        moon = Physics.PhysicsObject(material, new_mass)
         moon_x = planet.displacement.x
         moon_y = planet.displacement.y - orbital_radius
         moon.displacement = Physics.Vector.make_vector_from_components(moon_x,moon_y)
         moon.velocity = Physics.Vector.make_directional_vector('W', orbital_velocity)
-        moon.calculate_bounds()
-        self.window.physics_canvas.add_force_object(moon)
+        self.window.physics_canvas.add_physics_object(moon)
         grav = Physics.GravitationalForceGenerator(planet, moon)
         self.window.physics_canvas.interacting_forces.append(grav)
         self.window.log('added orbiter')
 
 
-class AddObjectWindow:
+class AddObjectWindow(PhysicsWindow):
     """
     Not yet implemented - will open a new window for adding a new object to the physics canvas
     """
-    def __init__(self):
-        pass
+    def __init__(self, window, event):
+        PhysicsWindow.__init__(self, window)
+        self.root.geometry(f"+{round(event.x)+300}+{round(event.y)+40}")
+        # title_label = ttk.Label(self.root, text='Add Physics Object')
+        # title_label.grid(row=0, column=0, columnspan=5, sticky= (W,E))
+
+        self.material_label = ttk.Label(self.root, text='material')
+        self.material_label.grid(row=1, column=0, sticky=E)
+
+        self.listbox = ttk.Spinbox(self.root, value=list(Substance.MATERIALS.keys()), state='readonly', width=11)
+        self.listbox.set(list(Substance.MATERIALS.keys())[0])
+        self.listbox.grid(row=1, column=1, sticky=W)
+
+        self.mass_label = ttk.Label(self.root, text='mass')
+        self.mass_label.grid(row=2, column=0, sticky=E)
+        self.mass_val = StringVar()
+        self.mass_val.set(str(Options['default mass']))
+        print(self.mass_val.get())
+
+        validate_key = (self.root.register(Utility.validate_number_input), '%P')
+        self.mass_entry = ttk.Entry(self.root, textvariable=self.mass_val, validate='key', validatecommand=validate_key, width=10)
+        self.mass_entry.grid(row=2, column=1, sticky=W)
+        self.mass_entry.insert(0, str(Options['default mass']))
+
+        self.add_button = ttk.Button(self.root, text='Add!', command=self.add_button_press)
+        self.add_button.grid(row=3, column=0, columnspan=3, sticky=(N,S,E,W))
+        self.root.mainloop()
+
+    def add_button_press(self):
+        material = Substance.MATERIALS[self.listbox.get()]
+        mass = float(self.mass_entry.get())
+        new_object = Physics.PhysicsObject(material, mass)
+        pc = self.window.physics_canvas
+        pc.add_physics_object(new_object)
+        self.del_win()

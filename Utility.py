@@ -1,8 +1,8 @@
 def validate_number_input(inp):
     """
-    Validates that a string input can be converted to a number
+    Validates that a string input can be converted to a number.
 
-    Probably can remove this once we get rid of parts of the DebugTab
+    Also confirms it is POSITIVE
 
     :param inp: The number to test
     :return: true or false
@@ -10,7 +10,9 @@ def validate_number_input(inp):
     """
     true_false = True
     try:
-        float(inp)
+        x = float(inp)
+        if x < 0.000001:
+            true_false = False
     except ValueError:
         true_false = False
     return true_false
@@ -50,6 +52,8 @@ def find_intersecting_point(line1, line2):
     :return: A tuple of (x,y) corresponding to the intersecting point OR False, if they are parallel
     :rtype: Tuple
     """
+    print(f"line1: {line1}")
+    print(f"line2: {line2}")
     slope1, intercept1, vertical1, end_point1 = line1
     slope2, intercept2, vertical2, end_point2 = line2
     x1, y1 = end_point1
@@ -64,11 +68,31 @@ def find_intersecting_point(line1, line2):
             intersect_x = x1
             intersect_y = (y2+y1)/2
     else:
-        if slope1 == slope2:
+        if round(slope1, 3) == round(slope2, 3):
             intersect_x = (x1+x2)/2
             intersect_y = (y2+y1)/2
         else:
             intersect_x = (intercept2-intercept1)/(slope1-slope2)
             intersect_y = slope1*intersect_x + intercept1
+            intersect_y2 = slope2*intersect_x + intercept2
     return intersect_x, intersect_y
+
+
+def center(win):
+    """
+    Centers the window by setting the geometry
+    :param win: root window
+    :type win: Tkinter.Tk
+    """
+    win.update_idletasks()
+    width = win.winfo_width()
+    frm_width = win.winfo_rootx() - win.winfo_x()
+    win_width = width + 2 * frm_width
+    height = win.winfo_height()
+    titlebar_height = win.winfo_rooty() - win.winfo_y()
+    win_height = height + titlebar_height + frm_width
+    x = win.winfo_screenwidth() // 2 - win_width // 2
+    y = win.winfo_screenheight() // 2 - win_height // 2
+    win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+    win.deiconify()
 

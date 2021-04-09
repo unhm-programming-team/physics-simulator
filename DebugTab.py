@@ -222,11 +222,11 @@ class ForceObjectAdder:
         self.window.physics_canvas.add_force_object(force_object)
 
     def key_handler(self, event):
-        direction = 'n'
+        direction = 's'
         if event.keysym == 'Right':
             direction = 'e'
         elif event.keysym == 'Up':
-            direction = 's'
+            direction = 'n'
         elif event.keysym == 'Left':
             direction = 'w'
         for i in range(0, len(self.force_objects)):

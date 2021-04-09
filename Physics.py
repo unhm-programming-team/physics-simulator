@@ -3,7 +3,7 @@ They generally do not interact directly with the user interface, but are managed
 
 import math
 
-import Substance
+import Substance, Utility
 
 
 class Vector:
@@ -160,6 +160,17 @@ class Vector:
         new_magnitude = self.magnitude * scalar
         return Vector(self.angle, new_magnitude)
 
+    def normal_make(self):
+        """
+        Returns a new magnitude 1 vector in the same angle.
+
+        :return: new Vector
+        :rtype: Vector
+        """
+        x = self.x / self.magnitude
+        y = self.y / self.magnitude
+        return Vector.make_vector_from_components(x, y)
+
     @staticmethod
     def make_directional_vector(direction='S', magnitude=1):
         """
@@ -219,6 +230,8 @@ class VectorObject:
         """Used by the tkinter canvas to reference the shape linked to this object"""
         self.width = 0
         self.height = 0
+        self.x_side = 0
+        self.y_side = 0
         self.x_0 = 0
         self.x_1 = 0
         self.y_0 = 0
@@ -235,10 +248,12 @@ class VectorObject:
         """
         Sets the x1 and y1 to coordinates of a square around it.
         """
-        self.x_0 = self.displacement.x - 1/2 * self.width
-        self.x_1 = self.displacement.x + 1/2 * self.width
-        self.y_0 = self.displacement.y - 1/2 * self.height
-        self.y_1 = self.displacement.y + 1/2 * self.height
+        self.x_side = self.width * 0.5
+        self.y_side = self.height * 0.5
+        self.x_0 = self.displacement.x - self.x_side
+        self.x_1 = self.displacement.x + self.x_side
+        self.y_0 = self.displacement.y - self.y_side
+        self.y_1 = self.displacement.y + self.y_side
 
     def update(self, interval):
         """
@@ -252,6 +267,87 @@ class VectorObject:
         self.velocity.add(self.acceleration.scale_make(interval))
         self.displacement.add(self.velocity.scale_make(interval))
         self.physics_canvas.move_me(self)
+        if not self.check_collision(interval):
+            self.displacement.add(self.velocity)
+            self.calculate_bounds()
+            self.physics_canvas.move_me(self)
+
+    def collide(self, other_object, my_next_displacement, other_next_displacement, interval):
+        """
+        Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid
+        redundant calculations.
+
+        :param other_object: The colliding object
+        :type other_object: ForceObject
+        :param my_next_displacement: Displacement vector that would realize if no collision
+        :type my_next_displacement: Vector
+        :param other_next_displacement: Displacement vector for other object that would realize if no collision
+        :type other_next_displacement: Vector
+        :param interval: Interval of distance move, second(s)
+        :type interval: number
+        """
+        line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)
+        line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)
+        collision_x, collision_y = Utility.find_intersecting_point(line1, line2)  # point of collision
+        if other_object.displacement.x < collision_x:  # these ifs put colliders on appropriate side
+            other_object.displacement.x = collision_x - other_object.x_side
+            self.displacement.x = collision_x + self.x_side
+        elif other_object.displacement.x > collision_x:
+            other_object.displacement.x = collision_x + other_object.x_side
+            self.displacement.x = collision_x - self.x_side
+        if other_object.displacement.y < collision_y:
+            other_object.displacement.y = collision_y - other_object.y_side
+            self.displacement.y = collision_y + self.y_side
+        elif other_object.displacement.y > collision_y:
+            other_object.displacement.y = collision_y + other_object.y_side
+            self.displacement.y = collision_y - self.y_side
+        self.displacement.calculate_angles()
+        other_object.displacement.calculate_angles()
+        self.velocity = Vector(0,0)
+        # self.displacement.add(self.velocity)
+        other_object.velocity = Vector(0,0)
+        self.calculate_bounds()
+        other_object.calculate_bounds()
+        self.physics_canvas.move_force_object(self)
+
+    def check_collision(self, interval):
+        """
+        The way collision is checked is that the next displacement from the velocity is calculated.
+
+        For each other extant physics object on the canvas, the next displacement from velocity is calculated.
+
+        If the lines between the displacements cross, the vectors have 'collided'.
+
+        This function returns True or False and is used in the update function. If collision doesn't happen,
+        the update function handles simple movement.
+
+        :param interval:
+        :return: Whether collision happened
+        :rtype: bool
+        """
+        next_displacement = self.displacement.add_make(self.velocity) # add radius/side length here?
+        for p in self.physics_canvas.physics_objects:
+            if p != self:
+                other_next_displacement = p.displacement.add_make(p.velocity)
+                y_cross = False
+                if self.displacement.y <= p.displacement.y:
+                    if next_displacement.y + self.y_side >= other_next_displacement.y - p.y_side:
+                        y_cross = True
+                elif self.displacement.y >= p.displacement.y:
+                    if next_displacement.y - self.y_side <= other_next_displacement.y + p.y_side:
+                        y_cross = True
+                x_cross = False
+                if self.displacement.x <= p.displacement.x:
+                    if next_displacement.x + self.x_side >= other_next_displacement.x - p.x_side:
+                        x_cross = True
+                elif self.displacement.x >= p.displacement.x:
+                    if next_displacement.x - self.x_side <= other_next_displacement.x + p.x_side:
+                        x_cross = True
+
+                if x_cross and y_cross:
+                    self.collide(p, next_displacement, other_next_displacement, interval)
+                    return True
+        return False
 
 
 class MassObject(VectorObject):
@@ -365,7 +461,7 @@ class GravitationalForceGenerator:
         self.moon = moon
         self.planet.dependent_force_generators.append(self)
         self.moon.dependent_force_generators.append(self)
-        self.grav_sum = planet.mass * moon.mass
+        self.grav_sum = planet.mass * moon.mass # omitted - the gravitational constant
         self.remaining = 1
 
     def update(self, interval):
@@ -381,10 +477,9 @@ class GravitationalForceGenerator:
         planet_off_y = self.moon.displacement.y - self.planet.displacement.y
         planet_vector = Vector.make_vector_from_components(planet_off_x, planet_off_y)
         reversed_vector = Vector.make_vector_from_components(planet_off_x*-1, planet_off_y*-1)
-        force_magnitude = (1000000/planet_vector.magnitude)*interval
+        force_magnitude = (1000000/planet_vector.magnitude)*interval # not accurate gravitational force
         self.planet.forces.append(Force(planet_vector.angle, force_magnitude))
         self.moon.forces.append(Force(reversed_vector.angle, force_magnitude))
-
 
     def remove(self):
         moon_forces = self.moon.dependent_force_generators
@@ -419,8 +514,8 @@ class ForceObject(MassObject):
     def update(self, interval):
         """
         Gets a new vector equal to multiplying acceleration by Velocity and adds it
-        to the velocity, mutating the velocity vector. v = at + v_0
-        Does the same for displacement. s = vt + s_0
+        to the velocity, mutating the velocity vector. :math:`v = at + v_0`
+        Does the same for displacement. :math:`s = vt + s_0`
         Tells physicsCanvas to move the rendering of the oval.
         :param interval: The time since last update.
         :type interval: number
@@ -436,9 +531,10 @@ class ForceObject(MassObject):
         self.forces = non_expired_forces
         self.acceleration = Vector(self.net_force_vector.angle, self.net_force_vector.magnitude/self.mass)
         self.velocity.add(self.acceleration)
-        self.displacement.add(self.velocity)
-        self.calculate_bounds()
-        self.physics_canvas.move_force_object(self)
+        if not self.check_collision(interval):
+            self.displacement.add(self.velocity)
+            self.calculate_bounds()
+            self.physics_canvas.move_force_object(self)
 
     def clear_forces(self):
         """
@@ -446,5 +542,38 @@ class ForceObject(MassObject):
         """
         for f in self.dependent_force_generators:
             f.remove()
+
+    def collide2(self, other_object, my_next_displacement, other_next_displacement):
+        """
+
+        Overwrites method in VectorObject
+
+        Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid
+        redundant calculations.
+
+        Will calculate forces to exchange if the other object is a PhysicsObject
+
+
+        :param other_object: The colliding object
+        :type other_object: ForceObject
+        :param my_next_displacement: Displacement vector that would realize if no collision
+        :type my_next_displacement: Vector
+        :param other_next_displacement: Displacement vector for other object that would realize if no collision
+        :type other_next_displacement: Vector
+        """
+        line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)
+        line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)
+        newx, newy = Utility.find_intersecting_point(line1, line2)
+        # self.displacement.add(self.velocity)
+        self.displacement = Vector(newx, newy)
+        self.velocity = Vector(0,0)
+        other_object.velocity = Vector(0,0)
+        self.displacement.calculate_angles()
+        self.calculate_bounds()
+        self.physics_canvas.move_force_object(self)
+
+
+
+
 
 

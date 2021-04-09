@@ -10,15 +10,16 @@ Options = {
     'title': 'Physics Simulator',
     'gravity': False, # not yet implemented
     'zoom': 1, # not yet implemented
-    'canvas height': 500, # pixels
-    'canvas width': 500,
+    'canvas height': 1000, # pixels
+    'canvas width': 1000,
     'update interval': 0.05,  # seconds
     'default mass': 10000000,  # kilograms
-    'key force magnitude': 1000000,  # newtons
+    'key force magnitude': 100000,  # newtons
     'key force duration': 1,
     'canvas border type': 'ridge',  # keywords only
     'canvas border width': 4,
     'canvas background color': '#E3F3FF',
+    'canvas axis color': 'green',
     'canvas left physics adjustment': 5,  # in pixels
     'canvas right physics adjustment': 3,
     'canvas top physics adjustment': 5,

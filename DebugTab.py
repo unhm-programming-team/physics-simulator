@@ -5,8 +5,7 @@ The LogTab contains a Listbox and a Scrollbar. Strings can be sent to LogTab to 
 the list. When clicked, they display on a lower label to account for long-stringed log events.
 
 The DebugTab contains buttons for adding objects, for testing purposes. The panels for adding those objects are part
-of this module. Ultimately, the only objects that will likely be added in later versions of this project are
-ForceObjects or higher. """
+of this module. """
 
 from tkinter import *
 from tkinter import ttk, colorchooser
@@ -85,7 +84,9 @@ class ForceObjectAdder:
     """
     Created by :class:`DebugTab.DebugTab`.
 
-    Deprecated, and should be removed in a future version.
+    May be removed in a future version. Somewhat redundant due to AddObjectWindow being implemented. However,
+    it still does the binding of key presses to object moves, so it's left for now while said feature is still useful
+    for debug and testing.
     """
     def __init__(self, window, parent_frame):
         """
@@ -105,6 +106,13 @@ class ForceObjectAdder:
         self.window.root.bind('<Right>', self.key_handler)
 
     def add_button_press(self):
+        """
+        Adds a cork object with mass 100,000 to the PhysicsCanvas
+
+        The object is controllable with keyboard inputs.
+
+        :return:
+        """
         material = Substance.MATERIALS['cork']
         mass = 100000
         force_object = Physics.PhysicsObject(material, mass)

@@ -135,20 +135,126 @@
         <h1>Source code for Utility</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="validate_number_input"><a class="viewcode-back" href="../Utility.html#Utility.validate_number_input">[docs]</a><span></span><span class="k">def</span> <span class="nf">validate_number_input</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Validates that a string input can be converted to a number</span>
+<span class="sd">    Validates that a string input can be converted to a number.</span>
 
-<span class="sd">    Probably can remove this once we get rid of parts of the DebugTab</span>
+<span class="sd">    Also confirms it is POSITIVE</span>
 
 <span class="sd">    :param inp: The number to test</span>
 <span class="sd">    :return: true or false</span>
 <span class="sd">    :rtype: bool</span>
+
 <span class="sd">    """</span>
     <span class="n">true_false</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="nb">float</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.000001</span><span class="p">:</span>
+            <span class="n">true_false</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="n">true_false</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="n">true_false</span></div>
+
+
+<div class="viewcode-block" id="get_line"><a class="viewcode-back" href="../Utility.html#Utility.get_line">[docs]</a><span class="k">def</span> <span class="nf">get_line</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Finds slope and intercept of a line given two points</span>
+
+<span class="sd">    :param x1: the old x, old displacement</span>
+<span class="sd">    :param y1: the old y, old displacement</span>
+<span class="sd">    :param x2: the target x, new displacement</span>
+<span class="sd">    :param y2: the target y, new displacement</span>
+<span class="sd">    :return: A tuple (slope, intercept, vertical, endpoint), where vertical is False if not vertical and endpoint is x2, y2</span>
+<span class="sd">    :rtype: Tuple</span>
+
+<span class="sd">    """</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rise</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span>
+    <span class="n">vertical</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">end_point</span> <span class="o">=</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x2</span> <span class="o">==</span> <span class="n">x1</span><span class="p">:</span>
+        <span class="n">vertical</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">slope</span> <span class="o">=</span> <span class="n">rise</span><span class="o">/</span><span class="n">run</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">slope</span><span class="o">*</span><span class="n">x1</span>
+    <span class="k">return</span> <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">vertical</span><span class="p">,</span> <span class="n">end_point</span></div>
+
+
+<div class="viewcode-block" id="find_intersecting_point"><a class="viewcode-back" href="../Utility.html#Utility.find_intersecting_point">[docs]</a><span class="k">def</span> <span class="nf">find_intersecting_point</span><span class="p">(</span><span class="n">line1</span><span class="p">,</span> <span class="n">line2</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Finds the intersecting points between two line</span>
+
+<span class="sd">    Currently buggy for near zero slopes - need some work on re-writing this algo.</span>
+
+<span class="sd">    Probably need to move from algebra to calculus/vectors after more reading.</span>
+
+<span class="sd">    How it's currently calculating:</span>
+
+<span class="sd">    :math:`y = m_1x+b_1`</span>
+
+<span class="sd">    :math:`y = m_2x+b_2`</span>
+
+<span class="sd">    :math:`m_1x+b_1 = m_2x+b_2`</span>
+
+<span class="sd">    :math:`x_\\text{intersect} = \\frac{b_2-b_1}{m_1-m_2}`</span>
+
+<span class="sd">    :math:`y_\\text{intersect} = m_1(x_\\text{intersect})+b_1`</span>
+
+
+<span class="sd">    :param line1: A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))</span>
+<span class="sd">    :type line1: Tuple</span>
+<span class="sd">    :param line2:  A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))</span>
+<span class="sd">    :type line2: Tuple</span>
+<span class="sd">    :return: A tuple of (x,y) corresponding to the intersecting point</span>
+<span class="sd">    :rtype: Tuple</span>
+
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"line1: </span><span class="si">{</span><span class="n">line1</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"line2: </span><span class="si">{</span><span class="n">line2</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">slope1</span><span class="p">,</span> <span class="n">intercept1</span><span class="p">,</span> <span class="n">vertical1</span><span class="p">,</span> <span class="n">end_point1</span> <span class="o">=</span> <span class="n">line1</span>
+    <span class="n">slope2</span><span class="p">,</span> <span class="n">intercept2</span><span class="p">,</span> <span class="n">vertical2</span><span class="p">,</span> <span class="n">end_point2</span> <span class="o">=</span> <span class="n">line2</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">end_point1</span>
+    <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">end_point2</span>
+    <span class="n">intersect_x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">intersect_y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">vertical1</span> <span class="ow">and</span> <span class="n">vertical2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x1</span> <span class="o">!=</span> <span class="n">x2</span><span class="p">:</span>
+            <span class="n">intersect_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">intersect_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">+</span><span class="n">y1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">intersect_x</span> <span class="o">=</span> <span class="n">x1</span>
+            <span class="n">intersect_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">+</span><span class="n">y1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">round</span><span class="p">(</span><span class="n">slope1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="nb">round</span><span class="p">(</span><span class="n">slope2</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">intersect_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+            <span class="n">intersect_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">+</span><span class="n">y1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">intersect_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">intercept2</span><span class="o">-</span><span class="n">intercept1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">slope1</span><span class="o">-</span><span class="n">slope2</span><span class="p">)</span>
+            <span class="n">intersect_y</span> <span class="o">=</span> <span class="n">slope1</span><span class="o">*</span><span class="n">intersect_x</span> <span class="o">+</span> <span class="n">intercept1</span>
+            <span class="n">intersect_y2</span> <span class="o">=</span> <span class="n">slope2</span><span class="o">*</span><span class="n">intersect_x</span> <span class="o">+</span> <span class="n">intercept2</span>
+    <span class="k">return</span> <span class="n">intersect_x</span><span class="p">,</span> <span class="n">intersect_y</span></div>
+
+
+<div class="viewcode-block" id="center"><a class="viewcode-back" href="../Utility.html#Utility.center">[docs]</a><span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Centers the window by checking screen width then setting the window's geometry</span>
+
+<span class="sd">    :param win: root window</span>
+<span class="sd">    :type win: Tkinter.Tk</span>
+
+<span class="sd">    """</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">()</span>
+    <span class="n">frm_width</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_rootx</span><span class="p">()</span> <span class="o">-</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_x</span><span class="p">()</span>
+    <span class="n">win_width</span> <span class="o">=</span> <span class="n">width</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">frm_width</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_height</span><span class="p">()</span>
+    <span class="n">titlebar_height</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_rooty</span><span class="p">()</span> <span class="o">-</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_y</span><span class="p">()</span>
+    <span class="n">win_height</span> <span class="o">=</span> <span class="n">height</span> <span class="o">+</span> <span class="n">titlebar_height</span> <span class="o">+</span> <span class="n">frm_width</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_screenwidth</span><span class="p">()</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">win_width</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">win_height</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">x</span><span class="si">{}</span><span class="s1">+</span><span class="si">{}</span><span class="s1">+</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="n">win</span><span class="o">.</span><span class="n">deiconify</span><span class="p">()</span></div>
+
 </pre></div>
       </article>
       <footer>

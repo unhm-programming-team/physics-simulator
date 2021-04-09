@@ -139,8 +139,7 @@
 <p>The LogTab contains a Listbox and a Scrollbar. Strings can be sent to LogTab to be logged - they will be added to
 the list. When clicked, they display on a lower label to account for long-stringed log events.</p>
 <p>The DebugTab contains buttons for adding objects, for testing purposes. The panels for adding those objects are part
-of this module. Ultimately, the only objects that will likely be added in later versions of this project are
-ForceObjects or higher.</p>
+of this module.</p>
 <dl class="py class">
 <dt id="DebugTab.DebugTab">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DebugTab.</span></code><code class="sig-name descname"><span class="pre">DebugTab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#DebugTab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.DebugTab" title="Permalink to this definition">¶</a></dt>
@@ -158,11 +157,20 @@ ForceObjects or higher.</p>
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DebugTab.</span></code><code class="sig-name descname"><span class="pre">ForceObjectAdder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#ForceObjectAdder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.ForceObjectAdder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Created by <a class="reference internal" href="#DebugTab.DebugTab" title="DebugTab.DebugTab"><code class="xref py py-class docutils literal notranslate"><span class="pre">DebugTab.DebugTab</span></code></a>.</p>
-<p>Deprecated, and should be removed in a future version.</p>
+<p>May be removed in a future version. Somewhat redundant due to AddObjectWindow being implemented. However,
+it still does the binding of key presses to object moves, so it’s left for now while said feature is still useful
+for debug and testing.</p>
 <dl class="py method">
 <dt id="DebugTab.ForceObjectAdder.add_button_press">
 <code class="sig-name descname"><span class="pre">add_button_press</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#ForceObjectAdder.add_button_press"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.ForceObjectAdder.add_button_press" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Adds a cork object with mass 100,000 to the PhysicsCanvas</p>
+<p>The object is controllable with keyboard inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt id="DebugTab.ForceObjectAdder.key_handler">
 <code class="sig-name descname"><span class="pre">key_handler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#ForceObjectAdder.key_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.ForceObjectAdder.key_handler" title="Permalink to this definition">¶</a></dt>
@@ -200,32 +208,6 @@ ForceObjects or higher.</p>
 <dd><p>Creates an entry in the Listbox from the string. Prepends a timestamp.
 :param string: text to log</p>
 </dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt id="DebugTab.MassObjectAdder">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DebugTab.</span></code><code class="sig-name descname"><span class="pre">MassObjectAdder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#MassObjectAdder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.MassObjectAdder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Created by <a class="reference internal" href="#DebugTab.DebugTab" title="DebugTab.DebugTab"><code class="xref py py-class docutils literal notranslate"><span class="pre">DebugTab.DebugTab</span></code></a>.</p>
-<p>Deprecated, and should be removed in a future version.</p>
-<dl class="py method">
-<dt id="DebugTab.MassObjectAdder.add_button_press">
-<code class="sig-name descname"><span class="pre">add_button_press</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#MassObjectAdder.add_button_press"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.MassObjectAdder.add_button_press" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt id="DebugTab.VectorObjectAdder">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DebugTab.</span></code><code class="sig-name descname"><span class="pre">VectorObjectAdder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#VectorObjectAdder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.VectorObjectAdder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Created by <a class="reference internal" href="#DebugTab.DebugTab" title="DebugTab.DebugTab"><code class="xref py py-class docutils literal notranslate"><span class="pre">DebugTab.DebugTab</span></code></a>.</p>
-<p>Deprecated, and should be removed in a future version.</p>
-<dl class="py method">
-<dt id="DebugTab.VectorObjectAdder.add_button_press">
-<code class="sig-name descname"><span class="pre">add_button_press</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#VectorObjectAdder.add_button_press"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.VectorObjectAdder.add_button_press" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt id="DebugTab.VectorObjectAdder.select_color">
-<code class="sig-name descname"><span class="pre">select_color</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DebugTab.html#VectorObjectAdder.select_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DebugTab.VectorObjectAdder.select_color" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 </dd></dl>
 </section>
 

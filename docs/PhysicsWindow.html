@@ -137,21 +137,36 @@
 <span id="physicswindow-module"></span><h1>PhysicsWindow module<a class="headerlink" href="#module-PhysicsWindow" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="PhysicsWindow.AddObjectWindow">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">AddObjectWindow</span></code><a class="reference internal" href="_modules/PhysicsWindow.html#AddObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.AddObjectWindow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Not yet implemented - will open a new window for adding a new object to the physics canvas</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">AddObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#AddObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.AddObjectWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#PhysicsWindow.PhysicsWindow" title="PhysicsWindow.PhysicsWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicsWindow.PhysicsWindow</span></code></a></p>
+<p>Opens a new window with entry fields for adding a new PhysicsObject to the canvas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window</strong> (<a class="reference internal" href="Ui.html#Ui.MainWindow" title="Ui.MainWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ui.MainWindow</span></code></a>) – The root window</p></li>
+<li><p><strong>event</strong> (<em>Tk.MouseEvent ?</em>) – A Mousevent</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="PhysicsWindow.AddObjectWindow.add_button_press">
+<code class="sig-name descname"><span class="pre">add_button_press</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#AddObjectWindow.add_button_press"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.AddObjectWindow.add_button_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executed when user clicks Add button.</p>
+<p>Creates PhysicsObject, calls PhysicsCanvas.add_physics_object</p>
+<p>Deltes and closes the window</p>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="PhysicsWindow.PhysicsObjectWindow">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">PhysicsObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">PhysicsWindow.</span></code><code class="sig-name descname"><span class="pre">PhysicsObjectWindow</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#PhysicsWindow.PhysicsWindow" title="PhysicsWindow.PhysicsWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicsWindow.PhysicsWindow</span></code></a></p>
-<p>A window which tracks the status of a <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a>, showing its current x, y, velocity, etc.</p>
+<p>A window which tracks the status of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code>, showing its current x, y, velocity, etc.</p>
 <p>Also provides buttons for deleting the object and adding an “orbiter”</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>window</strong> (<a class="reference internal" href="Ui.html#Ui.MainWindow" title="Ui.MainWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">Ui.MainWindow</span></code></a>) – The main UI window</p></li>
-<li><p><strong>force_object</strong> (<a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a>) – The ForceObject to track</p></li>
+<li><p><strong>physics_object</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code>) – The ForceObject to track</p></li>
 <li><p><strong>x</strong> (<em>number</em>) – The screen x the window should appear</p></li>
 <li><p><strong>y</strong> (<em>number</em>) – The screen y the window should appear</p></li>
 </ul>
@@ -162,7 +177,7 @@
 <code class="sig-name descname"><span class="pre">delete_button</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PhysicsWindow.html#PhysicsObjectWindow.delete_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PhysicsWindow.PhysicsObjectWindow.delete_button" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when user presses the delete button on the window.</p>
 <p>Deletes the ForceObject and the PhysicsObjectWindow</p>
-<p>Calls clear_forces on the <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a></p>
+<p>Calls clear_forces on the <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></p>
 </dd></dl>
 <dl class="py method">
 <dt id="PhysicsWindow.PhysicsObjectWindow.orbiter_button">

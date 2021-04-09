@@ -136,10 +136,68 @@
         <section id="module-Utility">
 <span id="utility-module"></span><h1>Utility module<a class="headerlink" href="#module-Utility" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
+<dt id="Utility.center">
+<code class="sig-prename descclassname"><span class="pre">Utility.</span></code><code class="sig-name descname"><span class="pre">center</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Utility.html#center"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Utility.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Centers the window by checking screen width then setting the window’s geometry</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>Tkinter.Tk</em>) – root window</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="Utility.find_intersecting_point">
+<code class="sig-prename descclassname"><span class="pre">Utility.</span></code><code class="sig-name descname"><span class="pre">find_intersecting_point</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Utility.html#find_intersecting_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Utility.find_intersecting_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the intersecting points between two line</p>
+<p>Currently buggy for near zero slopes - need some work on re-writing this algo.</p>
+<p>Probably need to move from algebra to calculus/vectors after more reading.</p>
+<p>How it’s currently calculating:</p>
+<p><span class="math notranslate nohighlight">\(y = m_1x+b_1\)</span></p>
+<p><span class="math notranslate nohighlight">\(y = m_2x+b_2\)</span></p>
+<p><span class="math notranslate nohighlight">\(m_1x+b_1 = m_2x+b_2\)</span></p>
+<p><span class="math notranslate nohighlight">\(x_\text{intersect} = \frac{b_2-b_1}{m_1-m_2}\)</span></p>
+<p><span class="math notranslate nohighlight">\(y_\text{intersect} = m_1(x_\text{intersect})+b_1\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line1</strong> (<em>Tuple</em>) – A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))</p></li>
+<li><p><strong>line2</strong> (<em>Tuple</em>) – A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple of (x,y) corresponding to the intersecting point</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt id="Utility.get_line">
+<code class="sig-prename descclassname"><span class="pre">Utility.</span></code><code class="sig-name descname"><span class="pre">get_line</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Utility.html#get_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Utility.get_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds slope and intercept of a line given two points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> – the old x, old displacement</p></li>
+<li><p><strong>y1</strong> – the old y, old displacement</p></li>
+<li><p><strong>x2</strong> – the target x, new displacement</p></li>
+<li><p><strong>y2</strong> – the target y, new displacement</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple (slope, intercept, vertical, endpoint), where vertical is False if not vertical and endpoint is x2, y2</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt id="Utility.validate_number_input">
 <code class="sig-prename descclassname"><span class="pre">Utility.</span></code><code class="sig-name descname"><span class="pre">validate_number_input</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Utility.html#validate_number_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Utility.validate_number_input" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validates that a string input can be converted to a number</p>
-<p>Probably can remove this once we get rid of parts of the DebugTab</p>
+<dd><p>Validates that a string input can be converted to a number.</p>
+<p>Also confirms it is POSITIVE</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>inp</strong> – The number to test</p>
@@ -199,5 +257,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="_static/scripts/main.js?digest=e931d09b2a40c1bb82b542effe772014573baf67"></script></body>
 </html>

@@ -1,5 +1,14 @@
-"""Physics contains the objects relating to mathematical calculations, such as Vectors, Forces, and ForceObjects.
-They generally do not interact directly with the user interface, but are managed by the user interface. """
+"""Physics contains the objects relating to mathematical calculations, such as Vectors, Forces, and PhysicsObjects.
+There are no UI components in this module.
+
+All displacements are calculated on an abstract plane - :class:`Ui.PhysicsCanvas` is responsible for translating to
+canvas coordinates.
+
+One semi-exception - PhysicsObjects handle their own collision detection, and they do that by referencing the
+collection of PhysicsObjects in PhysicsCanvas.
+
+All the physics logic and calculation should be handled here.
+ """
 
 import math
 
@@ -30,8 +39,9 @@ class Vector:
         """
         Calculates components from angle and magnitude.
 
-        :math:`y = \\text{vector}_\text{mag} * \\sin{\\theta}`
-        :math:`x = \\text{vector}_\text{mag} * \\cos{\\theta}`
+        :math:`y = \\text{vector}_\\text{mag} * \\sin{\\theta}`
+
+        :math:`x = \\text{vector}_\\text{mag} * \\cos{\\theta}`
 
         """
         self.y = self.magnitude * math.sin(self.angle)
@@ -42,7 +52,9 @@ class Vector:
         Calculates angle and mag from components.
 
         :math:`\\theta= \\arctan{(\\frac{y}{x})}`
-        :math:`\text{mag} = \\sqrt{x^2+y^2}`
+
+        :math:`\\text{mag} = \\sqrt{x^2+y^2}`
+
         """
         y = self.y
         x = self.x
@@ -344,14 +356,21 @@ class PhysicsObject:
     From the net force and mass, it calculates acceleration. From the acceleration, it calculates velocity. From
     velocity, displacement is calculated.
 
-    :math:`F_{net} = \\sum{F}\\text{ Newtons}`
-    :math:`a = \\frac{F_\\text{net}}{m}\\text{ m/s}^2`
-    :math:`v = at + v_0 \\text{ m/s}`
-    :math:`s = vt + s_0 = \\frac{1}{2}at^2+v_0t_s_0 \\text{ m}`
+    :math:`F_{net} = \\sum{F}\\text{   Newtons}`
 
-    :param material: The material from :class:`Substance.Material` used in this object. Determines its color and size
-    based on the material density. :type material: :class:`Substance.Material` :param mass: The mass of the object. (
-    kg) :type mass: Number
+    :math:`a = \\frac{F_\\text{net}}{m}\\text{   m/s}^2`
+
+    :math:`v = at + v_0 \\text{   m/s}`
+
+    :math:`s = vt + s_0 = \\frac{1}{2}at^2+v_0t+s_0 \\text{   m}`
+
+    :param material: The material from :class:`Substance.Material` used in this object. Determines its color and size based on the material density.
+
+    :type material: :class:`Substance.Material`
+
+    :param mass: The mass of the object. (kg)
+
+    :type mass: Number
 
     """
     def __init__(self, material, mass):
@@ -360,11 +379,11 @@ class PhysicsObject:
         self.canvas_id = None  # set by physics canvas at time of drawing
         """Used by the tkinter canvas to reference the shape linked to this object"""
         self.displacement = Vector(0,0)
-        """offset from origin"""
+        """A vector of positional offset from the 0,0 of world origin"""
         self.velocity = Vector(0,0)
-        """speed, m/s"""
+        """A vector of velocity magnitude and angle"""
         self.acceleration = Vector(0,0)
-        """m/s^2"""
+        """A vector of acceleration magnitude and angle"""
         self.material = material
         """The material the PhysicsObject is made of"""
         self.mass = mass
@@ -388,8 +407,10 @@ class PhysicsObject:
         to the velocity, mutating the velocity vector. :math:`v = at + v_0`
         Does the same for displacement. :math:`s = vt + s_0`
         Tells physicsCanvas to move the rendering of the oval.
+
         :param interval: The time since last update.
         :type interval: number
+
         """
         self.net_force_vector = Vector(0, 0)
         non_expired_forces = []
@@ -419,6 +440,7 @@ class PhysicsObject:
         :type other_next_displacement: Vector
         :param interval: Interval of distance move, second(s)
         :type interval: number
+
         """
         line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)
         line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)
@@ -456,6 +478,7 @@ class PhysicsObject:
         :param interval:
         :return: Whether collision happened
         :rtype: bool
+
         """
         next_displacement = self.displacement.add_make(self.velocity) # add radius/side length here?
         for p in self.physics_canvas.physics_objects:
@@ -484,6 +507,7 @@ class PhysicsObject:
     def clear_forces(self):
         """
         Clears forces from self.dependent_force_generators by calling remove() on each
+
         """
         for f in self.dependent_force_generators:
             f.remove()

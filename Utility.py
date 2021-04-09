@@ -7,6 +7,7 @@ def validate_number_input(inp):
     :param inp: The number to test
     :return: true or false
     :rtype: bool
+
     """
     true_false = True
     try:
@@ -21,12 +22,14 @@ def validate_number_input(inp):
 def get_line(x1, y1, x2, y2):
     """
     Finds slope and intercept of a line given two points
+
     :param x1: the old x, old displacement
     :param y1: the old y, old displacement
     :param x2: the target x, new displacement
     :param y2: the target y, new displacement
     :return: A tuple (slope, intercept, vertical, endpoint), where vertical is False if not vertical and endpoint is x2, y2
     :rtype: Tuple
+
     """
     slope = 0
     intercept = 0
@@ -45,12 +48,31 @@ def get_line(x1, y1, x2, y2):
 def find_intersecting_point(line1, line2):
     """
     Finds the intersecting points between two line
+
+    Currently buggy for near zero slopes - need some work on re-writing this algo.
+
+    Probably need to move from algebra to calculus/vectors after more reading.
+
+    How it's currently calculating:
+
+    :math:`y = m_1x+b_1`
+
+    :math:`y = m_2x+b_2`
+
+    :math:`m_1x+b_1 = m_2x+b_2`
+
+    :math:`x_\\text{intersect} = \\frac{b_2-b_1}{m_1-m_2}`
+
+    :math:`y_\\text{intersect} = m_1(x_\\text{intersect})+b_1`
+
+
     :param line1: A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))
     :type line1: Tuple
     :param line2:  A tuple of the form (slope, intercept, vertical, (endpoint_x, endpoint_y))
     :type line2: Tuple
-    :return: A tuple of (x,y) corresponding to the intersecting point OR False, if they are parallel
+    :return: A tuple of (x,y) corresponding to the intersecting point
     :rtype: Tuple
+
     """
     print(f"line1: {line1}")
     print(f"line2: {line2}")
@@ -80,9 +102,11 @@ def find_intersecting_point(line1, line2):
 
 def center(win):
     """
-    Centers the window by setting the geometry
+    Centers the window by checking screen width then setting the window's geometry
+
     :param win: root window
     :type win: Tkinter.Tk
+
     """
     win.update_idletasks()
     width = win.winfo_width()

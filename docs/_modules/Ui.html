@@ -142,6 +142,7 @@
 <span class="kn">from</span> <span class="nn">Options</span> <span class="kn">import</span> <span class="n">Options</span>
 <span class="kn">import</span> <span class="nn">Physics</span>
 <span class="kn">import</span> <span class="nn">DebugTab</span>
+<span class="kn">import</span> <span class="nn">Utility</span>
 
 <span class="kn">import</span> <span class="nn">PhysicsWindow</span>
 
@@ -189,6 +190,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">center_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right_notebook</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bottom_time_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">Utility</span><span class="o">.</span><span class="n">center</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div>
 
 
@@ -219,8 +221,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'bd'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas border width'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'bg'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas background color'</span><span class="p">]</span>
 
-        <span class="c1"># set click handler</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">"&lt;Button-1&gt;"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">click_handler</span><span class="p">)</span>
+        <span class="c1"># set click handlers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">"&lt;Button-3&gt;"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context_popup</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span> <span class="o">=</span> <span class="p">[]</span>
@@ -228,39 +229,42 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">interacting_forces</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="sd">"""Instances from, e.g. :class:`Physics.GravitationalForceGenerator` that need to be have update called"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw_cartesian</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PhysicsCanvas.add_gravity_vector_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.add_gravity_vector_object">[docs]</a>    <span class="k">def</span> <span class="nf">add_gravity_vector_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">acceleration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">):</span>
-        <span class="n">physics_object</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">VectorObject</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_x</span><span class="p">:</span>  <span class="c1"># objects placed beyond canvas size get moved to edge</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_x</span>
-        <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_x</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_x</span>
-        <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_y</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_y</span>
-        <span class="k">elif</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_y</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_y</span>
-        <span class="n">displacement_vector</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">displacement_vector</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="s1">'S'</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.8</span><span class="p">)</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
-        <span class="n">x_0</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y_0</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="n">x_1</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y_1</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_oval</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<div class="viewcode-block" id="PhysicsCanvas.draw_cartesian"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.draw_cartesian">[docs]</a>    <span class="k">def</span> <span class="nf">draw_cartesian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Draw axis lines.</span>
+<span class="sd">        """</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas axis color'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhysicsCanvas.add_physics_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.add_physics_object">[docs]</a>    <span class="k">def</span> <span class="nf">add_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_object</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        This replaced redundant methods add_force_object, add_vector_object, etc. in the refactor. Those classes were also all merged into PhysicsObject.</span>
+
+<span class="sd">        Draws a rectangle to represent the physicsObject on the canvas.</span>
+
+<span class="sd">        Adds a reference to the new PhysicsObject in self.physicsObjects</span>
+
+<span class="sd">        Sets physics_object.canvas_id to the canvas id (integer) resulting from drawing a shape</span>
+
+<span class="sd">        Sets physics_object.physics_canvas to a reference to this PhysicsCanvas</span>
+
+<span class="sd">        :param physics_object: A physics object to draw on the canvas</span>
+<span class="sd">        :type physics_object: :class:`Physics.PhysicsObject`</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">physics_object</span><span class="p">,</span> <span class="s1">'material'</span><span class="p">):</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">color</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">'blue'</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">side</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">side</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
+        <span class="n">y0</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">side</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">side</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
+        <span class="n">physics_object</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_rectangle</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">physics_object</span><span class="o">.</span><span class="n">physics_canvas</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">physics_object</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PhysicsCanvas.add_mass_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.add_mass_object">[docs]</a>    <span class="k">def</span> <span class="nf">add_mass_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mass_object</span><span class="p">):</span>
-        <span class="n">mass_object</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">mass_object</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
-        <span class="n">x_0</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">x_0</span>
-        <span class="n">y_0</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">y_0</span>
-        <span class="n">x_1</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">x_1</span>
-        <span class="n">y_1</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">y_1</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">color</span>
-        <span class="n">mass_object</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_oval</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mass_object</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PhysicsCanvas.update"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
         <span class="sd">"""</span>
@@ -274,85 +278,48 @@
             <span class="n">f</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PhysicsCanvas.move_physics_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.move_physics_object">[docs]</a>    <span class="k">def</span> <span class="nf">move_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_object</span><span class="p">):</span>
-        <span class="n">displacement_x</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
-        <span class="n">displacement_y</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">displacement_x</span> <span class="o">+</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_x</span> <span class="ow">and</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">displacement_x</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_x</span> <span class="ow">and</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">displacement_y</span> <span class="o">+</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_y</span> <span class="ow">and</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">displacement_y</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_y</span> <span class="ow">and</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span>
-
-        <span class="n">new_x</span> <span class="o">=</span> <span class="n">displacement_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span>
-        <span class="n">new_y</span> <span class="o">=</span> <span class="n">displacement_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span> <span class="o">-</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">moveto</span><span class="p">(</span><span class="n">physics_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">,</span> <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PhysicsCanvas.move_mass_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.move_mass_object">[docs]</a>    <span class="k">def</span> <span class="nf">move_mass_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mass_object</span><span class="p">):</span>
-        <span class="n">mass_object</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
-        <span class="n">velocity</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">velocity</span>
-        <span class="n">x_0</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">x_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="k">if</span> <span class="n">x_0</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">x_1</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">x_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="k">if</span> <span class="n">x_1</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">y_0</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">y_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="k">if</span> <span class="n">y_0</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">y_1</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">y_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="k">if</span> <span class="n">y_1</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">mass_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">moveto</span><span class="p">(</span><span class="n">mass_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PhysicsCanvas.add_force_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.add_force_object">[docs]</a>    <span class="k">def</span> <span class="nf">add_force_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_object</span><span class="p">):</span>
-        <span class="sd">"""</span>
-<span class="sd">        Renders a new force object to the canvas.</span>
-
-<span class="sd">        Sets force_object.canvas_id to the canvas id returned from generating the shape, which the canvas object uses to find the graphic rendering.</span>
-
-<span class="sd">        :param force_object: A ForceObject to add</span>
-<span class="sd">        :type force_object: :class:`Physics.ForceObject`</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force_object</span><span class="p">)</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">x_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">y_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="n">x1</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">x_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y1</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">y_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">color</span>
-        <span class="n">force_object</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_rectangle</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">'added force object </span><span class="si">{</span><span class="n">force_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PhysicsCanvas.move_force_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.move_force_object">[docs]</a>    <span class="k">def</span> <span class="nf">move_force_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_object</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        Called by :class:`Physics.ForceObject` when they need to move.</span>
 
-<span class="sd">        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas, then moves the rendering to the appropriate pixel x,y.</span>
+<span class="sd">        Checks the displacement vector of the parameter object, calculates where that should appear on the canvas,</span>
+<span class="sd">        then moves the rendering to the appropriate pixel x,y.</span>
 
-<span class="sd">        :param force_object: An object with a displacement vector that wants to move</span>
-<span class="sd">        :type force_object: extends :class:`Physics.PhysicsObject`</span>
+<span class="sd">        Currently, this is a little buggy and needs to be reworked. Positive and negative y are not accounted for correctly.</span>
+
+<span class="sd">        :param physics_object: An object with a displacement vector that wants to move</span>
+<span class="sd">        :type physics_object: extends :class:`Physics.PhysicsObject`</span>
 <span class="sd">        """</span>
-        <span class="n">velocity</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">velocity</span>
-        <span class="n">force_object</span><span class="o">.</span><span class="n">calculate_bounds</span><span class="p">()</span>
-        <span class="n">x0</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">x_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y0</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">y_0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="n">x1</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">x_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span>
-        <span class="n">y1</span> <span class="o">=</span> <span class="n">force_object</span><span class="o">.</span><span class="n">y_1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span>
-        <span class="k">if</span> <span class="n">x0</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas left physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">velocity</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">side</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">-</span> <span class="n">side</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">side</span>
+        <span class="n">y0</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">-</span> <span class="n">side</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">side</span>
+        <span class="k">if</span> <span class="n">dx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_x</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas left physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas right physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dx</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_x</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas right physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">y0</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas top physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dy</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_y</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas top physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="n">y1</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas bottom physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dy</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas bottom physics adjustment'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="n">velocity</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">moveto</span><span class="p">(</span><span class="n">force_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span></div>
+        <span class="n">new_x</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span> <span class="o">-</span> <span class="n">side</span>
+        <span class="n">new_y</span> <span class="o">=</span> <span class="n">physics_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span> <span class="o">-</span> <span class="n">side</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">moveto</span><span class="p">(</span><span class="n">physics_object</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">,</span> <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhysicsCanvas.get_physics_object_from_id"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.get_physics_object_from_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_physics_object_from_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the object with canvas id equal to id</span>
+<span class="sd">        :param id: A canvas id</span>
+<span class="sd">        :type id: int</span>
+<span class="sd">        :return: :class:`Physics.PhysicsObject`</span>
+<span class="sd">        """</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">p</span></div>
 
 <div class="viewcode-block" id="PhysicsCanvas.delete_physics_object"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.delete_physics_object">[docs]</a>    <span class="k">def</span> <span class="nf">delete_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_object</span><span class="p">):</span>
         <span class="sd">"""</span>
@@ -374,7 +341,8 @@
         <span class="sd">"""</span>
 <span class="sd">        Pops a right click option menu near the user click.</span>
 
-<span class="sd">        If there is a ForceObject within Option['click radius'] of the click, the option menu is populated with entries relating to that object. Otherwise, the entry for adding a new object is in the menu.</span>
+<span class="sd">        If there is a ForceObject within Option['click radius'] of the click, the option menu is populated with</span>
+<span class="sd">        entries relating to that object. Otherwise, the entry for adding a new object is in the menu.</span>
 
 <span class="sd">        :param event: Mouse click event</span>
 <span class="sd">        """</span>
@@ -396,13 +364,26 @@
                 <span class="k">break</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">found_match</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Add'</span><span class="p">)</span>
+            <span class="n">cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">popup_add</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Add'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">cb</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">popup_info</span><span class="p">(</span><span class="n">found_match</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'Info'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">cb</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_menu</span><span class="o">.</span><span class="n">tk_popup</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">x_root</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y_root</span><span class="p">)</span>
         <span class="c1"># self.context_menu.destroy()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context_menu</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PhysicsCanvas.popup_add"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.popup_add">[docs]</a>    <span class="k">def</span> <span class="nf">popup_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generates a callback function for use with the context menu, to popup a new window for adding a PHysics Object at the click location.</span>
+<span class="sd">        :param event: MouseEvent</span>
+<span class="sd">        :return: A callback function to be attached as a UI command</span>
+<span class="sd">        :rtype: Function</span>
+<span class="sd">        """</span>
+        <span class="k">def</span> <span class="nf">callb</span><span class="p">():</span>
+            <span class="n">PhysicsWindow</span><span class="o">.</span><span class="n">AddObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">callb</span></div>
+
 
 <div class="viewcode-block" id="PhysicsCanvas.popup_info"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.popup_info">[docs]</a>    <span class="k">def</span> <span class="nf">popup_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_object</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">"""</span>
@@ -418,36 +399,9 @@
         <span class="n">po</span> <span class="o">=</span> <span class="n">force_object</span>
 
         <span class="k">def</span> <span class="nf">callb</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">po</span><span class="p">)</span> <span class="o">==</span> <span class="n">Physics</span><span class="o">.</span><span class="n">ForceObject</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">po</span><span class="p">)</span> <span class="o">==</span> <span class="n">Physics</span><span class="o">.</span><span class="n">PhysicsObject</span><span class="p">:</span>
                 <span class="n">fow</span> <span class="o">=</span> <span class="n">PhysicsWindow</span><span class="o">.</span><span class="n">PhysicsObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">po</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">callb</span></div>
-
-<div class="viewcode-block" id="PhysicsCanvas.click_handler"><a class="viewcode-back" href="../Ui.html#Ui.PhysicsCanvas.click_handler">[docs]</a>    <span class="k">def</span> <span class="nf">click_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">"""</span>
-<span class="sd">        deprecated, slated for removal</span>
-<span class="sd">        :param event:</span>
-<span class="sd">        :return:</span>
-<span class="sd">        """</span>
-        <span class="n">radius</span> <span class="o">=</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'canvas select radius'</span><span class="p">]</span>
-        <span class="n">left</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">radius</span>
-        <span class="n">right</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">radius</span>
-        <span class="n">top</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">radius</span>
-        <span class="n">bottom</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span>
-
-        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">find_overlapping</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">)</span>
-
-        <span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="p">)):</span>
-            <span class="n">p_o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_objects</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">p_o</span><span class="p">)</span> <span class="o">==</span> <span class="n">Physics</span><span class="o">.</span><span class="n">ForceObject</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)):</span>
-                    <span class="n">target_id</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="n">p_o</span><span class="o">.</span><span class="n">canvas_id</span> <span class="o">==</span> <span class="n">target_id</span><span class="p">:</span>
-                        <span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_o</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">force_object</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
-            <span class="n">Window</span><span class="o">.</span><span class="n">PhysicsObjectWindow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">force_object</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">callb</span></div></div>
 
 
 <div class="viewcode-block" id="TimeSelector"><a class="viewcode-back" href="../Ui.html#Ui.TimeSelector">[docs]</a><span class="k">class</span> <span class="nc">TimeSelector</span><span class="p">:</span>
@@ -551,12 +505,38 @@
 <span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
         <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">"Clear"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_press</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_button</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<div class="viewcode-block" id="EnvironmentTab.clear_press"><a class="viewcode-back" href="../Ui.html#Ui.EnvironmentTab.clear_press">[docs]</a>    <span class="k">def</span> <span class="nf">clear_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Deletes all refs in physics Canvas</span>
+<span class="sd">        Closes all hanging windows</span>
+
+<span class="sd">        Clears canvas of extant physics objects</span>
+
+<span class="sd">        Removes interacting forces</span>
+<span class="sd">        """</span>
+
+        <span class="k">for</span> <span class="n">win</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">additional_windows</span><span class="p">:</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">del_win</span><span class="p">()</span>
+
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">physics_objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">physics_objects</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">pos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">canvas_id</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">force</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">interacting_forces</span><span class="p">:</span>
+            <span class="n">force</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="OptionsTab"><a class="viewcode-back" href="../Ui.html#Ui.OptionsTab">[docs]</a><span class="k">class</span> <span class="nc">OptionsTab</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    Presumably will have options components</span>
+<span class="sd">    Will have UI components for changing values such as in Options.Options</span>
+
 <span class="sd">    """</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
         <span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>

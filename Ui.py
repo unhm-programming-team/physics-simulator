@@ -86,8 +86,7 @@ class PhysicsCanvas:
         self.canvas['bd'] = Options['canvas border width']
         self.canvas['bg'] = Options['canvas background color']
 
-        # set click handler
-        self.canvas.bind("<Button-1>", self.click_handler)
+        # set click handlers
         self.canvas.bind("<Button-3>", self.context_popup)
 
         self.physics_objects = []
@@ -99,13 +98,27 @@ class PhysicsCanvas:
 
     def draw_cartesian(self):
         """
-        Draw axis lines
+        Draw axis lines.
         """
         color = Options['canvas axis color']
         self.canvas.create_line(0, self.origin_y, self.width, self.origin_y, fill=color)
         self.canvas.create_line(self.origin_x, 0, self.origin_x, self.height, fill=color)
 
     def add_physics_object(self, physics_object):
+        """
+        This replaced redundant methods add_force_object, add_vector_object, etc. in the refactor. Those classes were also all merged into PhysicsObject.
+
+        Draws a rectangle to represent the physicsObject on the canvas.
+
+        Adds a reference to the new PhysicsObject in self.physicsObjects
+
+        Sets physics_object.canvas_id to the canvas id (integer) resulting from drawing a shape
+
+        Sets physics_object.physics_canvas to a reference to this PhysicsCanvas
+
+        :param physics_object: A physics object to draw on the canvas
+        :type physics_object: :class:`Physics.PhysicsObject`
+        """
         if hasattr(physics_object, 'material'):
             color = physics_object.material.color
         else:
@@ -136,6 +149,8 @@ class PhysicsCanvas:
         Checks the displacement vector of the parameter object, calculates where that should appear on the canvas,
         then moves the rendering to the appropriate pixel x,y.
 
+        Currently, this is a little buggy and needs to be reworked. Positive and negative y are not accounted for correctly.
+
         :param physics_object: An object with a displacement vector that wants to move
         :type physics_object: extends :class:`Physics.PhysicsObject`
         """
@@ -164,6 +179,7 @@ class PhysicsCanvas:
         """
         Returns the object with canvas id equal to id
         :param id: A canvas id
+        :type id: int
         :return: :class:`Physics.PhysicsObject`
         """
         for p in self.physics_objects:
@@ -190,7 +206,8 @@ class PhysicsCanvas:
         """
         Pops a right click option menu near the user click.
 
-        If there is a ForceObject within Option['click radius'] of the click, the option menu is populated with entries relating to that object. Otherwise, the entry for adding a new object is in the menu.
+        If there is a ForceObject within Option['click radius'] of the click, the option menu is populated with
+        entries relating to that object. Otherwise, the entry for adding a new object is in the menu.
 
         :param event: Mouse click event
         """
@@ -250,33 +267,6 @@ class PhysicsCanvas:
             if type(po) == Physics.PhysicsObject:
                 fow = PhysicsWindow.PhysicsObjectWindow(self.window, po, event.x, event.y)
         return callb
-
-    def click_handler(self, event):
-        """
-        deprecated, slated for removal
-        :param event:
-        :return:
-        """
-        radius = Options['canvas select radius']
-        left = event.x - radius
-        right = event.x + radius
-        top = event.y - radius
-        bottom = event.y + radius
-
-        results = self.canvas.find_overlapping(left, top, right, bottom)
-
-        objects = []
-
-        for i in range(0, len(self.physics_objects)):
-            p_o = self.physics_objects[i]
-            if type(p_o) == Physics.PhysicsObject:
-                for c in range(0,len(results)):
-                    target_id = results[c]
-                    if p_o.canvas_id == target_id:
-                        objects.append(p_o)
-
-        for force_object in objects:
-            PhysicsWindow.PhysicsObjectWindow(self.window, force_object)
 
 
 class TimeSelector:
@@ -389,7 +379,10 @@ class EnvironmentTab(ttk.Frame):
         """
         Deletes all refs in physics Canvas
         Closes all hanging windows
-        :return:
+
+        Clears canvas of extant physics objects
+
+        Removes interacting forces
         """
 
         for win in self.window.additional_windows:
@@ -407,7 +400,8 @@ class EnvironmentTab(ttk.Frame):
 
 class OptionsTab(ttk.Frame):
     """
-    Presumably will have options components
+    Will have UI components for changing values such as in Options.Options
+
     """
     def __init__(self, parent, window):
         ttk.Frame.__init__(self, parent)

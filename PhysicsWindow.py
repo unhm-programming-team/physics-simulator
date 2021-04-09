@@ -169,7 +169,12 @@ class PhysicsObjectWindow(PhysicsWindow):
 
 class AddObjectWindow(PhysicsWindow):
     """
-    Not yet implemented - will open a new window for adding a new object to the physics canvas
+    Opens a new window with entry fields for adding a new PhysicsObject to the canvas.
+
+    :param window: The root window
+    :type window: :class:`Ui.MainWindow`
+    :param event: A Mousevent
+    :type event: Tk.MouseEvent ?
     """
     def __init__(self, window, event):
         PhysicsWindow.__init__(self, window)
@@ -200,6 +205,13 @@ class AddObjectWindow(PhysicsWindow):
         self.root.mainloop()
 
     def add_button_press(self):
+        """
+        Executed when user clicks Add button.
+
+        Creates PhysicsObject, calls PhysicsCanvas.add_physics_object
+
+        Deltes and closes the window
+        """
         material = Substance.MATERIALS[self.listbox.get()]
         mass = float(self.mass_entry.get())
         new_object = Physics.PhysicsObject(material, mass)

@@ -27,4 +27,5 @@ MATERIALS = {
     "cork": Material(240, '#C8985E', 'cork')
 }
 """
+Add new materials to this list to have them appear as options in application selection menus.
 """

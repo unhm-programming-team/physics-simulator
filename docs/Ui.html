@@ -140,6 +140,14 @@
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">EnvironmentTab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#EnvironmentTab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.EnvironmentTab" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.ttk.Frame</span></code></p>
 <p>Will have environment options like grav, air resistance, maybe scaling</p>
+<dl class="py method">
+<dt id="Ui.EnvironmentTab.clear_press">
+<code class="sig-name descname"><span class="pre">clear_press</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#EnvironmentTab.clear_press"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.EnvironmentTab.clear_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all refs in physics Canvas
+Closes all hanging windows</p>
+<p>Clears canvas of extant physics objects</p>
+<p>Removes interacting forces</p>
+</dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt id="Ui.MainWindow">
@@ -171,7 +179,7 @@
 <dt id="Ui.OptionsTab">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Ui.</span></code><code class="sig-name descname"><span class="pre">OptionsTab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#OptionsTab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.OptionsTab" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tkinter.ttk.Frame</span></code></p>
-<p>Presumably will have options components</p>
+<p>Will have UI components for changing values such as in Options.Options</p>
 </dd></dl>
 <dl class="py class">
 <dt id="Ui.PhysicsCanvas">
@@ -180,36 +188,25 @@
 <p>Controls the drawing of PhysicsObjects and inheriting classes on a canvas</p>
 <p>Sets origin to center and calculates actual pixel coordinates from object displacement vectors.</p>
 <dl class="py method">
-<dt id="Ui.PhysicsCanvas.add_force_object">
-<code class="sig-name descname"><span class="pre">add_force_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_force_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_force_object" title="Permalink to this definition">¶</a></dt>
-<dd><p>Renders a new force object to the canvas.</p>
-<p>Sets force_object.canvas_id to the canvas id returned from generating the shape, which the canvas object uses to find the graphic rendering.</p>
+<dt id="Ui.PhysicsCanvas.add_physics_object">
+<code class="sig-name descname"><span class="pre">add_physics_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_physics_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_physics_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This replaced redundant methods add_force_object, add_vector_object, etc. in the refactor. Those classes were also all merged into PhysicsObject.</p>
+<p>Draws a rectangle to represent the physicsObject on the canvas.</p>
+<p>Adds a reference to the new PhysicsObject in self.physicsObjects</p>
+<p>Sets physics_object.canvas_id to the canvas id (integer) resulting from drawing a shape</p>
+<p>Sets physics_object.physics_canvas to a reference to this PhysicsCanvas</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>force_object</strong> (<a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a>) – A ForceObject to add</p>
+<dd class="field-odd"><p><strong>physics_object</strong> (<a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a>) – A physics object to draw on the canvas</p>
 </dd>
 </dl>
-</dd></dl>
-<dl class="py method">
-<dt id="Ui.PhysicsCanvas.add_gravity_vector_object">
-<code class="sig-name descname"><span class="pre">add_gravity_vector_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acceleration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blue'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_gravity_vector_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_gravity_vector_object" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt id="Ui.PhysicsCanvas.add_mass_object">
-<code class="sig-name descname"><span class="pre">add_mass_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.add_mass_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.add_mass_object" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt id="Ui.PhysicsCanvas.click_handler">
-<code class="sig-name descname"><span class="pre">click_handler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.click_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.click_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>deprecated, slated for removal
-:param event:
-:return:</p>
 </dd></dl>
 <dl class="py method">
 <dt id="Ui.PhysicsCanvas.context_popup">
 <code class="sig-name descname"><span class="pre">context_popup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.context_popup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.context_popup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pops a right click option menu near the user click.</p>
-<p>If there is a ForceObject within Option[‘click radius’] of the click, the option menu is populated with entries relating to that object. Otherwise, the entry for adding a new object is in the menu.</p>
+<p>If there is a ForceObject within Option[‘click radius’] of the click, the option menu is populated with
+entries relating to that object. Otherwise, the entry for adding a new object is in the menu.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>event</strong> – Mouse click event</p>
@@ -222,12 +219,25 @@
 <dd><p>Deletes an object and removes its rendering from the canvas.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>physics_object</strong> (extends <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code>) – Object to delete</p>
+<dd class="field-odd"><p><strong>physics_object</strong> (extends <a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a>) – Object to delete</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.draw_cartesian">
+<code class="sig-name descname"><span class="pre">draw_cartesian</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.draw_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.draw_cartesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw axis lines.</p>
+</dd></dl>
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.get_physics_object_from_id">
+<code class="sig-name descname"><span class="pre">get_physics_object_from_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.get_physics_object_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.get_physics_object_from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the object with canvas id equal to id
+:param id: A canvas id
+:type id: int
+:return: <a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a></p>
 </dd></dl>
 <dl class="py attribute">
 <dt id="Ui.PhysicsCanvas.interacting_forces">
@@ -235,28 +245,30 @@
 <dd><p>Instances from, e.g. <a class="reference internal" href="Physics.html#Physics.GravitationalForceGenerator" title="Physics.GravitationalForceGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.GravitationalForceGenerator</span></code></a> that need to be have update called</p>
 </dd></dl>
 <dl class="py method">
-<dt id="Ui.PhysicsCanvas.move_force_object">
-<code class="sig-name descname"><span class="pre">move_force_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_force_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_force_object" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called by <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a> when they need to move.</p>
-<p>Checks the displacement vector of the parameter object, calculates where that should appear on the canvas, then moves the rendering to the appropriate pixel x,y.</p>
+<dt id="Ui.PhysicsCanvas.move_physics_object">
+<code class="sig-name descname"><span class="pre">move_physics_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_physics_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_physics_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code> when they need to move.</p>
+<p>Checks the displacement vector of the parameter object, calculates where that should appear on the canvas,
+then moves the rendering to the appropriate pixel x,y.</p>
+<p>Currently, this is a little buggy and needs to be reworked. Positive and negative y are not accounted for correctly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>force_object</strong> (extends <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code>) – An object with a displacement vector that wants to move</p>
+<dd class="field-odd"><p><strong>physics_object</strong> (extends <a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a>) – An object with a displacement vector that wants to move</p>
 </dd>
 </dl>
 </dd></dl>
-<dl class="py method">
-<dt id="Ui.PhysicsCanvas.move_mass_object">
-<code class="sig-name descname"><span class="pre">move_mass_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_mass_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_mass_object" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt id="Ui.PhysicsCanvas.move_physics_object">
-<code class="sig-name descname"><span class="pre">move_physics_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.move_physics_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.move_physics_object" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 <dl class="py attribute">
 <dt id="Ui.PhysicsCanvas.physics_objects">
 <code class="sig-name descname"><span class="pre">physics_objects</span></code><a class="headerlink" href="#Ui.PhysicsCanvas.physics_objects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instances from e.g., <a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a> that need to be have update called</p>
+<dd><p>Instances from e.g., <code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code> that need to be have update called</p>
+</dd></dl>
+<dl class="py method">
+<dt id="Ui.PhysicsCanvas.popup_add">
+<code class="sig-name descname"><span class="pre">popup_add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#PhysicsCanvas.popup_add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.PhysicsCanvas.popup_add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a callback function for use with the context menu, to popup a new window for adding a PHysics Object at the click location.
+:param event: MouseEvent
+:return: A callback function to be attached as a UI command
+:rtype: Function</p>
 </dd></dl>
 <dl class="py method">
 <dt id="Ui.PhysicsCanvas.popup_info">
@@ -265,7 +277,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>force_object</strong> (<a class="reference internal" href="Physics.html#Physics.ForceObject" title="Physics.ForceObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code></a>) – The physics object to link</p></li>
+<li><p><strong>force_object</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.ForceObject</span></code>) – The physics object to link</p></li>
 <li><p><strong>event</strong> – Mouse click event</p></li>
 </ul>
 </dd>

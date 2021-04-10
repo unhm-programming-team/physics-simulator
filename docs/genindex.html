@@ -110,6 +110,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">physics-simulator</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="DebugTab.html">DebugTab module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Options.html">Options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Particle.html">Particle module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Physics.html">Physics module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="PhysicsWindow.html">PhysicsWindow module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Substance.html">Substance module</a></li>
@@ -152,11 +153,15 @@
           <li><a href="PhysicsWindow.html#PhysicsWindow.AddObjectWindow.add_button_press">(PhysicsWindow.AddObjectWindow method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="Physics.html#Physics.Vector.add_make">add_make() (Physics.Vector method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="Ui.html#Ui.PhysicsCanvas.add_physics_object">add_physics_object() (Ui.PhysicsCanvas method)</a>
+</li>
+        <li><a href="DebugTab.html#DebugTab.ForceObjectAdder.add_test_collision">add_test_collision() (DebugTab.ForceObjectAdder method)</a>
+</li>
+        <li><a href="Particle.html#Particle.Particle.add_to">add_to() (Particle.Particle method)</a>
 </li>
         <li><a href="Ui.html#Ui.MainWindow.additional_windows">additional_windows (Ui.MainWindow attribute)</a>
 </li>
@@ -174,14 +179,18 @@
 </li>
         <li><a href="Physics.html#Physics.Vector.calculate_components">calculate_components() (Physics.Vector method)</a>
 </li>
-        <li><a href="Physics.html#Physics.PhysicsObject.canvas_id">canvas_id (Physics.PhysicsObject attribute)</a>
+        <li><a href="Particle.html#Particle.Particle.canvas_id">canvas_id (Particle.Particle attribute)</a>
+
+        <ul>
+          <li><a href="Physics.html#Physics.PhysicsObject.canvas_id">(Physics.PhysicsObject attribute)</a>
 </li>
+        </ul></li>
         <li><a href="Utility.html#Utility.center">center() (in module Utility)</a>
-</li>
-        <li><a href="Physics.html#Physics.PhysicsObject.check_collision">check_collision() (Physics.PhysicsObject method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="Physics.html#Physics.PhysicsObject.check_collision">check_collision() (Physics.PhysicsObject method)</a>
+</li>
         <li><a href="Physics.html#Physics.PhysicsObject.clear_forces">clear_forces() (Physics.PhysicsObject method)</a>
 </li>
         <li><a href="Ui.html#Ui.EnvironmentTab.clear_press">clear_press() (Ui.EnvironmentTab method)</a>
@@ -211,16 +220,28 @@
 </li>
         <li><a href="PhysicsWindow.html#PhysicsWindow.PhysicsWindow.del_win">del_win() (PhysicsWindow.PhysicsWindow method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow.delete_button">delete_button() (PhysicsWindow.PhysicsObjectWindow method)</a>
 </li>
         <li><a href="Ui.html#Ui.PhysicsCanvas.delete_physics_object">delete_physics_object() (Ui.PhysicsCanvas method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="Physics.html#Physics.PhysicsObject.dependent_force_generators">dependent_force_generators (Physics.PhysicsObject attribute)</a>
 </li>
-        <li><a href="Physics.html#Physics.PhysicsObject.displacement">displacement (Physics.PhysicsObject attribute)</a>
+        <li><a href="Particle.html#Particle.Particle.displacement">displacement (Particle.Particle attribute)</a>
+
+        <ul>
+          <li><a href="Physics.html#Physics.PhysicsObject.displacement">(Physics.PhysicsObject attribute)</a>
 </li>
+        </ul></li>
+        <li><a href="Particle.html#Particle.Line.draw">draw() (Particle.Line method)</a>
+
+        <ul>
+          <li><a href="Particle.html#Particle.Particle.draw">(Particle.Particle method)</a>
+</li>
+          <li><a href="Particle.html#Particle.Triangle.draw">(Particle.Triangle method)</a>
+</li>
+        </ul></li>
         <li><a href="Ui.html#Ui.PhysicsCanvas.draw_cartesian">draw_cartesian() (Ui.PhysicsCanvas method)</a>
 </li>
     </ul></td>
@@ -305,6 +326,8 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="Particle.html#Particle.Line">Line (class in Particle)</a>
+</li>
         <li><a href="Ui.html#Ui.MainWindow.log">log (Ui.MainWindow attribute)</a>
 </li>
     </ul></td>
@@ -337,8 +360,6 @@
 </li>
         <li><a href="Substance.html#Substance.MATERIALS">MATERIALS (in module Substance)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     module
 
@@ -346,6 +367,8 @@
           <li><a href="DebugTab.html#module-DebugTab">DebugTab</a>
 </li>
           <li><a href="Options.html#module-Options">Options</a>
+</li>
+          <li><a href="Particle.html#module-Particle">Particle</a>
 </li>
           <li><a href="Physics.html#module-Physics">Physics</a>
 </li>
@@ -358,6 +381,8 @@
           <li><a href="Utility.html#module-Utility">Utility</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="Ui.html#Ui.PhysicsCanvas.move_physics_object">move_physics_object() (Ui.PhysicsCanvas method)</a>
 </li>
     </ul></td>
@@ -402,22 +427,37 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li>
+    Particle
+
+        <ul>
+          <li><a href="Particle.html#module-Particle">module</a>
+</li>
+        </ul></li>
+        <li><a href="Particle.html#Particle.Particle">Particle (class in Particle)</a>
+</li>
+        <li><a href="DebugTab.html#DebugTab.ForceObjectAdder.particle_test">particle_test() (DebugTab.ForceObjectAdder method)</a>
+</li>
+        <li>
     Physics
 
         <ul>
           <li><a href="Physics.html#module-Physics">module</a>
 </li>
         </ul></li>
-        <li><a href="Physics.html#Physics.PhysicsObject.physics_canvas">physics_canvas (Physics.PhysicsObject attribute)</a>
+        <li><a href="Particle.html#Particle.Particle.physics_canvas">physics_canvas (Particle.Particle attribute)</a>
+
+        <ul>
+          <li><a href="Physics.html#Physics.PhysicsObject.physics_canvas">(Physics.PhysicsObject attribute)</a>
 </li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="Ui.html#Ui.PhysicsCanvas.physics_objects">physics_objects (Ui.PhysicsCanvas attribute)</a>
 </li>
         <li><a href="Ui.html#Ui.PhysicsCanvas">PhysicsCanvas (class in Ui)</a>
 </li>
         <li><a href="Physics.html#Physics.PhysicsObject">PhysicsObject (class in Physics)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="PhysicsWindow.html#PhysicsWindow.PhysicsObjectWindow">PhysicsObjectWindow (class in PhysicsWindow)</a>
 </li>
         <li>
@@ -500,11 +540,23 @@
   <h2>T</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="Particle.html#Particle.Particle.time_remaining">time_remaining (Particle.Particle attribute)</a>
+</li>
         <li><a href="Ui.html#Ui.TimeSelector">TimeSelector (class in Ui)</a>
+</li>
+        <li><a href="Ui.html#Ui.TimeSelector.toggle_run_button">toggle_run_button() (Ui.TimeSelector method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="Ui.html#Ui.TimeSelector.toggle_run_button">toggle_run_button() (Ui.TimeSelector method)</a>
+        <li><a href="Particle.html#Particle.Line.transform">transform() (Particle.Line method)</a>
+
+        <ul>
+          <li><a href="Particle.html#Particle.Particle.transform">(Particle.Particle method)</a>
+</li>
+          <li><a href="Particle.html#Particle.Triangle.transform">(Particle.Triangle method)</a>
+</li>
+        </ul></li>
+        <li><a href="Particle.html#Particle.Triangle">Triangle (class in Particle)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -521,9 +573,11 @@
           <li><a href="Ui.html#module-Ui">module</a>
 </li>
         </ul></li>
-        <li><a href="Physics.html#Physics.Force.update">update() (Physics.Force method)</a>
+        <li><a href="Particle.html#Particle.Particle.update">update() (Particle.Particle method)</a>
 
         <ul>
+          <li><a href="Physics.html#Physics.Force.update">(Physics.Force method)</a>
+</li>
           <li><a href="Physics.html#Physics.GravitationalForceGenerator.update">(Physics.GravitationalForceGenerator method)</a>
 </li>
           <li><a href="Physics.html#Physics.PhysicsObject.update">(Physics.PhysicsObject method)</a>

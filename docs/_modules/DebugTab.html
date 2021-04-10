@@ -111,6 +111,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../modules.html">physics-simulator</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label for="toctree-checkbox-1"><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../DebugTab.html">DebugTab module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Options.html">Options module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Particle.html">Particle module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Physics.html">Physics module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PhysicsWindow.html">PhysicsWindow module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Substance.html">Substance module</a></li>
@@ -141,14 +142,15 @@
 
 <span class="sd">The DebugTab contains buttons for adding objects, for testing purposes. The panels for adding those objects are part</span>
 <span class="sd">of this module. """</span>
-
+<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span><span class="p">,</span> <span class="n">colorchooser</span>
 
+<span class="kn">import</span> <span class="nn">Particle</span>
 <span class="kn">import</span> <span class="nn">Utility</span><span class="o">,</span> <span class="nn">Substance</span><span class="o">,</span> <span class="nn">Physics</span>
 <span class="kn">from</span> <span class="nn">Options</span> <span class="kn">import</span> <span class="n">Options</span>
 
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">math</span>
 
 
 <div class="viewcode-block" id="LogTab"><a class="viewcode-back" href="../DebugTab.html#DebugTab.LogTab">[docs]</a><span class="k">class</span> <span class="nc">LogTab</span><span class="p">(</span><span class="n">ttk</span><span class="o">.</span><span class="n">Frame</span><span class="p">):</span>
@@ -232,7 +234,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_button</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'add Force Object'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_button_press</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_collision</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'test collision'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">add_test_collision</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_collision</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_test</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'particle test'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">particle_test</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">particle_test</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">force_objects</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">'&lt;Down&gt;'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_handler</span><span class="p">)</span>
@@ -264,7 +272,58 @@
             <span class="n">direction</span> <span class="o">=</span> <span class="s1">'w'</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">force_objects</span><span class="p">)):</span>
             <span class="n">force</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Force</span><span class="o">.</span><span class="n">make_directional_force</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'key force magnitude'</span><span class="p">],</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'key force duration'</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">force_objects</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">force_objects</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ForceObjectAdder.particle_test"><a class="viewcode-back" href="../DebugTab.html#DebugTab.ForceObjectAdder.particle_test">[docs]</a>    <span class="k">def</span> <span class="nf">particle_test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">particle</span> <span class="o">=</span> <span class="n">Particle</span><span class="o">.</span><span class="n">Particle</span><span class="p">()</span>
+        <span class="n">physics_canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span>
+        <span class="n">particle</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">physics_canvas</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ForceObjectAdder.add_test_collision"><a class="viewcode-back" href="../DebugTab.html#DebugTab.ForceObjectAdder.add_test_collision">[docs]</a>    <span class="k">def</span> <span class="nf">add_test_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">physics_canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">physics_canvas</span>
+        <span class="n">ob1</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">PhysicsObject</span><span class="p">(</span><span class="n">Substance</span><span class="o">.</span><span class="n">MATERIALS</span><span class="p">[</span><span class="s1">'chalk'</span><span class="p">],</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'default mass'</span><span class="p">])</span>
+        <span class="n">ob1</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="s1">'NE'</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="n">ob2</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">PhysicsObject</span><span class="p">(</span><span class="n">Substance</span><span class="o">.</span><span class="n">MATERIALS</span><span class="p">[</span><span class="s1">'maple'</span><span class="p">],</span> <span class="n">Options</span><span class="p">[</span><span class="s1">'default mass'</span><span class="p">])</span>
+        <span class="n">ob2</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_directional_vector</span><span class="p">(</span><span class="s1">'NW'</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+        <span class="n">x1</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">physics_canvas</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">physics_canvas</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">ob1</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">ob2</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">physics_canvas</span><span class="o">.</span><span class="n">add_physics_object</span><span class="p">(</span><span class="n">ob1</span><span class="p">)</span>
+        <span class="n">physics_canvas</span><span class="o">.</span><span class="n">add_physics_object</span><span class="p">(</span><span class="n">ob2</span><span class="p">)</span>
+
+
+        <span class="c1"># try adding a test triangle vector to check our math on vector intersections</span>
+        <span class="n">ob1_to_2</span> <span class="o">=</span> <span class="n">ob2</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">subtract_make</span><span class="p">(</span><span class="n">ob1</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>  <span class="c1"># A Vector</span>
+        <span class="n">ob2_to_1</span> <span class="o">=</span> <span class="n">ob1</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">subtract_make</span><span class="p">(</span><span class="n">ob2</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>
+
+        <span class="n">ob1_inner_angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">ob1</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span> <span class="o">-</span> <span class="n">ob1_to_2</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">ob2_inner_angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">ob2</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span> <span class="o">-</span> <span class="n">ob2_to_1</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">missing_inner_angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">-</span> <span class="n">ob1_inner_angle</span> <span class="o">-</span> <span class="n">ob2_inner_angle</span>
+        <span class="n">ob1_to_collision_length</span> <span class="o">=</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">ob2_inner_angle</span><span class="p">)</span><span class="o">*</span><span class="n">ob1_to_2</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">missing_inner_angle</span><span class="p">))</span>
+        <span class="n">ob1_to_collision</span> <span class="o">=</span> <span class="n">Physics</span><span class="o">.</span><span class="n">Vector</span><span class="p">(</span><span class="n">ob1</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">ob1_to_collision_length</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'ob1 vel'</span><span class="p">,</span> <span class="n">ob1</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'ob2 vel'</span><span class="p">,</span> <span class="n">ob2</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'vec between'</span><span class="p">,</span> <span class="n">ob1_to_2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'vec between back'</span><span class="p">,</span> <span class="n">ob2_to_1</span><span class="p">)</span>
+
+        <span class="n">line2</span> <span class="o">=</span> <span class="n">Particle</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ob2</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="s1">'black'</span><span class="p">)</span>
+        <span class="n">line2</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">ob2</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">line2</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">physics_canvas</span><span class="p">)</span>
+
+        <span class="n">line3</span> <span class="o">=</span> <span class="n">Particle</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ob1_to_2</span><span class="p">,</span> <span class="s1">'black'</span><span class="p">)</span>
+        <span class="n">line3</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">ob1</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">line3</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">physics_canvas</span><span class="p">)</span>
+
+        <span class="n">line5</span> <span class="o">=</span> <span class="n">Particle</span><span class="o">.</span><span class="n">Line</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ob1_to_collision</span><span class="p">,</span> <span class="s1">'green'</span><span class="p">)</span>
+        <span class="n">line5</span><span class="o">.</span><span class="n">displacement</span> <span class="o">=</span> <span class="n">ob1</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">line5</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">physics_canvas</span><span class="p">)</span></div></div>
+
 
 </pre></div>
       </article>

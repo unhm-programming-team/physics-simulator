@@ -6,6 +6,7 @@ physics-simulator
 
    DebugTab
    Options
+   Particle
    Physics
    PhysicsWindow
    Substance

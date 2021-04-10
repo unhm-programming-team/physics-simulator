@@ -147,39 +147,45 @@ class ForceObjectAdder:
     def add_test_collision(self):
         physics_canvas = self.window.physics_canvas
         ob1 = Physics.PhysicsObject(Substance.MATERIALS['chalk'], Options['default mass'])
-        ob1.velocity = Physics.Vector.make_directional_vector('SE', 20)
+        ob1.velocity = Physics.Vector.make_directional_vector('NE', 20)
         ob2 = Physics.PhysicsObject(Substance.MATERIALS['maple'], Options['default mass'])
-        ob2.velocity = Physics.Vector.make_directional_vector('SW', 20)
+        ob2.velocity = Physics.Vector.make_directional_vector('NW', 20)
 
         x1 = -(random.random() * physics_canvas.width/2)
-        x2 = random.random() * physics_canvas.width/2
+        x2 = (random.random() * physics_canvas.width/2)
 
-        ob1.displacement = Physics.Vector.make_vector_from_components(x1, 10)
-        ob2.displacement = Physics.Vector.make_vector_from_components(x2, 50)
-
-        # try adding a test triangle vector to check our math on vector intersections
-        ob1_to_2 = ob2.displacement.subtract_make(ob1.displacement)  # A Vector
-        distance_between = ob1_to_2.magnitude
-        missing_angle = (math.pi - ob1.velocity.angle - ((math.pi/2)-ob1.velocity.angle))
-        ob1_distance_to_collision = (distance_between * math.sin(ob2.velocity.angle))/math.sin(missing_angle)
-        ob1_to_collision = Physics.Vector(ob1.velocity.angle, ob1_distance_to_collision)
-
-
-        print(f"ob1 v: {ob1.velocity}")
-        print(f"ob2 v: {ob2.velocity}")
-        print(f"ob1_to_2: {ob1_to_2}")
-        print(f"ob1_to_collision: {ob1_to_collision}")
-        # tri = Particle.Triangle(2, 0, 0, ob1_to_2.x, ob1_to_2.y, ob1_to_collision.x, ob1_to_collision.y)
-        line1 = Particle.Line(3, 0, 0, ob1_to_2.x, ob1_to_2.y)
-        line1.displacement = ob1.displacement.scale_make(1)
-        line2 = Particle.Line(3, 0, 0, ob1_to_collision.x, ob1_to_collision.y )
-        line2.displacement = ob1.displacement.scale_make(1)
-        line2.add_to(physics_canvas)
-        line1.add_to(physics_canvas)
-        # tri.displacement = ob1.displacement.scale_make(1)
-        # tri.add_to(physics_canvas)
+        ob1.displacement = Physics.Vector.make_vector_from_components(x1, 50)
+        ob2.displacement = Physics.Vector.make_vector_from_components(x2, 10)
 
         physics_canvas.add_physics_object(ob1)
         physics_canvas.add_physics_object(ob2)
+
+
+        # try adding a test triangle vector to check our math on vector intersections
+        ob1_to_2 = ob2.displacement.subtract_make(ob1.displacement)  # A Vector
+        ob2_to_1 = ob1.displacement.subtract_make(ob2.displacement)
+
+        ob1_inner_angle = math.fabs(ob1.velocity.angle - ob1_to_2.angle)
+        ob2_inner_angle = math.fabs(ob2.velocity.angle - ob2_to_1.angle)
+        missing_inner_angle = math.pi - ob1_inner_angle - ob2_inner_angle
+        ob1_to_collision_length = (math.sin(ob2_inner_angle)*ob1_to_2.magnitude)/(math.sin(missing_inner_angle))
+        ob1_to_collision = Physics.Vector(ob1.velocity.angle, ob1_to_collision_length)
+
+        print('ob1 vel', ob1.velocity)
+        print('ob2 vel', ob2.velocity)
+        print('vec between', ob1_to_2)
+        print('vec between back', ob2_to_1)
+
+        line2 = Particle.Line(3, ob2.velocity.scale_make(2), 'black')
+        line2.displacement = ob2.displacement.scale_make(1)
+        line2.add_to(physics_canvas)
+
+        line3 = Particle.Line(3, ob1_to_2, 'black')
+        line3.displacement = ob1.displacement.scale_make(1)
+        line3.add_to(physics_canvas)
+
+        line5 = Particle.Line(3, ob1_to_collision, 'green')
+        line5.displacement = ob1.displacement.scale_make(1)
+        line5.add_to(physics_canvas)
 
 

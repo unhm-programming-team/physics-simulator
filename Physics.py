@@ -104,7 +104,7 @@ class Vector:
         """
         new_x = self.x - other_vector.x
         new_y = self.y - other_vector.y
-        return Vector.make_vector_from_components(new_x,new_y)
+        return Vector.make_vector_from_components(new_x, new_y)
 
     def add(self, other_vector):
         """
@@ -221,6 +221,11 @@ class Vector:
         return Vector(angle, magnitude)
 
     def __repr__(self):
+        """
+        Changes what's output when calling print(Vector) so useful information about the vector is displayed
+        :return: A string of details about this vector
+        :rtype: string
+        """
         return f"Vec({round(self.x,3)}, {round(self.y,3)})    a:{round(math.degrees(self.angle),3)} mag:{round(self.magnitude, 3)}"
 
 

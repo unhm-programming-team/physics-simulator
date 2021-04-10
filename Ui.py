@@ -131,6 +131,7 @@ class PhysicsCanvas:
         physics_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
         physics_object.physics_canvas = self
         self.physics_objects.append(physics_object)
+        self.move_physics_object(physics_object)
 
     def update(self, interval):
         """
@@ -165,13 +166,13 @@ class PhysicsCanvas:
         x1 = dx + side
         y0 = dy - side
         y1 = dy + side
-        if dx < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
+        if x0 < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
             velocity.x *= -1
-        elif dx > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
+        elif x1 > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
             velocity.x *= -1
-        if dy < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0:
+        if y0 < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0:
             velocity.y *= -1
-        elif dy > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0:
+        elif y1 > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0:
             velocity.y *= -1
         velocity.calculate_angles()
         new_x = physics_object.displacement.x + self.origin_x - side
@@ -399,6 +400,9 @@ class EnvironmentTab(ttk.Frame):
 
         for force in self.window.physics_canvas.interacting_forces:
             force.remove()
+
+        for particle in self.window.physics_canvas.particles:
+            self.window.physics_canvas.canvas.delete(particle.canvas_id)
 
 
 class OptionsTab(ttk.Frame):

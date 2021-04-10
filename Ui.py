@@ -93,6 +93,7 @@ class PhysicsCanvas:
         """Instances from e.g., :class:`Physics.ForceObject` that need to be have update called"""
         self.interacting_forces = []
         """Instances from, e.g. :class:`Physics.GravitationalForceGenerator` that need to be have update called"""
+        self.particles = []
         self.canvas.grid()
         self.draw_cartesian()
 
@@ -141,6 +142,8 @@ class PhysicsCanvas:
             o.update(interval)
         for f in self.interacting_forces:
             f.update(interval)
+        for p in self.particles:
+            p.update(interval)
 
     def move_physics_object(self, physics_object):
         """
@@ -172,7 +175,7 @@ class PhysicsCanvas:
             velocity.y *= -1
         velocity.calculate_angles()
         new_x = physics_object.displacement.x + self.origin_x - side
-        new_y = physics_object.displacement.y + self.origin_y - side
+        new_y = self.origin_y - (physics_object.displacement.y + side)
         self.canvas.moveto(physics_object.canvas_id, new_x, new_y)
 
     def get_physics_object_from_id(self, id):

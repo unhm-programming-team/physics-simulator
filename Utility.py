@@ -74,8 +74,8 @@ def find_intersecting_point(line1, line2):
     :rtype: Tuple
 
     """
-    print(f"line1: {line1}")
-    print(f"line2: {line2}")
+    # print(f"line1: {line1}")
+    # print(f"line2: {line2}")
     slope1, intercept1, vertical1, end_point1 = line1
     slope2, intercept2, vertical2, end_point2 = line2
     x1, y1 = end_point1

@@ -220,6 +220,9 @@ class Vector:
             angle = 0.7853981633974483
         return Vector(angle, magnitude)
 
+    def __repr__(self):
+        return f"Vec({round(self.x,3)}, {round(self.y,3)})    a:{round(math.degrees(self.angle),3)} mag:{round(self.magnitude, 3)}"
+
 
 class Force(Vector):
     """
@@ -327,7 +330,7 @@ class GravitationalForceGenerator:
         planet_off_y = self.moon.displacement.y - self.planet.displacement.y
         planet_vector = Vector.make_vector_from_components(planet_off_x, planet_off_y)
         reversed_vector = Vector.make_vector_from_components(planet_off_x*-1, planet_off_y*-1)
-        force_magnitude = (1000000/planet_vector.magnitude)*interval # not accurate gravitational force
+        force_magnitude = (math.sqrt(self.planet.mass * self.moon.mass)/2)*interval # not accurate gravitational force
         self.planet.forces.append(Force(planet_vector.angle, force_magnitude))
         self.moon.forces.append(Force(reversed_vector.angle, force_magnitude))
 

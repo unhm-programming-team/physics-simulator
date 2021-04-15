@@ -294,6 +294,13 @@ class Force(Vector):
 
 
 class GravitationalForceGenerator:
+    def __init__(self, planet, moon):
+        self.planet = planet
+        self.moon = moon
+        self.planet.dependent_force_generators.append(self)
+        self.moon.dependent_force_generators.append(self)
+        self.grav_sum = planet.mass * moon.mass # omitted - the gravitational constant
+        self.remaining = 1
     """
     Connects two objects together with 'gravity'. Currently not accurately implemented, because planetary scales make
     for poor visibility on the UI.
@@ -314,13 +321,6 @@ class GravitationalForceGenerator:
     :type moon: ForceObject
 
     """
-    def __init__(self, planet, moon):
-        self.planet = planet
-        self.moon = moon
-        self.planet.dependent_force_generators.append(self)
-        self.moon.dependent_force_generators.append(self)
-        self.grav_sum = planet.mass * moon.mass # omitted - the gravitational constant
-        self.remaining = 1
 
     def update(self, interval):
         """
@@ -431,6 +431,13 @@ class PhysicsObject:
         self.forces = non_expired_forces
         self.acceleration = Vector(self.net_force_vector.angle, self.net_force_vector.magnitude/self.mass)
         self.velocity.add(self.acceleration)
+        # a check to see if it should stop
+        if self.velocity.magnitude < 1:
+            x_min = self.physics_canvas.min_x
+            x_max = self.physics_canvas.max_x
+            y_min = self.physics_canvas.min_y
+            y_max = self.physics_canvas.max_y
+
         if not self.check_collision(interval):
             self.displacement.add(self.velocity)
             self.physics_canvas.move_physics_object(self)
@@ -439,6 +446,32 @@ class PhysicsObject:
         """
         Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid
         redundant calculations.
+
+        The elastic collision formulas:
+
+        :math:
+
+        :math:`K_{1i}+K_{2i} = K_{1f} + K_{2f}`
+
+        :math:`m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}`
+
+        :math:`v_{1f} = \\frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}`
+
+        :math:`v_{2f} = \\frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}`
+
+        In the x direction alone:
+
+        :math:`m_1v_{1i} = m_1v_{1f}\\cos{\\theta_1} + m_2v_{2f}\\cos{\\theta_2}`
+
+        :math:`m_1v_{1f}\\sin{\\theta_1} = m_2v_{2f}\\sin{\\theta_2}`
+
+        :math:`\\frac{1}{2}m_1v_{1i}^2 = \\frac{1}{2}m_1v_{1f}^2 + \\frac{1}{2}m_2v_{2f}^2`
+
+        In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before
+
+        Kinetic energy is conserved but not in each dimension
+
+
 
         :param other_object: The colliding object
         :type other_object: ForceObject
@@ -520,6 +553,17 @@ class PhysicsObject:
         for f in self.dependent_force_generators:
             f.remove()
 
+    def get_energy_vector(self):
+        joules = self.velocity.magnitude * self.mass
+        return Vector(self.velocity.angle, joules)
+
+    def __repr__(self):
+        """
+        Changes output of print(PhysicsObject) so useful information about it is displayed
+        :return: A string of details about this vector
+        :rtype: string
+        """
+        return f"{round(self.mass, 2)}kg {self.material.name} physicsobject, moving at {round(self.velocity.magnitude,2)} meters per sec "
 
 
 

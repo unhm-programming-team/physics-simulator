@@ -101,6 +101,9 @@ class ForceObjectAdder:
 
         self.test_collision = ttk.Button(self.frame, text='test collision', command=self.add_test_collision)
         self.test_collision.grid(column=0,row=2)
+        self.is_horizontal_collision = BooleanVar()
+        collision_check = ttk.Checkbutton(self.frame, text='horizontal', variable=self.is_horizontal_collision)
+        collision_check.grid(column=1, row=2)
         self.frame.grid()
 
         self.particle_test = ttk.Button(self.frame, text='particle test', command=self.particle_test)
@@ -147,15 +150,20 @@ class ForceObjectAdder:
     def add_test_collision(self):
         physics_canvas = self.window.physics_canvas
         ob1 = Physics.PhysicsObject(Substance.MATERIALS['chalk'], Options['default mass'])
-        ob1.velocity = Physics.Vector.make_directional_vector('NE', 20)
-        ob2 = Physics.PhysicsObject(Substance.MATERIALS['maple'], Options['default mass'])
-        ob2.velocity = Physics.Vector.make_directional_vector('NW', 20)
+        ob2 = Physics.PhysicsObject(Substance.MATERIALS['maple'], (Options['default mass']*2)/3)
 
         x1 = -(random.random() * physics_canvas.width/2)
         x2 = (random.random() * physics_canvas.width/2)
 
         ob1.displacement = Physics.Vector.make_vector_from_components(x1, 50)
-        ob2.displacement = Physics.Vector.make_vector_from_components(x2, 10)
+        ob2.displacement = Physics.Vector.make_vector_from_components(x2, 15)
+
+        if not self.is_horizontal_collision.get():
+            ob1.velocity = Physics.Vector.make_directional_vector('NE', 22)
+            ob1.velocity.rotate(-1.3)
+            ob2.velocity = Physics.Vector.make_directional_vector('NW', 20)
+        else:
+            ob1.velocity = Physics.Vector.make_directional_vector('E', 22)
 
         physics_canvas.add_physics_object(ob1)
         physics_canvas.add_physics_object(ob2)

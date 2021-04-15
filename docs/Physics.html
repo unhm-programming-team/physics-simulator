@@ -200,23 +200,6 @@ to account for that.</p>
 <dt id="Physics.GravitationalForceGenerator">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Physics.</span></code><code class="sig-name descname"><span class="pre">GravitationalForceGenerator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">moon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#GravitationalForceGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.GravitationalForceGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Connects two objects together with ‘gravity’. Currently not accurately implemented, because planetary scales make
-for poor visibility on the UI.</p>
-<p>Three objects keep a reference to a gravitational force; the <cite>class:Ui.PhysicsCanvas</cite> object and each
-<cite>class:Physics.ForceObject</cite> that are connected with the gravity.</p>
-<p>When remove() is called on a GravitationalForceGenerator, it removes each of these references so it will no
-longer be updated.</p>
-<p>GraviationalForceGenerator is updated directly by  <cite>class:Ui.PhysicsCanvas</cite>; each update, it calculates the
-appropriate graviational pull for its two reference ForceObjects, then adds a force of the appropriate angle and
-magnitude to their force lists.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>planet</strong> (<em>ForceObject</em>) – An object to connect with gravity</p></li>
-<li><p><strong>moon</strong> (<em>ForceObject</em>) – An object to connect with gravity</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt id="Physics.GravitationalForceGenerator.remove">
 <code class="sig-name descname"><span class="pre">remove</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#GravitationalForceGenerator.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.GravitationalForceGenerator.remove" title="Permalink to this definition">¶</a></dt>
@@ -297,6 +280,21 @@ the update function handles simple movement.</p>
 <code class="sig-name descname"><span class="pre">collide</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">my_next_displacement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_next_displacement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#PhysicsObject.collide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.PhysicsObject.collide" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid
 redundant calculations.</p>
+<p>The elastic collision formulas:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Math</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p><span class="math notranslate nohighlight">\(K_{1i}+K_{2i} = K_{1f} + K_{2f}\)</span></p>
+<p><span class="math notranslate nohighlight">\(m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}\)</span></p>
+<p><span class="math notranslate nohighlight">\(v_{1f} = \frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}\)</span></p>
+<p><span class="math notranslate nohighlight">\(v_{2f} = \frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}\)</span></p>
+<p>In the x direction alone:</p>
+<p><span class="math notranslate nohighlight">\(m_1v_{1i} = m_1v_{1f}\cos{\theta_1} + m_2v_{2f}\cos{\theta_2}\)</span></p>
+<p><span class="math notranslate nohighlight">\(m_1v_{1f}\sin{\theta_1} = m_2v_{2f}\sin{\theta_2}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\frac{1}{2}m_1v_{1i}^2 = \frac{1}{2}m_1v_{1f}^2 + \frac{1}{2}m_2v_{2f}^2\)</span></p>
+<p>In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before</p>
+<p>Kinetic energy is conserved but not in each dimension</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -323,6 +321,10 @@ redundant calculations.</p>
 <code class="sig-name descname"><span class="pre">forces</span></code><a class="headerlink" href="#Physics.PhysicsObject.forces" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently active forces affecting this object</p>
 </dd></dl>
+<dl class="py method">
+<dt id="Physics.PhysicsObject.get_energy_vector">
+<code class="sig-name descname"><span class="pre">get_energy_vector</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#PhysicsObject.get_energy_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.PhysicsObject.get_energy_vector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 <dl class="py attribute">
 <dt id="Physics.PhysicsObject.height">
 <code class="sig-name descname"><span class="pre">height</span></code><a class="headerlink" href="#Physics.PhysicsObject.height" title="Permalink to this definition">¶</a></dt>

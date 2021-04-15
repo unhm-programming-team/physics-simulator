@@ -167,13 +167,17 @@ class PhysicsCanvas:
         y0 = dy - side
         y1 = dy + side
         if x0 < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
-            velocity.x *= -1
+            velocity.x *= -0.5
         elif x1 > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
-            velocity.x *= -1
+            velocity.x *= -0.5
         if y0 < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0:
-            velocity.y *= -1
+            velocity.y *= -0.5
         elif y1 > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0:
-            velocity.y *= -1
+            velocity.y *= -0.5
+        if y1 > self.max_y - 200 - side - Options['canvas bottom physics adjustment']:
+            print('min y')
+            if velocity.magnitude > 0:
+                velocity.y = 0
         velocity.calculate_angles()
         new_x = physics_object.displacement.x + self.origin_x - side
         new_y = self.origin_y - (physics_object.displacement.y + side)
@@ -377,7 +381,31 @@ class EnvironmentTab(ttk.Frame):
         self.window = window
         self.clear_button = ttk.Button(self, text="Clear", command=self.clear_press)
 
-        self.clear_button.grid()
+        self.is_gravity = BooleanVar()
+        gravity_check = ttk.Checkbutton(self, text="gravity", variable=self.is_gravity, command=self.toggle_gravity)
+        self.gravity_accel = IntVar()
+        self.gravity_accel.set(9.8)
+
+        self.clear_button.grid(column=0, row=0)
+        gravity_check.grid(column=0, row=1)
+
+    def toggle_gravity(self):
+        physics_canvas = self.window.physics_canvas
+        if self.is_gravity.get(): # checkbox changes before command is called
+            for p_object in physics_canvas.physics_objects:
+                p_object._grav_force = Physics.Force.make_directional_force('S', self.gravity_accel.get()*p_object.mass)
+                p_object._grav_force.constant = True
+                p_object.forces.append(p_object._grav_force)
+                print(p_object)
+        else:
+            for p_object in physics_canvas.physics_objects:
+                if hasattr(p_object, '_grav_force'):
+                    grav_force = p_object._grav_force
+                    for f in p_object.forces:
+                        if f == grav_force:
+                            i = p_object.forces.index(f)
+                            p_object.forces.pop(i)
+                            break
 
     def clear_press(self):
         """

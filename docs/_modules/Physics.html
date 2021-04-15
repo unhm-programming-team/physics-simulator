@@ -430,6 +430,13 @@
 
 
 <div class="viewcode-block" id="GravitationalForceGenerator"><a class="viewcode-back" href="../Physics.html#Physics.GravitationalForceGenerator">[docs]</a><span class="k">class</span> <span class="nc">GravitationalForceGenerator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planet</span><span class="p">,</span> <span class="n">moon</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moon</span> <span class="o">=</span> <span class="n">moon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moon</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grav_sum</span> <span class="o">=</span> <span class="n">planet</span><span class="o">.</span><span class="n">mass</span> <span class="o">*</span> <span class="n">moon</span><span class="o">.</span><span class="n">mass</span> <span class="c1"># omitted - the gravitational constant</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="sd">"""</span>
 <span class="sd">    Connects two objects together with 'gravity'. Currently not accurately implemented, because planetary scales make</span>
 <span class="sd">    for poor visibility on the UI.</span>
@@ -450,13 +457,6 @@
 <span class="sd">    :type moon: ForceObject</span>
 
 <span class="sd">    """</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planet</span><span class="p">,</span> <span class="n">moon</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">moon</span> <span class="o">=</span> <span class="n">moon</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">planet</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">moon</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grav_sum</span> <span class="o">=</span> <span class="n">planet</span><span class="o">.</span><span class="n">mass</span> <span class="o">*</span> <span class="n">moon</span><span class="o">.</span><span class="n">mass</span> <span class="c1"># omitted - the gravitational constant</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">remaining</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="GravitationalForceGenerator.update"><a class="viewcode-back" href="../Physics.html#Physics.GravitationalForceGenerator.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>
         <span class="sd">"""</span>
@@ -567,6 +567,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">forces</span> <span class="o">=</span> <span class="n">non_expired_forces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span><span class="o">.</span><span class="n">magnitude</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">)</span>
+        <span class="c1"># a check to see if it should stop</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_x</span>
+            <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">max_x</span>
+            <span class="n">y_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_y</span>
+            <span class="n">y_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">max_y</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_collision</span><span class="p">(</span><span class="n">interval</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">move_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
@@ -575,6 +582,32 @@
         <span class="sd">"""</span>
 <span class="sd">        Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid</span>
 <span class="sd">        redundant calculations.</span>
+
+<span class="sd">        The elastic collision formulas:</span>
+
+<span class="sd">        :math:</span>
+
+<span class="sd">        :math:`K_{1i}+K_{2i} = K_{1f} + K_{2f}`</span>
+
+<span class="sd">        :math:`m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}`</span>
+
+<span class="sd">        :math:`v_{1f} = \\frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}`</span>
+
+<span class="sd">        :math:`v_{2f} = \\frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}`</span>
+
+<span class="sd">        In the x direction alone:</span>
+
+<span class="sd">        :math:`m_1v_{1i} = m_1v_{1f}\\cos{\\theta_1} + m_2v_{2f}\\cos{\\theta_2}`</span>
+
+<span class="sd">        :math:`m_1v_{1f}\\sin{\\theta_1} = m_2v_{2f}\\sin{\\theta_2}`</span>
+
+<span class="sd">        :math:`\\frac{1}{2}m_1v_{1i}^2 = \\frac{1}{2}m_1v_{1f}^2 + \\frac{1}{2}m_2v_{2f}^2`</span>
+
+<span class="sd">        In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before</span>
+
+<span class="sd">        Kinetic energy is conserved but not in each dimension</span>
+
+
 
 <span class="sd">        :param other_object: The colliding object</span>
 <span class="sd">        :type other_object: ForceObject</span>
@@ -654,8 +687,19 @@
 
 <span class="sd">        """</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dependent_force_generators</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="PhysicsObject.get_energy_vector"><a class="viewcode-back" href="../Physics.html#Physics.PhysicsObject.get_energy_vector">[docs]</a>    <span class="k">def</span> <span class="nf">get_energy_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">joules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass</span>
+        <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">joules</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Changes output of print(PhysicsObject) so useful information about it is displayed</span>
+<span class="sd">        :return: A string of details about this vector</span>
+<span class="sd">        :rtype: string</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">kg </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> physicsobject, moving at </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> meters per sec "</span></div>
 
 
 

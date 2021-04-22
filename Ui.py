@@ -390,11 +390,44 @@ class EnvironmentTab(ttk.Frame):
 
         self.is_gravity = BooleanVar()
         gravity_check = ttk.Checkbutton(self, text="gravity", variable=self.is_gravity, command=self.toggle_gravity)
+        self.is_gravity.set(Options['gravity'])
         self.gravity_accel = IntVar()
         self.gravity_accel.set(9.8)
 
+        self.is_air = BooleanVar()
+        air_check = ttk.Checkbutton(self, text="air resistance", variable=self.is_air, command=self.toggle_air)
+        self.is_air.set(Options['air resistance'])
+
         self.clear_button.grid(column=0, row=0)
-        gravity_check.grid(column=0, row=1)
+        gravity_check.grid(column=0, row=1,sticky=W)
+        air_check.grid(column=0,row=2, sticky=W)
+
+    def toggle_air(self):
+        """
+        Creates drag forces for objects
+
+        Drag acts opposite to the direction of motion
+        """
+        physics_canvas = self.window.physics_canvas
+        if self.is_air.get(): # checkbox changes before command is called
+            for p_object in physics_canvas.physics_objects:
+                # make a drag force
+                p_object._drag = Physics.DragForce(p_object)
+                p_object.forces.append(p_object._drag)
+            physics_canvas.new_physics_object_plugins.append(self.set_drag_for_new_physics_object)
+        else:
+            for p_object in physics_canvas.physics_objects:
+                if hasattr(p_object, '_drag'):
+                    drag_force = p_object._drag
+                    for f in p_object.forces:
+                        if f == drag_force:  # remove
+                            i = p_object.forces.index(f)
+                            p_object.forces.pop(i)
+                            break
+            for plug in physics_canvas.new_physics_object_plugins:
+                if plug == self.set_drag_for_new_physics_object:
+                    i = physics_canvas.new_physics_object_plugins.index(plug)
+                    physics_canvas.new_physics_object_plugins.pop(i)
 
     def toggle_gravity(self):
         physics_canvas = self.window.physics_canvas
@@ -403,7 +436,6 @@ class EnvironmentTab(ttk.Frame):
                 p_object._grav_force = Physics.Force.make_directional_force('S', self.gravity_accel.get()*p_object.mass)
                 p_object._grav_force.constant = True
                 p_object.forces.append(p_object._grav_force)
-                print(p_object)
             physics_canvas.new_physics_object_plugins.append(self.set_grav_for_new_physics_object)
         else:
             for p_object in physics_canvas.physics_objects:
@@ -430,6 +462,18 @@ class EnvironmentTab(ttk.Frame):
             physics_object._grav_force = Physics.Force.make_directional_force('S', self.gravity_accel.get()*physics_object.mass)
             physics_object._grav_force.constant = True
             physics_object.forces.append(physics_object._grav_force)
+
+    def set_drag_for_new_physics_object(self, physics_object):
+        """
+        Append this function to :class:`PhysicsCanvas.new_physics_object_plugins`
+
+        :param physics_object: A new physics object
+        :type :class:`Physics.PhysicsObject`
+
+        """
+        if self.is_air.get():
+            physics_object._drag = Physics.DragForce(physics_object)
+            physics_object.forces.append(physics_object._drag)
 
 
 

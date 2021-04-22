@@ -14,6 +14,7 @@ import math
 
 import Substance, Utility
 import Particle
+from Options import Options
 
 
 class Vector:
@@ -304,6 +305,23 @@ class Force(Vector):
             self.remaining = 1
 
 
+class DragForce(Force):
+    def __init__(self, physics_object, air_density=Options['air density']):
+        Force.__init__(self, 0, 0, 1.0, True)
+        area = physics_object.side * physics_object.side
+        self.drag_scale = area * air_density * 0.5 * 0.8 * -1 # 0.8 is drag coefficient for cube
+        self.object = physics_object
+
+    def update(self, interval):
+        v = self.object.velocity.scale_make(1)
+        self.angle = v.angle
+        self.force_magnitude = self.drag_scale * v.magnitude * v.magnitude
+        self.calculate_components()
+        # print('drag', self)
+        # print('velocity', v)
+        Force.update(self, interval)
+
+
 class GravitationalForceGenerator:
     def __init__(self, planet, moon):
         self.planet = planet
@@ -443,6 +461,11 @@ class PhysicsObject:
         self.acceleration = Vector(self.net_force_vector.angle, self.net_force_vector.magnitude/self.mass)
         if self.displacement.y - self.side > self.physics_canvas.min_y + self.side:
             self.velocity.add(self.acceleration)
+        #elif self.velocity.y < Options['velocity zero limit']:
+        #    if self.net_force_vector.y < Options['net force zero limit']:
+        #        self.velocity = Vector.make_vector_from_components(self.velocity.x, 0)
+        #        self.displacement.y = self.physics_canvas.min_y + self.side
+        #        self.displacement.calculate_angles()
         # a check to see if it should stop
         y_min = self.physics_canvas.min_y
 

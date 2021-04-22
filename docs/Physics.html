@@ -281,20 +281,7 @@ the update function handles simple movement.</p>
 <dd><p>Called by the check_collision function. Next displacements calculated there are passed as parameters to avoid
 redundant calculations.</p>
 <p>The elastic collision formulas:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Math</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-<p><span class="math notranslate nohighlight">\(K_{1i}+K_{2i} = K_{1f} + K_{2f}\)</span></p>
-<p><span class="math notranslate nohighlight">\(m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}\)</span></p>
-<p><span class="math notranslate nohighlight">\(v_{1f} = \frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}\)</span></p>
-<p><span class="math notranslate nohighlight">\(v_{2f} = \frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}\)</span></p>
-<p>In the x direction alone:</p>
-<p><span class="math notranslate nohighlight">\(m_1v_{1i} = m_1v_{1f}\cos{\theta_1} + m_2v_{2f}\cos{\theta_2}\)</span></p>
-<p><span class="math notranslate nohighlight">\(m_1v_{1f}\sin{\theta_1} = m_2v_{2f}\sin{\theta_2}\)</span></p>
-<p><span class="math notranslate nohighlight">\(\frac{1}{2}m_1v_{1i}^2 = \frac{1}{2}m_1v_{1f}^2 + \frac{1}{2}m_2v_{2f}^2\)</span></p>
-<p>In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before</p>
-<p>Kinetic energy is conserved but not in each dimension</p>
+<p>link - <a class="reference external" href="https://imada.sdu.dk/~rolf/Edu/DM815/E10/2dcollisions.pdf">https://imada.sdu.dk/~rolf/Edu/DM815/E10/2dcollisions.pdf</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -429,6 +416,23 @@ components.</p>
 <dd><p>Calculates components from angle and magnitude.</p>
 <p><span class="math notranslate nohighlight">\(y = \text{vector}_\text{mag} * \sin{\theta}\)</span></p>
 <p><span class="math notranslate nohighlight">\(x = \text{vector}_\text{mag} * \cos{\theta}\)</span></p>
+</dd></dl>
+<dl class="py method">
+<dt id="Physics.Vector.dot_product">
+<code class="sig-name descname"><span class="pre">dot_product</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Physics.html#Vector.dot_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Physics.Vector.dot_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the scalar dot product of this and another vector
+Non mutating</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other_vector</strong> – A vector to multiply with this one</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A scalar</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>number</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt id="Physics.Vector.make_directional_vector">

@@ -94,6 +94,10 @@ class PhysicsCanvas:
         self.interacting_forces = []
         """Instances from, e.g. :class:`Physics.GravitationalForceGenerator` that need to be have update called"""
         self.particles = []
+        self.new_physics_object_plugins = []
+        """These are functions. Each will have func(physics_object) called on it when a new object is added.
+            You can generate a callback to go in this list to add functionality to new objects that are added
+        """
         self.canvas.grid()
         self.draw_cartesian()
 
@@ -128,9 +132,14 @@ class PhysicsCanvas:
         x1 = physics_object.displacement.x + physics_object.side + self.origin_x
         y0 = physics_object.displacement.y - physics_object.side + self.origin_y
         y1 = physics_object.displacement.y + physics_object.side + self.origin_y
+        # down the line, the physics object should draw itself
         physics_object.canvas_id = self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
         physics_object.physics_canvas = self
         self.physics_objects.append(physics_object)
+
+        for plugin in self.new_physics_object_plugins:
+            plugin(physics_object)
+
         self.move_physics_object(physics_object)
 
     def update(self, interval):
@@ -159,6 +168,7 @@ class PhysicsCanvas:
         :type physics_object: extends :class:`Physics.PhysicsObject`
         """
         velocity = physics_object.velocity
+        acceleration = physics_object.acceleration
         dx = physics_object.displacement.x
         dy = physics_object.displacement.y
         side = physics_object.side
@@ -166,19 +176,16 @@ class PhysicsCanvas:
         x1 = dx + side
         y0 = dy - side
         y1 = dy + side
-        if x0 < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0:
-            velocity.x *= -0.5
-        elif x1 > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0:
-            velocity.x *= -0.5
-        if y0 < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0:
-            velocity.y *= -0.5
-        elif y1 > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0:
-            velocity.y *= -0.5
-        if y1 > self.max_y - 200 - side - Options['canvas bottom physics adjustment']:
-            print('min y')
-            if velocity.magnitude > 0:
-                velocity.y = 0
+        if x0 < self.min_x + Options['canvas left physics adjustment'] and velocity.x < 0.001:
+            velocity.x *= -1
+        elif x1 > self.max_x + Options['canvas right physics adjustment'] and velocity.x > 0.001:
+            velocity.x *= -1
+        if y0 < self.min_y + Options['canvas top physics adjustment'] and velocity.y < 0.001:
+            velocity.y *= -1
+        elif y1 > self.max_y - Options['canvas bottom physics adjustment'] and velocity.y > 0.001:
+            velocity.y *= -1
         velocity.calculate_angles()
+        acceleration.calculate_angles()
         new_x = physics_object.displacement.x + self.origin_x - side
         new_y = self.origin_y - (physics_object.displacement.y + side)
         self.canvas.moveto(physics_object.canvas_id, new_x, new_y)
@@ -397,6 +404,7 @@ class EnvironmentTab(ttk.Frame):
                 p_object._grav_force.constant = True
                 p_object.forces.append(p_object._grav_force)
                 print(p_object)
+            physics_canvas.new_physics_object_plugins.append(self.set_grav_for_new_physics_object)
         else:
             for p_object in physics_canvas.physics_objects:
                 if hasattr(p_object, '_grav_force'):
@@ -406,6 +414,24 @@ class EnvironmentTab(ttk.Frame):
                             i = p_object.forces.index(f)
                             p_object.forces.pop(i)
                             break
+            for plug in physics_canvas.new_physics_object_plugins:
+                if plug == self.set_grav_for_new_physics_object:
+                    i = physics_canvas.new_physics_object_plugins.index(plug)
+                    physics_canvas.new_physics_object_plugins.pop(i)
+
+    def set_grav_for_new_physics_object(self, physics_object):
+        """
+        Append this function to :class:`PhysicsCanvas.new_physics_object_plugins`
+
+        :param physics_object: A new physics object
+        :type :class:`Physics.PhysicsObject`
+        """
+        if self.is_gravity.get():
+            physics_object._grav_force = Physics.Force.make_directional_force('S', self.gravity_accel.get()*physics_object.mass)
+            physics_object._grav_force.constant = True
+            physics_object.forces.append(physics_object._grav_force)
+
+
 
     def clear_press(self):
         """

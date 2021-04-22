@@ -149,6 +149,7 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">import</span> <span class="nn">Substance</span><span class="o">,</span> <span class="nn">Utility</span>
+<span class="kn">import</span> <span class="nn">Particle</span>
 
 
 <div class="viewcode-block" id="Vector"><a class="viewcode-back" href="../Physics.html#Physics.Vector">[docs]</a><span class="k">class</span> <span class="nc">Vector</span><span class="p">:</span>
@@ -196,6 +197,17 @@
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Vector.dot_product"><a class="viewcode-back" href="../Physics.html#Physics.Vector.dot_product">[docs]</a>    <span class="k">def</span> <span class="nf">dot_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_vector</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Gets the scalar dot product of this and another vector</span>
+<span class="sd">        Non mutating</span>
+
+<span class="sd">        :param other_vector: A vector to multiply with this one</span>
+<span class="sd">        :return: A scalar</span>
+<span class="sd">        :rtype: number</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">other_vector</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Vector.make_vector_from_components"><a class="viewcode-back" href="../Physics.html#Physics.Vector.make_vector_from_components">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">make_vector_from_components</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -304,7 +316,6 @@
 <span class="sd">        :returns: A brand new Vector</span>
 <span class="sd">        :rtype: Vector</span>
 <span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*=</span> <span class="n">scalar</span>
         <span class="n">new_magnitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">*</span> <span class="n">scalar</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">new_magnitude</span><span class="p">)</span></div>
 
@@ -566,13 +577,10 @@
                 <span class="n">non_expired_forces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">force</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">forces</span> <span class="o">=</span> <span class="n">non_expired_forces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_force_vector</span><span class="o">.</span><span class="n">magnitude</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">mass</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acceleration</span><span class="p">)</span>
         <span class="c1"># a check to see if it should stop</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_x</span>
-            <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">max_x</span>
-            <span class="n">y_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_y</span>
-            <span class="n">y_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">max_y</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">min_y</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_collision</span><span class="p">(</span><span class="n">interval</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
@@ -585,27 +593,7 @@
 
 <span class="sd">        The elastic collision formulas:</span>
 
-<span class="sd">        :math:</span>
-
-<span class="sd">        :math:`K_{1i}+K_{2i} = K_{1f} + K_{2f}`</span>
-
-<span class="sd">        :math:`m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}`</span>
-
-<span class="sd">        :math:`v_{1f} = \\frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}`</span>
-
-<span class="sd">        :math:`v_{2f} = \\frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}`</span>
-
-<span class="sd">        In the x direction alone:</span>
-
-<span class="sd">        :math:`m_1v_{1i} = m_1v_{1f}\\cos{\\theta_1} + m_2v_{2f}\\cos{\\theta_2}`</span>
-
-<span class="sd">        :math:`m_1v_{1f}\\sin{\\theta_1} = m_2v_{2f}\\sin{\\theta_2}`</span>
-
-<span class="sd">        :math:`\\frac{1}{2}m_1v_{1i}^2 = \\frac{1}{2}m_1v_{1f}^2 + \\frac{1}{2}m_2v_{2f}^2`</span>
-
-<span class="sd">        In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before</span>
-
-<span class="sd">        Kinetic energy is conserved but not in each dimension</span>
+<span class="sd">        link - https://imada.sdu.dk/~rolf/Edu/DM815/E10/2dcollisions.pdf</span>
 
 
 
@@ -619,26 +607,61 @@
 <span class="sd">        :type interval: number</span>
 
 <span class="sd">        """</span>
-        <span class="n">line1</span> <span class="o">=</span> <span class="n">Utility</span><span class="o">.</span><span class="n">get_line</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">my_next_displacement</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">my_next_displacement</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="n">line2</span> <span class="o">=</span> <span class="n">Utility</span><span class="o">.</span><span class="n">get_line</span><span class="p">(</span><span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">other_next_displacement</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">other_next_displacement</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="n">collision_x</span><span class="p">,</span> <span class="n">collision_y</span> <span class="o">=</span> <span class="n">Utility</span><span class="o">.</span><span class="n">find_intersecting_point</span><span class="p">(</span><span class="n">line1</span><span class="p">,</span> <span class="n">line2</span><span class="p">)</span>  <span class="c1"># point of collision</span>
-        <span class="k">if</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">collision_x</span><span class="p">:</span>  <span class="c1"># these ifs put colliders on appropriate side</span>
-            <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">collision_x</span> <span class="o">-</span> <span class="n">other_object</span><span class="o">.</span><span class="n">side</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">collision_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span>
-        <span class="k">elif</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">collision_x</span><span class="p">:</span>
-            <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">collision_x</span> <span class="o">+</span> <span class="n">other_object</span><span class="o">.</span><span class="n">side</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">collision_x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span>
-        <span class="k">if</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">collision_y</span><span class="p">:</span>
-            <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">collision_y</span> <span class="o">-</span> <span class="n">other_object</span><span class="o">.</span><span class="n">side</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">collision_y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span>
-        <span class="k">elif</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">collision_y</span><span class="p">:</span>
-            <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">collision_y</span> <span class="o">+</span> <span class="n">other_object</span><span class="o">.</span><span class="n">side</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">collision_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">side</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span>
-        <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">calculate_angles</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="c1"># self.displacement.add(self.velocity)</span>
-        <span class="n">other_object</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)</span>
+        <span class="c1"># line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)</span>
+        <span class="c1"># collision_x, collision_y = Utility.find_intersecting_point(line1, line2)  # point of collision</span>
+        <span class="c1"># if other_object.displacement.x &lt; collision_x:  # these ifs put colliders on appropriate side</span>
+        <span class="c1">#     other_object.displacement.x = collision_x - other_object.side</span>
+        <span class="c1">#     self.displacement.x = collision_x + self.side</span>
+        <span class="c1"># elif other_object.displacement.x &gt; collision_x:</span>
+        <span class="c1">#     other_object.displacement.x = collision_x + other_object.side</span>
+        <span class="c1">#     self.displacement.x = collision_x - self.side</span>
+        <span class="c1"># if other_object.displacement.y &lt; collision_y:</span>
+        <span class="c1">#     other_object.displacement.y = collision_y - other_object.side</span>
+        <span class="c1">#     self.displacement.y = collision_y + self.side</span>
+        <span class="c1"># elif other_object.displacement.y &gt; collision_y:</span>
+        <span class="c1">#     other_object.displacement.y = collision_y + other_object.side</span>
+        <span class="c1">#     self.displacement.y = collision_y - self.side</span>
+        <span class="c1"># self.displacement.calculate_angles()</span>
+        <span class="c1"># other_object.displacement.calculate_angles()</span>
+
+        <span class="c1"># calculate the normal vector</span>
+        <span class="n">x_diff</span> <span class="o">=</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">y_diff</span> <span class="o">=</span> <span class="n">other_object</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">x_diff</span><span class="p">,</span> <span class="n">y_diff</span><span class="p">)</span>
+        <span class="n">unit_normal</span> <span class="o">=</span> <span class="n">normal</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">unit_normal</span><span class="o">.</span><span class="n">magnitude</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">unit_normal</span><span class="o">.</span><span class="n">calculate_components</span><span class="p">()</span>
+
+        <span class="c1"># calculate the unit tangent</span>
+        <span class="n">unit_tangent</span> <span class="o">=</span> <span class="n">Vector</span><span class="o">.</span><span class="n">make_vector_from_components</span><span class="p">(</span><span class="n">unit_normal</span><span class="o">.</span><span class="n">y</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">unit_normal</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">v1_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">dot_product</span><span class="p">(</span><span class="n">unit_normal</span><span class="p">)</span>
+        <span class="n">v1_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">dot_product</span><span class="p">(</span><span class="n">unit_tangent</span><span class="p">)</span>
+        <span class="n">v2_n</span> <span class="o">=</span> <span class="n">other_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">dot_product</span><span class="p">(</span><span class="n">unit_normal</span><span class="p">)</span>
+        <span class="n">v2_t</span> <span class="o">=</span> <span class="n">other_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">dot_product</span><span class="p">(</span><span class="n">unit_tangent</span><span class="p">)</span>
+
+        <span class="c1"># find new normal scalar velocities</span>
+
+        <span class="n">m_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass</span>
+        <span class="n">m_2</span> <span class="o">=</span> <span class="n">other_object</span><span class="o">.</span><span class="n">mass</span>
+        <span class="n">v_1f_mag</span> <span class="o">=</span> <span class="p">(</span><span class="n">v1_n</span><span class="o">*</span><span class="p">(</span><span class="n">m_1</span><span class="o">-</span><span class="n">m_2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">m_2</span><span class="o">*</span><span class="n">v2_n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">m_1</span><span class="o">+</span><span class="n">m_2</span><span class="p">)</span>
+        <span class="n">v_2f_mag</span> <span class="o">=</span> <span class="p">(</span><span class="n">v2_n</span><span class="o">*</span><span class="p">(</span><span class="n">m_2</span><span class="o">-</span><span class="n">m_1</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">m_1</span><span class="o">*</span><span class="n">v1_n</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">m_1</span><span class="o">+</span><span class="n">m_2</span><span class="p">)</span>
+
+        <span class="c1"># convert new magnitudes to vectors</span>
+        <span class="n">v_1fn</span> <span class="o">=</span> <span class="n">unit_normal</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">v_1f_mag</span><span class="p">)</span>
+        <span class="n">v_1ft</span> <span class="o">=</span> <span class="n">unit_tangent</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">v1_t</span><span class="p">)</span>
+        <span class="n">v_2fn</span> <span class="o">=</span> <span class="n">unit_normal</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">v_2f_mag</span><span class="p">)</span>
+        <span class="n">v_2ft</span> <span class="o">=</span> <span class="n">unit_tangent</span><span class="o">.</span><span class="n">scale_make</span><span class="p">(</span><span class="n">v2_t</span><span class="p">)</span>
+
+        <span class="c1"># final velocity vectors</span>
+        <span class="n">v_1_f</span> <span class="o">=</span> <span class="n">v_1fn</span><span class="o">.</span><span class="n">add_make</span><span class="p">(</span><span class="n">v_1ft</span><span class="p">)</span>
+        <span class="n">v_2_f</span> <span class="o">=</span> <span class="n">v_2fn</span><span class="o">.</span><span class="n">add_make</span><span class="p">(</span><span class="n">v_2ft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">v_1_f</span>
+        <span class="n">other_object</span><span class="o">.</span><span class="n">velocity</span><span class="o">=</span> <span class="n">v_2_f</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">physics_canvas</span><span class="o">.</span><span class="n">move_physics_object</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PhysicsObject.check_collision"><a class="viewcode-back" href="../Physics.html#Physics.PhysicsObject.check_collision">[docs]</a>    <span class="k">def</span> <span class="nf">check_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interval</span><span class="p">):</span>

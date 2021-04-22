@@ -13,6 +13,7 @@ All the physics logic and calculation should be handled here.
 import math
 
 import Substance, Utility
+import Particle
 
 
 class Vector:
@@ -60,6 +61,17 @@ class Vector:
         x = self.x
         self.angle = math.atan2(y, x)
         self.magnitude = math.sqrt(x*x + y*y)
+
+    def dot_product(self, other_vector):
+        """
+        Gets the scalar dot product of this and another vector
+        Non mutating
+
+        :param other_vector: A vector to multiply with this one
+        :return: A scalar
+        :rtype: number
+        """
+        return (self.x * other_vector.x) + (self.y * other_vector.y)
 
     @staticmethod
     def make_vector_from_components(x, y):
@@ -168,7 +180,6 @@ class Vector:
         :returns: A brand new Vector
         :rtype: Vector
         """
-        self.magnitude *= scalar
         new_magnitude = self.magnitude * scalar
         return Vector(self.angle, new_magnitude)
 
@@ -430,13 +441,10 @@ class PhysicsObject:
                 non_expired_forces.append(force)
         self.forces = non_expired_forces
         self.acceleration = Vector(self.net_force_vector.angle, self.net_force_vector.magnitude/self.mass)
-        self.velocity.add(self.acceleration)
+        if self.displacement.y - self.side > self.physics_canvas.min_y + self.side:
+            self.velocity.add(self.acceleration)
         # a check to see if it should stop
-        if self.velocity.magnitude < 1:
-            x_min = self.physics_canvas.min_x
-            x_max = self.physics_canvas.max_x
-            y_min = self.physics_canvas.min_y
-            y_max = self.physics_canvas.max_y
+        y_min = self.physics_canvas.min_y
 
         if not self.check_collision(interval):
             self.displacement.add(self.velocity)
@@ -449,27 +457,7 @@ class PhysicsObject:
 
         The elastic collision formulas:
 
-        :math:
-
-        :math:`K_{1i}+K_{2i} = K_{1f} + K_{2f}`
-
-        :math:`m_1*v_{1i} + m_2*vi_2 = m_1*v_{1f} + m_2*v_{2f}`
-
-        :math:`v_{1f} = \\frac{(m1-m2)*v_{1i} + 2m_2 *v_{2i}}{(m1+m2)}`
-
-        :math:`v_{2f} = \\frac{2m_1*v_{1i}-(m_1-m_2)*v_{i2}}{(m1+m2)}`
-
-        In the x direction alone:
-
-        :math:`m_1v_{1i} = m_1v_{1f}\\cos{\\theta_1} + m_2v_{2f}\\cos{\\theta_2}`
-
-        :math:`m_1v_{1f}\\sin{\\theta_1} = m_2v_{2f}\\sin{\\theta_2}`
-
-        :math:`\\frac{1}{2}m_1v_{1i}^2 = \\frac{1}{2}m_1v_{1f}^2 + \\frac{1}{2}m_2v_{2f}^2`
-
-        In an elastic collision, the sum of the energy/momentum in the x direction is the same after as before
-
-        Kinetic energy is conserved but not in each dimension
+        link - https://imada.sdu.dk/~rolf/Edu/DM815/E10/2dcollisions.pdf
 
 
 
@@ -483,26 +471,61 @@ class PhysicsObject:
         :type interval: number
 
         """
-        line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)
-        line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)
-        collision_x, collision_y = Utility.find_intersecting_point(line1, line2)  # point of collision
-        if other_object.displacement.x < collision_x:  # these ifs put colliders on appropriate side
-            other_object.displacement.x = collision_x - other_object.side
-            self.displacement.x = collision_x + self.side
-        elif other_object.displacement.x > collision_x:
-            other_object.displacement.x = collision_x + other_object.side
-            self.displacement.x = collision_x - self.side
-        if other_object.displacement.y < collision_y:
-            other_object.displacement.y = collision_y - other_object.side
-            self.displacement.y = collision_y + self.side
-        elif other_object.displacement.y > collision_y:
-            other_object.displacement.y = collision_y + other_object.side
-            self.displacement.y = collision_y - self.side
-        self.displacement.calculate_angles()
-        other_object.displacement.calculate_angles()
-        self.velocity = Vector(0,0)
-        # self.displacement.add(self.velocity)
-        other_object.velocity = Vector(0,0)
+
+        # line1 = Utility.get_line(self.displacement.x, self.displacement.y, my_next_displacement.x, my_next_displacement.y)
+        # line2 = Utility.get_line(other_object.displacement.x, other_object.displacement.y, other_next_displacement.x, other_next_displacement.y)
+        # collision_x, collision_y = Utility.find_intersecting_point(line1, line2)  # point of collision
+        # if other_object.displacement.x < collision_x:  # these ifs put colliders on appropriate side
+        #     other_object.displacement.x = collision_x - other_object.side
+        #     self.displacement.x = collision_x + self.side
+        # elif other_object.displacement.x > collision_x:
+        #     other_object.displacement.x = collision_x + other_object.side
+        #     self.displacement.x = collision_x - self.side
+        # if other_object.displacement.y < collision_y:
+        #     other_object.displacement.y = collision_y - other_object.side
+        #     self.displacement.y = collision_y + self.side
+        # elif other_object.displacement.y > collision_y:
+        #     other_object.displacement.y = collision_y + other_object.side
+        #     self.displacement.y = collision_y - self.side
+        # self.displacement.calculate_angles()
+        # other_object.displacement.calculate_angles()
+
+        # calculate the normal vector
+        x_diff = other_object.displacement.x - self.displacement.x
+        y_diff = other_object.displacement.y - self.displacement.y
+        normal = Vector.make_vector_from_components(x_diff, y_diff)
+        unit_normal = normal.scale_make(1)
+        unit_normal.magnitude = 1
+        unit_normal.calculate_components()
+
+        # calculate the unit tangent
+        unit_tangent = Vector.make_vector_from_components(unit_normal.y*(-1), unit_normal.x)
+
+        v1_n = self.velocity.dot_product(unit_normal)
+        v1_t = self.velocity.dot_product(unit_tangent)
+        v2_n = other_object.velocity.dot_product(unit_normal)
+        v2_t = other_object.velocity.dot_product(unit_tangent)
+
+        # find new normal scalar velocities
+
+        m_1 = self.mass
+        m_2 = other_object.mass
+        v_1f_mag = (v1_n*(m_1-m_2)+2*m_2*v2_n)/(m_1+m_2)
+        v_2f_mag = (v2_n*(m_2-m_1)+2*m_1*v1_n)/(m_1+m_2)
+
+        # convert new magnitudes to vectors
+        v_1fn = unit_normal.scale_make(v_1f_mag)
+        v_1ft = unit_tangent.scale_make(v1_t)
+        v_2fn = unit_normal.scale_make(v_2f_mag)
+        v_2ft = unit_tangent.scale_make(v2_t)
+
+        # final velocity vectors
+        v_1_f = v_1fn.add_make(v_1ft)
+        v_2_f = v_2fn.add_make(v_2ft)
+
+        self.velocity = v_1_f
+        other_object.velocity= v_2_f
+
         self.physics_canvas.move_physics_object(self)
 
     def check_collision(self, interval):

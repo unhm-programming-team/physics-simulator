@@ -150,6 +150,17 @@ Closes all hanging windows</p>
 <p>Removes interacting forces</p>
 </dd></dl>
 <dl class="py method">
+<dt id="Ui.EnvironmentTab.set_grav_for_new_physics_object">
+<code class="sig-name descname"><span class="pre">set_grav_for_new_physics_object</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">physics_object</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#EnvironmentTab.set_grav_for_new_physics_object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.EnvironmentTab.set_grav_for_new_physics_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append this function to <a class="reference internal" href="#Ui.PhysicsCanvas.new_physics_object_plugins" title="Ui.PhysicsCanvas.new_physics_object_plugins"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicsCanvas.new_physics_object_plugins</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>physics_object</strong> – A new physics object</p>
+</dd>
+</dl>
+<p>:type <a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a></p>
+</dd></dl>
+<dl class="py method">
 <dt id="Ui.EnvironmentTab.toggle_gravity">
 <code class="sig-name descname"><span class="pre">toggle_gravity</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Ui.html#EnvironmentTab.toggle_gravity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Ui.EnvironmentTab.toggle_gravity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -261,6 +272,12 @@ then moves the rendering to the appropriate pixel x,y.</p>
 <dd class="field-odd"><p><strong>physics_object</strong> (extends <a class="reference internal" href="Physics.html#Physics.PhysicsObject" title="Physics.PhysicsObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">Physics.PhysicsObject</span></code></a>) – An object with a displacement vector that wants to move</p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py attribute">
+<dt id="Ui.PhysicsCanvas.new_physics_object_plugins">
+<code class="sig-name descname"><span class="pre">new_physics_object_plugins</span></code><a class="headerlink" href="#Ui.PhysicsCanvas.new_physics_object_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>These are functions. Each will have func(physics_object) called on it when a new object is added.
+You can generate a callback to go in this list to add functionality to new objects that are added</p>
 </dd></dl>
 <dl class="py attribute">
 <dt id="Ui.PhysicsCanvas.physics_objects">
